@@ -9,6 +9,13 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+import Vue from 'vue'
+import Vuetify from 'vuetify'
+// index.js or main.js
+import 'vuetify/dist/vuetify.min.css' // Ensure you are using css-loader
+import 'font-awesome/css/font-awesome.min.css' // Ensure you are using css-loader
+
+Vue.use(Vuetify)
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -21,6 +28,7 @@ window.Vue = require('vue');
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component('navbar-menu', require('./components/NavbarMenu.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
