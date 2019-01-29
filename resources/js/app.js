@@ -27,8 +27,12 @@ Vue.use(Vuetify)
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-Vue.component('navbar-menu', require('./components/NavbarMenu.vue').default);
+// Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+// Vue.component('navbar-menu', require('./components/NavbarMenu.vue').default);
+Vue.component('app-component', require('./components/AppComponent.vue').default);
+// Vue.component('footer-component', require('./components/FooterComponent.vue').default);
+// Vue.component('content-component', require('./components/ContentComponent.vue').default);
+Vue.component('valuation-component', require('./components/valuations/ValuationComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

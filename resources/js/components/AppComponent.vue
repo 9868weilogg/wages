@@ -37,7 +37,8 @@
         <v-list-tile
           v-for="item in items"
           :key="item.title"
-          @click=""
+          @click="item.href"
+          :href="item.href"
         >
           <v-list-tile-action>
             <v-icon>{{ item.icon }}</v-icon>
@@ -50,20 +51,18 @@
       </v-list>
     </v-navigation-drawer>
     <v-toolbar app>
-      <v-btn
-        color="pink"
-        dark
+      <v-toolbar-side-icon
         @click.stop="drawer = !drawer"
-      >
-        <v-icon>fas fa-list</v-icon>
-        Toggle
-      </v-btn>
+      ></v-toolbar-side-icon>
+      <v-toolbar-items class="hidden-sm-and-down">
+        <v-btn flat
+          href="/home"
+        >
+          WAGES
+        </v-btn>
+      </v-toolbar-items>
     </v-toolbar>
-    <v-content>
-      <v-container fluid>
-        <router-view></router-view>
-      </v-container>
-    </v-content>
+    <valuation-component></valuation-component>
     <v-footer app>
       <v-spacer></v-spacer>
       <div>&copy; {{ new Date().getFullYear() }}</div>
@@ -77,9 +76,9 @@
       return {
         drawer: null,
         items: [
-          { title: 'User Account', icon: 'dashboard' },
-          { title: 'Valuation', icon: 'question_answer' },
-          { title: 'Performance', icon: 'question_answer' }
+          { title: 'User Account', icon: 'dashboard', href: '/users' },
+          { title: 'Valuation', icon: 'question_answer', href: '/valuations' },
+          { title: 'Performance', icon: 'question_answer', href: '/performances' }
         ],
         mini: false,
         right: null
