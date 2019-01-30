@@ -27,12 +27,16 @@ Vue.use(Vuetify)
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-// Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-// Vue.component('navbar-menu', require('./components/NavbarMenu.vue').default);
+
 Vue.component('app-component', require('./components/AppComponent.vue').default);
-// Vue.component('footer-component', require('./components/FooterComponent.vue').default);
-// Vue.component('content-component', require('./components/ContentComponent.vue').default);
 Vue.component('valuation-component', require('./components/valuations/ValuationComponent.vue').default);
+Vue.component('watchlist-component', require('./components/valuations/WatchlistComponent.vue').default);
+Vue.component('fundamental-data', require('./components/valuations/FundamentalData.vue').default);
+Vue.component('intrinsic-value', require('./components/valuations/IntrinsicValue.vue').default);
+Vue.component('fair-value', require('./components/valuations/FairValue.vue').default);
+Vue.component('buffett-approach', require('./components/valuations/BuffettApproach.vue').default);
+Vue.component('fisher-approach', require('./components/valuations/FisherApproach.vue').default);
+Vue.component('fundamental-analysis', require('./components/valuations/FundamentalAnalysis.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
