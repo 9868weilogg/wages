@@ -55,9 +55,6 @@ class CreateTenant extends Command
         }
         $hostname = $this->registerTenant($name, $email);
         app(Environment::class)->hostname($hostname);
-        // we'll create a random secure password for our to-be admin
-        $password = str_random();
-        $this->addAdmin($name, $email, $password, $hostname);
         $this->info("Tenant '{$name}' is created and is now accessible at {$hostname->fqdn}");
         $this->info("Admin {$email} can log in using password {$password}");
     }
@@ -86,11 +83,19 @@ class CreateTenant extends Command
         $hostname->fqdn = "{$name}.{$baseUrl}";
         // $hostname->customer()->associate($customer);
         app(HostnameRepository::class)->attach($hostname, $website);
+        // we'll create a random secure password for our to-be admin
+        $password = str_random();
+        $this->addAdmin($name, $email, $password, $hostname,$website);
         return $hostname;
     }
-    private function addAdmin($name, $email, $password, $hostname)
+    private function addAdmin($name, $email, $password, $hostname, $website)
     {
+        $tenancy = app(Environment::class);
+        $tenancy->tenant($website); // switches the tenant and reconfigures the app
+
         $admin = User::create(['name' => $name, 'email' => $email, 'password' => Hash::make($password), 'hostname_id' => $hostname->id]);
+        $admin->guard_name = 'web';
+        $admin->assignRole('admin');
         return $admin;
     }
 }

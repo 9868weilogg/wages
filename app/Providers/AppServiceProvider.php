@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Hyn\Tenancy\Environment;
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,7 +15,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        $env = app(Environment::class);
+
+        if ($fqdn = optional($env->hostname())->fqdn) {
+            config(['database.default' => 'tenant']);
+        }
     }
 
     /**
