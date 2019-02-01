@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','hostname_id',
+        'name', 'email', 'password',
     ];
 
     /**
@@ -27,8 +27,4 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
-
-    public function hostname(){
-      return $this->belongsTo(config('tenancy.models.hostname'));
-    }
 }
