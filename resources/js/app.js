@@ -28,15 +28,10 @@ Vue.use(Vuetify)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 
-Vue.component('app-component', require('./components/AppComponent.vue').default);
-Vue.component('valuation-component', require('./components/valuations/ValuationComponent.vue').default);
-Vue.component('watchlist-component', require('./components/valuations/WatchlistComponent.vue').default);
-Vue.component('fundamental-data', require('./components/valuations/FundamentalData.vue').default);
-Vue.component('intrinsic-value', require('./components/valuations/IntrinsicValue.vue').default);
-Vue.component('fair-value', require('./components/valuations/FairValue.vue').default);
-Vue.component('buffett-approach', require('./components/valuations/BuffettApproach.vue').default);
-Vue.component('fisher-approach', require('./components/valuations/FisherApproach.vue').default);
-Vue.component('fundamental-analysis', require('./components/valuations/FundamentalAnalysis.vue').default);
+Vue.component('home-page', require('./components/pages/home/HomePage.vue').default);
+Vue.component('valuation-page', require('./components/pages/valuations/ValuationPage.vue').default);
+Vue.component('admin-page', require('./components/pages/admins/AdminPage.vue').default);
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
