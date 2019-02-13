@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Models\EndOfDayData;
+use App\Models\Stock;
+
+use Carbon\Carbon;
+
 class EndOfDayDatasController extends Controller
 {
     /**
@@ -13,7 +18,11 @@ class EndOfDayDatasController extends Controller
      */
     public function index()
     {
-        //
+        // EndOfDayData::uploadFrom2018();
+        // EndOfDayData::crawlKlseScreenerForEOD();
+        
+        return response()->json('Uploaded Successful');
+
     }
 
     /**
@@ -71,14 +80,4 @@ class EndOfDayDatasController extends Controller
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }
