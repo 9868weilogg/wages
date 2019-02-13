@@ -118,10 +118,17 @@ class EndOfDayData extends Model
 
       for($date = $from; $date->lte($to); $date->addDay()) {
 
-
-        $dateTxt = $date->format('Ymd');
+        EndOfDayData::storeEOD2DB($date);
         
+      }
+    }
 
+    public static function storeEOD2DB($date){
+      $dateTxt = $date->format('Ymd');
+      
+      $exist = count(EndOfDayData::where('created_at',">=",Carbon::today()->format('Y-m-d H:i:s'))->where('created_at','<',Carbon::today()->addDay()->format('Y-m-d H:i:s'))->get());  
+
+      if($exist == 0) {
         $file_url = 'http://www.free88.org/free88trigger/DownloadFile.aspx?Exchange=KLSE&Filename=KLSE_' . $dateTxt . '.txt';
 
         $data = file_get_contents($file_url);
@@ -173,6 +180,9 @@ class EndOfDayData extends Model
             } 
           }
         }
+        return "Store Success.";
+      } else {
+        return  "Store Failed.";
       }
     }
 }
