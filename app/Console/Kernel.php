@@ -27,7 +27,7 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')
         //          ->hourly();
         $schedule->command('command:updateeod')
-                  ->everyMinute();
+                  ->everyFiveMinutes();
                   // ->dailyAt('01:00');
 
     }
