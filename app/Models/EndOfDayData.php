@@ -160,7 +160,7 @@ class EndOfDayData extends Model
                     'low' => $data[6],
                     'close' => $data[7],
                     'volume' => $data[8],
-                    'code' => substr($data[0],count($data[0])-9,count($data[0])-5),
+                    'code' => substr($data[0],-9,-5),
                     'created_at' => Carbon::createFromFormat('Ymd', $dateTxt)->timestamp,
                   ]);
 
