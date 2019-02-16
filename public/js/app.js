@@ -1763,6 +1763,7 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _UploadCard_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./UploadCard.vue */ "./resources/js/components/pages/admins/UploadCard.vue");
 //
 //
 //
@@ -1783,172 +1784,32 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  components: {},
+  components: {
+    UploadCard: _UploadCard_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
   data: function data() {
     return {
-      stockList: '',
-      sectorIndustryCode: '',
-      snackbar: false,
-      color: '',
-      timeout: 0,
-      text: 'Hello, I\'m a snackbar',
-      uploading: true
+      stock_upload: {
+        'title': 'Stock Upload',
+        'ref': 'stockList',
+        'type': 'single',
+        'document': 'stockList'
+      },
+      sector_industry_upload: {
+        'title': 'Sector/Industry Code Upload',
+        'ref': 'sectorIndustryCode',
+        'type': 'single',
+        'document': 'sectorIndustryCode'
+      },
+      fundamental_data_upload: {
+        'title': 'Fundamental Data Upload',
+        'ref': 'fundamentalData',
+        'type': 'multiple',
+        'document': 'fundamentalData'
+      }
     };
-  },
-  methods: {
-    onFilePicked: function onFilePicked() {
-      this.stockList = this.$refs.stockList.files[0];
-      this.sectorIndustryCode = this.$refs.sectorIndustryCode.files[0];
-      console.log(this.stockList);
-      console.log(this.sectorIndustryCode);
-    },
-    submitStockList: function submitStockList() {
-      var self = this;
-      self.showUploadingSnackbar(self);
-
-      var _formData = new FormData();
-
-      _formData.append('file', this.stockList);
-
-      _formData.append('filename', 'bursa_stock_list.csv');
-
-      _formData.append('process', 'upload_bursa_stock_list');
-
-      axios({
-        url: '/api/stocks',
-        method: 'post',
-        data: _formData,
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      }).then(function (response) {
-        console.log(response);
-
-        if (response.data == "Failed Update Stock List") {
-          self.showFailUploadSnackbar(self);
-        } else if (response.data == "Update Stock List Successfully") {
-          self.showSuccessUploadSnackbar(self);
-        }
-      }).catch(function (error) {
-        console.log(error.response);
-      });
-    },
-    submitSectorIndsutryCode: function submitSectorIndsutryCode() {
-      var self = this;
-      self.showUploadingSnackbar(self);
-
-      var _formData = new FormData();
-
-      _formData.append('file', this.sectorIndustryCode);
-
-      _formData.append('filename', 'sector_industry_code.csv');
-
-      _formData.append('process', 'upload_sector_industry_code');
-
-      axios({
-        url: '/api/stocks',
-        method: 'post',
-        data: _formData,
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      }).then(function (response) {
-        console.log(response);
-
-        if (response.data == "Failed Update Sector and Industry") {
-          self.showFailUploadSnackbar(self);
-        } else if (response.data == "Update Sector and Industry Successfully") {
-          self.showSuccessUploadSnackbar(self);
-        }
-      }).catch(function (error) {
-        console.log(error.response);
-      });
-    },
-    showFailUploadSnackbar: function showFailUploadSnackbar(self) {
-      self.snackbar = true;
-      self.uploading = false;
-      self.color = 'error';
-      self.text = "Failed Uploading";
-      setTimeout(function () {
-        self.snackbar = false;
-      }, 2000);
-    },
-    showSuccessUploadSnackbar: function showSuccessUploadSnackbar(self) {
-      self.snackbar = true;
-      self.uploading = false;
-      self.color = 'success';
-      self.text = "Successed Uploading";
-      setTimeout(function () {
-        self.snackbar = false;
-      }, 2000);
-    },
-    showUploadingSnackbar: function showUploadingSnackbar(self) {
-      self.snackbar = true;
-      self.color = 'info';
-      self.text = "Uploading...";
-      self.uploading = true;
-    }
   }
 });
 
@@ -2064,6 +1925,159 @@ __webpack_require__.r(__webpack_exports__);
       mini: false,
       right: null
     };
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/admins/UploadCard.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/admins/UploadCard.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      stockList: '',
+      sectorIndustryCode: '',
+      fundamentalData: '',
+      snackbar: false,
+      color: '',
+      timeout: 0,
+      text: 'Hello, I\'m a snackbar',
+      uploading: true
+    };
+  },
+  props: ['card_detail'],
+  methods: {
+    onFilePicked: function onFilePicked(type, ref) {
+      var _ref = ref;
+
+      if (type == "single") {
+        this.stockList = this.$refs[ref].files[0];
+        this.sectorIndustryCode = this.$refs[ref].files[0];
+      } else if (type == "multiple") {
+        this.fundamentalData = this.$refs[ref].files;
+      }
+    },
+    submit: function submit(document) {
+      var self = this;
+      self.showUploadingSnackbar(self);
+
+      var _formData = new FormData();
+
+      if (document == "stockList") {
+        _formData.append('file', this.stockList);
+
+        _formData.append('filename', 'bursa_stock_list.csv');
+
+        _formData.append('process', 'upload_bursa_stock_list');
+      } else if (document == "sectorIndustryCode") {
+        _formData.append('file', this.sectorIndustryCode);
+
+        _formData.append('filename', 'sector_industry_code.csv');
+
+        _formData.append('process', 'upload_sector_industry_code');
+      } else if (document == "fundamentalData") {
+        for (var i = 0; i < this.fundamentalData.length; i++) {
+          var _file = this.fundamentalData[i];
+
+          _formData.append('file[' + i + ']', _file);
+        }
+
+        _formData.append('process', 'upload_fundamental_data');
+      }
+
+      axios({
+        url: '/api/stocks',
+        method: 'post',
+        data: _formData,
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }).then(function (response) {
+        console.log(response);
+
+        if (response.data == "Failed Update Sector and Industry" || response.data == "Failed Update Stock List" || response.data == "Failed Update Fundamental Data") {
+          self.showFailUploadSnackbar(self);
+        } else if (response.data == "Update Sector and Industry Successfully" || response.data == "Update Stock List Successfully" || response.data == "Update Fundamental Data Successfully") {
+          self.showSuccessUploadSnackbar(self);
+        }
+      }).catch(function (error) {
+        console.log(error.response);
+      });
+    },
+    showFailUploadSnackbar: function showFailUploadSnackbar(self) {
+      self.snackbar = true;
+      self.uploading = false;
+      self.color = 'error';
+      self.text = "Failed Uploading";
+      setTimeout(function () {
+        self.snackbar = false;
+      }, 2000);
+    },
+    showSuccessUploadSnackbar: function showSuccessUploadSnackbar(self) {
+      self.snackbar = true;
+      self.uploading = false;
+      self.color = 'success';
+      self.text = "Successed Uploading";
+      setTimeout(function () {
+        self.snackbar = false;
+      }, 2000);
+    },
+    showUploadingSnackbar: function showUploadingSnackbar(self) {
+      self.snackbar = true;
+      self.color = 'info';
+      self.text = "Uploading...";
+      self.uploading = true;
+    }
   }
 });
 
@@ -22006,31 +22020,12 @@ var render = function() {
                 { attrs: { row: "", wrap: "" } },
                 [
                   _c(
-                    "v-snackbar",
-                    {
-                      attrs: {
-                        right: true,
-                        top: true,
-                        timeout: _vm.timeout,
-                        color: _vm.color
-                      },
-                      model: {
-                        value: _vm.snackbar,
-                        callback: function($$v) {
-                          _vm.snackbar = $$v
-                        },
-                        expression: "snackbar"
-                      }
-                    },
+                    "v-flex",
+                    { attrs: { xs12: "", sm6: "", "pa-4": "" } },
                     [
-                      _vm._v(
-                        "\n          " + _vm._s(_vm.text) + "\n          "
-                      ),
-                      _vm.uploading
-                        ? _c("v-progress-circular", {
-                            attrs: { indeterminate: "", color: "purple" }
-                          })
-                        : _vm._e()
+                      _c("upload-card", {
+                        attrs: { card_detail: _vm.stock_upload }
+                      })
                     ],
                     1
                   ),
@@ -22039,65 +22034,9 @@ var render = function() {
                     "v-flex",
                     { attrs: { xs12: "", sm6: "", "pa-4": "" } },
                     [
-                      _c(
-                        "v-card",
-                        { attrs: { dark: "" } },
-                        [
-                          _c(
-                            "v-card-title",
-                            { attrs: { "primary-title": "" } },
-                            [
-                              _c("div", [
-                                _c("h3", { staticClass: "headline mb-0" }, [
-                                  _vm._v("Stock Upload")
-                                ])
-                              ])
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-card-action",
-                            [
-                              _c("input", {
-                                ref: "stockList",
-                                attrs: {
-                                  type: "file",
-                                  accept:
-                                    ".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
-                                },
-                                on: {
-                                  change: function($event) {
-                                    _vm.onFilePicked()
-                                  }
-                                }
-                              }),
-                              _vm._v(" "),
-                              _c(
-                                "v-btn",
-                                {
-                                  attrs: {
-                                    block: "",
-                                    color: "blue-grey",
-                                    dark: ""
-                                  },
-                                  on: {
-                                    click: function($event) {
-                                      _vm.submitStockList()
-                                    }
-                                  }
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                Submit\n              "
-                                  )
-                                ]
-                              )
-                            ],
-                            1
-                          )
-                        ],
-                        1
-                      )
+                      _c("upload-card", {
+                        attrs: { card_detail: _vm.sector_industry_upload }
+                      })
                     ],
                     1
                   ),
@@ -22106,65 +22045,9 @@ var render = function() {
                     "v-flex",
                     { attrs: { xs12: "", sm6: "", "pa-4": "" } },
                     [
-                      _c(
-                        "v-card",
-                        { attrs: { dark: "" } },
-                        [
-                          _c(
-                            "v-card-title",
-                            { attrs: { "primary-title": "" } },
-                            [
-                              _c("div", [
-                                _c("h3", { staticClass: "headline mb-0" }, [
-                                  _vm._v("Sector/Industry Code Upload")
-                                ])
-                              ])
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-card-action",
-                            [
-                              _c("input", {
-                                ref: "sectorIndustryCode",
-                                attrs: {
-                                  type: "file",
-                                  accept:
-                                    ".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
-                                },
-                                on: {
-                                  change: function($event) {
-                                    _vm.onFilePicked()
-                                  }
-                                }
-                              }),
-                              _vm._v(" "),
-                              _c(
-                                "v-btn",
-                                {
-                                  attrs: {
-                                    block: "",
-                                    color: "blue-grey",
-                                    dark: ""
-                                  },
-                                  on: {
-                                    click: function($event) {
-                                      _vm.submitSectorIndsutryCode()
-                                    }
-                                  }
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                Submit\n              "
-                                  )
-                                ]
-                              )
-                            ],
-                            1
-                          )
-                        ],
-                        1
-                      )
+                      _c("upload-card", {
+                        attrs: { card_detail: _vm.fundamental_data_upload }
+                      })
                     ],
                     1
                   )
@@ -22363,6 +22246,111 @@ var render = function() {
           _c("v-spacer"),
           _vm._v(" "),
           _c("div", [_vm._v("© " + _vm._s(new Date().getFullYear()))])
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/admins/UploadCard.vue?vue&type=template&id=07042236&":
+/*!**************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/admins/UploadCard.vue?vue&type=template&id=07042236& ***!
+  \**************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c(
+        "v-snackbar",
+        {
+          attrs: {
+            right: true,
+            top: true,
+            timeout: _vm.timeout,
+            color: _vm.color
+          },
+          model: {
+            value: _vm.snackbar,
+            callback: function($$v) {
+              _vm.snackbar = $$v
+            },
+            expression: "snackbar"
+          }
+        },
+        [
+          _vm._v("\n    " + _vm._s(_vm.text) + "\n    "),
+          _vm.uploading
+            ? _c("v-progress-circular", {
+                attrs: { indeterminate: "", color: "purple" }
+              })
+            : _vm._e()
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-card",
+        { attrs: { dark: "" } },
+        [
+          _c("v-card-title", { attrs: { "primary-title": "" } }, [
+            _c("div", [
+              _c("h3", { staticClass: "headline mb-0" }, [
+                _vm._v(_vm._s(_vm.card_detail.title))
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "v-card-action",
+            [
+              _c("input", {
+                ref: _vm.card_detail.ref,
+                attrs: {
+                  type: "file",
+                  multiple: "",
+                  accept:
+                    ".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                },
+                on: {
+                  change: function($event) {
+                    _vm.onFilePicked(_vm.card_detail.type, _vm.card_detail.ref)
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "v-btn",
+                {
+                  attrs: { block: "", color: "blue-grey", dark: "" },
+                  on: {
+                    click: function($event) {
+                      _vm.submit(_vm.card_detail.document)
+                    }
+                  }
+                },
+                [_vm._v("\n        Submit\n      ")]
+              )
+            ],
+            1
+          )
         ],
         1
       )
@@ -59418,6 +59406,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AdminPage_vue_vue_type_template_id_7adf2109___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AdminPage_vue_vue_type_template_id_7adf2109___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/admins/UploadCard.vue":
+/*!*************************************************************!*\
+  !*** ./resources/js/components/pages/admins/UploadCard.vue ***!
+  \*************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _UploadCard_vue_vue_type_template_id_07042236___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./UploadCard.vue?vue&type=template&id=07042236& */ "./resources/js/components/pages/admins/UploadCard.vue?vue&type=template&id=07042236&");
+/* harmony import */ var _UploadCard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./UploadCard.vue?vue&type=script&lang=js& */ "./resources/js/components/pages/admins/UploadCard.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _UploadCard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _UploadCard_vue_vue_type_template_id_07042236___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _UploadCard_vue_vue_type_template_id_07042236___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/pages/admins/UploadCard.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/admins/UploadCard.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/components/pages/admins/UploadCard.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_UploadCard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./UploadCard.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/admins/UploadCard.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_UploadCard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/admins/UploadCard.vue?vue&type=template&id=07042236&":
+/*!********************************************************************************************!*\
+  !*** ./resources/js/components/pages/admins/UploadCard.vue?vue&type=template&id=07042236& ***!
+  \********************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UploadCard_vue_vue_type_template_id_07042236___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./UploadCard.vue?vue&type=template&id=07042236& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/admins/UploadCard.vue?vue&type=template&id=07042236&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UploadCard_vue_vue_type_template_id_07042236___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UploadCard_vue_vue_type_template_id_07042236___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
