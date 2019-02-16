@@ -3,14 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\File;
-use Illuminate\Support\Facades\Storage;
 
-use App\Models\Industry;
-use App\Models\Sector;
-use App\Models\Stock;
+use App\Models\Fundamental;
 
-class StocksController extends Controller
+use Storage;
+
+class FundamentalsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,7 +17,7 @@ class StocksController extends Controller
      */
     public function index()
     {
-        return 'a';
+        //
     }
 
     /**
@@ -40,30 +38,20 @@ class StocksController extends Controller
      */
     public function store(Request $request)
     {
-        if($request->process == "upload_bursa_stock_list") {
+        if($request->process == "upload_fundamental_data") {
           if($request->hasFile('file') ){
 
-            Stock::updateStockList($request,['stocks']);
+            Fundamental::updateFundamentalData($request);
 
-            $response = "Update Stock List Successfully";
+            $response = "Update Fundamental Data Successfully";
             
 
           } else {
-            $response = "Failed Update Stock List";
+            $response = "Failed Update Fundamental Data";
 
           }
-        } elseif($request->process == "upload_sector_industry_code") {
-          if($request->hasFile('file') ){
-            
-            Stock::updateSectorIndustry($request,['sectors','industries']);
-
-            $response = "Update Sector and Industry Successfully";
-
-          } else {
-            $response = "Failed Update Sector and Industry";
-
-          } 
         }
+
         return response()->json($response);
     }
 
@@ -98,9 +86,7 @@ class StocksController extends Controller
      */
     public function update(Request $request, $id)
     {
-          // return response()->json('a');
-        return response()->json($request);
-
+        //
     }
 
     /**
