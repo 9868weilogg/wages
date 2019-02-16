@@ -30,7 +30,7 @@
           v-on:change="onFilePicked(card_detail.type,card_detail.ref)"
         >
         <v-btn 
-          v-on:click="submit(card_detail.document)"
+          v-on:click="submit(card_detail.document,card_detail.url)"
           block 
           color="blue-grey" 
           dark >
@@ -68,7 +68,7 @@
         
       },
 
-      submit(document) {
+      submit(document,url) {
         let self = this;
         self.showUploadingSnackbar(self);
         var _formData = new FormData();
@@ -96,7 +96,7 @@
 
         }
         axios({
-          url: '/api/stocks',
+          url: '/api/' + url,
           method: 'post',
           data: _formData,
           headers: {
