@@ -31,19 +31,22 @@
           'title' : 'Stock Upload',
           'ref' : 'stockList',
           'type' : 'single',
-          'document' : 'stockList'
+          'document' : 'stockList',
+          'url' : 'stocks'
         },
         sector_industry_upload : {
           'title' : 'Sector/Industry Code Upload',
           'ref' : 'sectorIndustryCode',
           'type' : 'single',
-          'document' : 'sectorIndustryCode'
+          'document' : 'sectorIndustryCode',
+          'url' : 'stocks'
         },
         fundamental_data_upload : {
           'title' : 'Fundamental Data Upload',
           'ref' : 'fundamentalData',
           'type' : 'multiple',
-          'document' : 'fundamentalData'
+          'document' : 'fundamentalData',
+          'url' : 'fundamentals'
         },
       }
     },

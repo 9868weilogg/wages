@@ -1795,19 +1795,22 @@ __webpack_require__.r(__webpack_exports__);
         'title': 'Stock Upload',
         'ref': 'stockList',
         'type': 'single',
-        'document': 'stockList'
+        'document': 'stockList',
+        'url': 'stocks'
       },
       sector_industry_upload: {
         'title': 'Sector/Industry Code Upload',
         'ref': 'sectorIndustryCode',
         'type': 'single',
-        'document': 'sectorIndustryCode'
+        'document': 'sectorIndustryCode',
+        'url': 'stocks'
       },
       fundamental_data_upload: {
         'title': 'Fundamental Data Upload',
         'ref': 'fundamentalData',
         'type': 'multiple',
-        'document': 'fundamentalData'
+        'document': 'fundamentalData',
+        'url': 'fundamentals'
       }
     };
   }
@@ -2007,7 +2010,7 @@ __webpack_require__.r(__webpack_exports__);
         this.fundamentalData = this.$refs[ref].files;
       }
     },
-    submit: function submit(document) {
+    submit: function submit(document, url) {
       var self = this;
       self.showUploadingSnackbar(self);
 
@@ -2036,7 +2039,7 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       axios({
-        url: '/api/stocks',
+        url: '/api/' + url,
         method: 'post',
         data: _formData,
         headers: {
@@ -22342,7 +22345,7 @@ var render = function() {
                   attrs: { block: "", color: "blue-grey", dark: "" },
                   on: {
                     click: function($event) {
-                      _vm.submit(_vm.card_detail.document)
+                      _vm.submit(_vm.card_detail.document, _vm.card_detail.url)
                     }
                   }
                 },
