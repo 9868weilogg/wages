@@ -26,7 +26,7 @@
           style=""
           multiple
           v-bind:ref="card_detail.ref"
-          accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+          accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel, text/plain"
           v-on:change="onFilePicked(card_detail.type,card_detail.ref)"
         >
         <v-btn 

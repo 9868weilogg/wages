@@ -49,11 +49,14 @@ class Stock extends Model
 
     public static function updateStockList($request,$tableArray){
       $csvLines = Stock::retrieveCsvLines($request);
-      Stock::truncateTable($tableArray);
+      $fileExtension = $request->file('file')->getClientOriginalExtension();
 
+      Stock::truncateTable($tableArray);
       foreach($csvLines as $key => $line) {
         if($key != 0){
-          $data = str_getcsv($line);
+          if($fileExtension == "txt") $data = str_getcsv($line,"|");
+          elseif($fileExtension == "csv") $data = str_getcsv($line);
+
           if($data[1] != null) {
             $stock = new Stock;
             $stock->code = $data[0];
@@ -65,9 +68,13 @@ class Stock extends Model
             $stock->sector_id = $sectorId;
             $stock->name = $data[4];
 
-            if(Industry::where('code',$data[14])->first()) $industryId = Industry::where('code',$data[14])->first()->id;
-            elseif(!Industry::where('code',$data[14])->first()) $industryId = 0;
-
+            if(count($data) == 15){
+              if(Industry::where('code',$data[14])->first()) $industryId = Industry::where('code',$data[14])->first()->id;
+              elseif(!Industry::where('code',$data[14])->first()) $industryId = 0;
+            } else {
+              $industryId = 0;
+            }
+            
             $stock->industry_id = $industryId;
             $stock->save();
 
@@ -79,12 +86,14 @@ class Stock extends Model
 
     public static function updateSectorIndustry($request, $tableArray) {
       $csvLines = Stock::retrieveCsvLines($request);
+      $fileExtension = $request->file('file')->getClientOriginalExtension();
+
       Stock::truncateTable($tableArray);
       $range = Stock::getTableRange($csvLines);
 
       foreach($csvLines as $key => $line) {
-
-        $data = str_getcsv($line);
+        if($fileExtension == "txt") $data = str_getcsv($line,"=");
+        elseif($fileExtension == "csv") $data = str_getcsv($line);
 
         if($key >= $range['sectorStartKey'] && $key <= $range['sectorEndKey']) {
           $sector = new Sector;
