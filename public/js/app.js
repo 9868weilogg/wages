@@ -22330,7 +22330,7 @@ var render = function() {
                   type: "file",
                   multiple: "",
                   accept:
-                    ".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                    ".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel, text/plain"
                 },
                 on: {
                   change: function($event) {
