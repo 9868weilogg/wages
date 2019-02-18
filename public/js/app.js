@@ -2770,6 +2770,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2788,7 +2795,30 @@ __webpack_require__.r(__webpack_exports__);
     FundamentalAnalysis: _FundamentalAnalysis_vue__WEBPACK_IMPORTED_MODULE_6__["default"]
   },
   data: function data() {
-    return {};
+    return {
+      search: '',
+      headers: [{
+        text: 'Stock Code',
+        align: 'left',
+        sortable: false,
+        value: 'code'
+      }, {
+        text: 'Name',
+        value: 'name'
+      }, {
+        text: 'Price (RM)',
+        value: 'price'
+      }],
+      stocks: [{
+        code: 'Frozen Yogurt',
+        name: 159,
+        price: 6.0
+      }, {
+        code: 'Ice cream sandwich',
+        name: 237,
+        price: 9.0
+      }]
+    };
   }
 });
 
@@ -3424,6 +3454,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -3442,7 +3479,30 @@ __webpack_require__.r(__webpack_exports__);
     FundamentalAnalysis: _FundamentalAnalysis_vue__WEBPACK_IMPORTED_MODULE_6__["default"]
   },
   data: function data() {
-    return {};
+    return {
+      search: '',
+      headers: [{
+        text: 'Stock Code',
+        align: 'left',
+        sortable: false,
+        value: 'code'
+      }, {
+        text: 'Name',
+        value: 'name'
+      }, {
+        text: 'Price (RM)',
+        value: 'price'
+      }],
+      stocks: [{
+        code: 'Frozen Yogurt',
+        name: 159,
+        price: 6.0
+      }, {
+        code: 'Ice cream sandwich',
+        name: 237,
+        price: 9.0
+      }]
+    };
   }
 });
 
@@ -22990,53 +23050,90 @@ var render = function() {
                         [
                           _c(
                             "v-card-title",
-                            { attrs: { "primary-title": "" } },
                             [
                               _c("div", [
                                 _c("h3", { staticClass: "headline mb-0" }, [
                                   _vm._v("Search")
                                 ])
-                              ])
-                            ]
+                              ]),
+                              _vm._v(" "),
+                              _c("v-spacer"),
+                              _vm._v(" "),
+                              _c("v-text-field", {
+                                attrs: {
+                                  "append-icon": "search",
+                                  label: "Search",
+                                  "single-line": "",
+                                  "hide-details": ""
+                                },
+                                model: {
+                                  value: _vm.search,
+                                  callback: function($$v) {
+                                    _vm.search = $$v
+                                  },
+                                  expression: "search"
+                                }
+                              })
+                            ],
+                            1
                           ),
                           _vm._v(" "),
-                          _c("v-data-table", {
-                            staticClass: "elevation-1",
-                            attrs: {
-                              headers: _vm.headers,
-                              items: _vm.desserts
-                            },
-                            scopedSlots: _vm._u([
-                              {
-                                key: "items",
-                                fn: function(props) {
-                                  return [
-                                    _c("td", [_vm._v(_vm._s(props.item.name))]),
-                                    _vm._v(" "),
-                                    _c("td", { staticClass: "text-xs-right" }, [
-                                      _vm._v(_vm._s(props.item.calories))
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("td", { staticClass: "text-xs-right" }, [
-                                      _vm._v(_vm._s(props.item.fat))
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("td", { staticClass: "text-xs-right" }, [
-                                      _vm._v(_vm._s(props.item.carbs))
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("td", { staticClass: "text-xs-right" }, [
-                                      _vm._v(_vm._s(props.item.protein))
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("td", { staticClass: "text-xs-right" }, [
-                                      _vm._v(_vm._s(props.item.iron))
-                                    ])
-                                  ]
+                          _c(
+                            "v-data-table",
+                            {
+                              attrs: {
+                                headers: _vm.headers,
+                                items: _vm.stocks,
+                                search: _vm.search
+                              },
+                              scopedSlots: _vm._u([
+                                {
+                                  key: "items",
+                                  fn: function(props) {
+                                    return [
+                                      _c("td", [
+                                        _vm._v(_vm._s(props.item.code))
+                                      ]),
+                                      _vm._v(" "),
+                                      _c(
+                                        "td",
+                                        { staticClass: "text-xs-right" },
+                                        [_vm._v(_vm._s(props.item.name))]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "td",
+                                        { staticClass: "text-xs-right" },
+                                        [_vm._v(_vm._s(props.item.price))]
+                                      )
+                                    ]
+                                  }
                                 }
-                              }
-                            ])
-                          })
+                              ])
+                            },
+                            [
+                              _c(
+                                "v-alert",
+                                {
+                                  attrs: {
+                                    slot: "no-results",
+                                    value: true,
+                                    color: "error",
+                                    icon: "warning"
+                                  },
+                                  slot: "no-results"
+                                },
+                                [
+                                  _vm._v(
+                                    '\n                Your search for "' +
+                                      _vm._s(_vm.search) +
+                                      '" found no results.\n              '
+                                  )
+                                ]
+                              )
+                            ],
+                            1
+                          )
                         ],
                         1
                       )
@@ -23611,53 +23708,90 @@ var render = function() {
                         [
                           _c(
                             "v-card-title",
-                            { attrs: { "primary-title": "" } },
                             [
                               _c("div", [
                                 _c("h3", { staticClass: "headline mb-0" }, [
                                   _vm._v("Search")
                                 ])
-                              ])
-                            ]
+                              ]),
+                              _vm._v(" "),
+                              _c("v-spacer"),
+                              _vm._v(" "),
+                              _c("v-text-field", {
+                                attrs: {
+                                  "append-icon": "search",
+                                  label: "Search",
+                                  "single-line": "",
+                                  "hide-details": ""
+                                },
+                                model: {
+                                  value: _vm.search,
+                                  callback: function($$v) {
+                                    _vm.search = $$v
+                                  },
+                                  expression: "search"
+                                }
+                              })
+                            ],
+                            1
                           ),
                           _vm._v(" "),
-                          _c("v-data-table", {
-                            staticClass: "elevation-1",
-                            attrs: {
-                              headers: _vm.headers,
-                              items: _vm.desserts
-                            },
-                            scopedSlots: _vm._u([
-                              {
-                                key: "items",
-                                fn: function(props) {
-                                  return [
-                                    _c("td", [_vm._v(_vm._s(props.item.name))]),
-                                    _vm._v(" "),
-                                    _c("td", { staticClass: "text-xs-right" }, [
-                                      _vm._v(_vm._s(props.item.calories))
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("td", { staticClass: "text-xs-right" }, [
-                                      _vm._v(_vm._s(props.item.fat))
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("td", { staticClass: "text-xs-right" }, [
-                                      _vm._v(_vm._s(props.item.carbs))
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("td", { staticClass: "text-xs-right" }, [
-                                      _vm._v(_vm._s(props.item.protein))
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("td", { staticClass: "text-xs-right" }, [
-                                      _vm._v(_vm._s(props.item.iron))
-                                    ])
-                                  ]
+                          _c(
+                            "v-data-table",
+                            {
+                              attrs: {
+                                headers: _vm.headers,
+                                items: _vm.stocks,
+                                search: _vm.search
+                              },
+                              scopedSlots: _vm._u([
+                                {
+                                  key: "items",
+                                  fn: function(props) {
+                                    return [
+                                      _c("td", [
+                                        _vm._v(_vm._s(props.item.code))
+                                      ]),
+                                      _vm._v(" "),
+                                      _c(
+                                        "td",
+                                        { staticClass: "text-xs-right" },
+                                        [_vm._v(_vm._s(props.item.name))]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "td",
+                                        { staticClass: "text-xs-right" },
+                                        [_vm._v(_vm._s(props.item.price))]
+                                      )
+                                    ]
+                                  }
                                 }
-                              }
-                            ])
-                          })
+                              ])
+                            },
+                            [
+                              _c(
+                                "v-alert",
+                                {
+                                  attrs: {
+                                    slot: "no-results",
+                                    value: true,
+                                    color: "error",
+                                    icon: "warning"
+                                  },
+                                  slot: "no-results"
+                                },
+                                [
+                                  _vm._v(
+                                    '\n                Your search for "' +
+                                      _vm._s(_vm.search) +
+                                      '" found no results.\n              '
+                                  )
+                                ]
+                              )
+                            ],
+                            1
+                          )
                         ],
                         1
                       )

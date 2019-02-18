@@ -8,25 +8,32 @@
           </v-flex>
           <v-flex xs12 sm6 pa-4>
             <v-card>
-              <v-card-title primary-title>
+              <v-card-title>
                 <div>
                   <h3 class="headline mb-0">Search</h3>
                 </div>
+                <v-spacer></v-spacer>
+                <v-text-field
+                  v-model="search"
+                  append-icon="search"
+                  label="Search"
+                  single-line
+                  hide-details
+                ></v-text-field>
               </v-card-title>
-
               <v-data-table
                 :headers="headers"
-                :items="desserts"
-                class="elevation-1"
+                :items="stocks"
+                :search="search"
               >
                 <template slot="items" slot-scope="props">
-                  <td>{{ props.item.name }}</td>
-                  <td class="text-xs-right">{{ props.item.calories }}</td>
-                  <td class="text-xs-right">{{ props.item.fat }}</td>
-                  <td class="text-xs-right">{{ props.item.carbs }}</td>
-                  <td class="text-xs-right">{{ props.item.protein }}</td>
-                  <td class="text-xs-right">{{ props.item.iron }}</td>
+                  <td>{{ props.item.code }}</td>
+                  <td class="text-xs-right">{{ props.item.name }}</td>
+                  <td class="text-xs-right">{{ props.item.price }}</td>
                 </template>
+                <v-alert slot="no-results" :value="true" color="error" icon="warning">
+                  Your search for "{{ search }}" found no results.
+                </v-alert>
               </v-data-table>
             </v-card>
           </v-flex>
@@ -82,7 +89,29 @@
     },
     data () {
       return {
-        
+        search: '',
+        headers: [
+          {
+            text: 'Stock Code',
+            align: 'left',
+            sortable: false,
+            value: 'code'
+          },
+          { text: 'Name', value: 'name' },
+          { text: 'Price (RM)', value: 'price' }
+        ],
+        stocks: [
+          {
+            code: 'Frozen Yogurt',
+            name: 159,
+            price: 6.0
+          },
+          {
+            code: 'Ice cream sandwich',
+            name: 237,
+            price: 9.0
+          }
+        ]
       }
     }
   }
