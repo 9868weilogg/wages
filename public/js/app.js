@@ -2854,32 +2854,64 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       watchlistHeaders: [{
-        text: 'Name',
+        text: 'Code',
         align: 'left',
         sortable: false,
-        value: 'name'
+        value: 'code'
       }, {
-        text: 'Price',
-        value: 'price'
+        text: 'Price (RM)',
+        value: 'stock'
+      }, {
+        text: 'Change',
+        value: 'stock'
       }],
-      watchlistContent: [{
-        name: 'Frozen Yogurt',
-        price: 159
-      }, {
-        name: 'Ice cream sandwich',
-        price: 159
-      }, {
-        name: 'Eclair',
-        price: 159
-      }, {
-        name: 'Cupcake',
-        price: 159
-      }]
+      watchlistContent: [] // watchlistContent: [
+      //   {
+      //     code: 'Frozen Yogurt',
+      //     watchlist_id: 159
+      //   },
+      //   {
+      //     code: 'Ice cream sandwich',
+      //     watchlist_id: 159
+      //   },
+      //   {
+      //     code: 'Eclair',
+      //     watchlist_id: 159
+      //   },
+      //   {
+      //     code: 'Cupcake',
+      //     watchlist_id: 159
+      //   }
+      // ]
+
     };
+  },
+  methods: {
+    getWatchlistItems: function getWatchlistItems() {
+      var _this = this;
+
+      axios({
+        url: '/api/watchlist-items',
+        method: 'get' // data: _formData,
+        // headers: {
+        //   'Content-Type': 'multipart/form-data'
+        // }
+
+      }).then(function (response) {
+        console.log(response.data.data[0]);
+        _this.watchlistContent = response.data.data;
+      }).catch(function (error) {
+        return console.log(error.response);
+      });
+    }
+  },
+  created: function created() {
+    this.getWatchlistItems();
   }
 });
 
@@ -23254,10 +23286,17 @@ var render = function() {
             key: "items",
             fn: function(props) {
               return [
-                _c("td", [_vm._v(_vm._s(props.item.name))]),
+                _c("td", [_vm._v(_vm._s(props.item.code))]),
                 _vm._v(" "),
                 _c("td", { staticClass: "text-xs-right" }, [
-                  _vm._v(_vm._s(props.item.price))
+                  _vm._v("RM " + _vm._s(props.item.stock.close))
+                ]),
+                _vm._v(" "),
+                _c("td", { staticClass: "text-xs-right" }, [
+                  _vm._v(
+                    "RM " +
+                      _vm._s(props.item.stock.close - props.item.stock.open)
+                  )
                 ])
               ]
             }
