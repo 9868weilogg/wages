@@ -10,4 +10,9 @@ class WatchlistItem extends Model
       'watchlist_id',
       'code',
     ];
+
+    public function watchlist(){
+      return $this->belongsTo('App\Models\Watchlist');
+    }
+
 }
