@@ -40,7 +40,6 @@ class UpdateEOD extends Command
      */
     public function handle()
     {
-        // 260099 entry
         $today = Carbon::today();
         $return = EndOfDayData::storeEOD2DB($today);
 

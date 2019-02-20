@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\Fundamental;
+use App\Models\Stock;
+
+use App\Http\Resources\FundamentalCollection;
 
 use Storage;
 
@@ -17,7 +20,13 @@ class FundamentalsController extends Controller
      */
     public function index()
     {
-        //
+        $fundamentals = Fundamental::get();
+        foreach($fundamentals as $fundamental){
+          $stockName = Stock::where('code',$fundamental->code)->first()->short_name;
+          $fundamental->name = $stockName;
+        }
+     
+        return new FundamentalCollection($fundamentals);
     }
 
     /**

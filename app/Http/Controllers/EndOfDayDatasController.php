@@ -21,10 +21,13 @@ class EndOfDayDatasController extends Controller
         // EndOfDayData::uploadFrom2018();
         // EndOfDayData::crawlKlseScreenerForEOD();
         
-        // $today = Carbon::today();
-        // EndOfDayData::storeEOD2DB($today);
         // dd(Carbon::today()->addDay()->format('Y-m-d H:i:s'));
-        dd(EndOfDayData::where('created_at',">=",Carbon::today()->format('Y-m-d H:i:s'))->where('created_at','<',Carbon::today()->addDay()->format('Y-m-d H:i:s'))->get());
+        // dd(EndOfDayData::where('created_at',">=",Carbon::today()->format('Y-m-d H:i:s'))->where('created_at','<',Carbon::today()->addDay()->format('Y-m-d H:i:s'))->get());
+
+        $today = Carbon::today();
+        $return = EndOfDayData::storeEOD2DB($today);
+
+        echo $return;
         return response()->json('Uploaded Successful');
 
     }

@@ -124,6 +124,7 @@ class EndOfDayData extends Model
     }
 
     public static function storeEOD2DB($date){
+      ini_set('max_execution_time', 0); // for infinite time of execution 
       $dateTxt = $date->format('Ymd');
       
       $exist = count(EndOfDayData::where('created_at',">=",Carbon::today()->format('Y-m-d H:i:s'))->where('created_at','<',Carbon::today()->addDay()->format('Y-m-d H:i:s'))->get());  
@@ -159,7 +160,7 @@ class EndOfDayData extends Model
                     'low' => $data[6],
                     'close' => $data[7],
                     'volume' => $data[8],
-                    'code' => substr($data[0],count($data[0])-9,count($data[0])-5),
+                    'code' => substr($data[0],-8,-4),
                     'created_at' => Carbon::createFromFormat('Ymd', $dateTxt)->timestamp,
                   ]);
 
