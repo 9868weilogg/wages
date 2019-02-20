@@ -66,7 +66,7 @@
           // }
         })
         .then(response => {
-          console.log(response.data.data[0]);
+          // console.log(response.data.data[0]);
           this.watchlistContent = response.data.data;
         })
         .catch(error => console.log(error.response));
