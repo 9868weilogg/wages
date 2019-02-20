@@ -2420,49 +2420,70 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      search: '',
       fDataHeaders: [{
         text: 'FYE',
         align: 'left',
         sortable: false,
         value: 'fye'
       }, {
-        text: 'Stock',
-        value: 'stock'
+        text: 'Name',
+        value: 'name'
       }, {
-        text: 'PE/ Book Value',
-        value: 'pe_bv'
+        text: 'PE',
+        value: 'pe'
       }, {
-        text: 'Dividend',
-        value: 'dividend'
+        text: 'Dividend Yield',
+        value: 'dy'
       }, {
-        text: 'EPS',
+        text: 'DPS (sen)',
+        value: 'dps'
+      }, {
+        text: 'EPS (sen)',
         value: 'eps'
       }, {
-        text: 'Net Profit GR',
+        text: 'Net Profit GR (%)',
         value: 'net_profit_gr'
+      }, // { text: 'Revenue', value: 'revenue' },
+      {
+        text: 'GP Cash',
+        value: 'gp_cash'
       }, {
-        text: 'Revenue',
-        value: 'revenue'
+        text: 'Total Cash (RM `000)',
+        value: 'total_cash'
       }, {
-        text: 'Cash',
-        value: 'cash'
+        text: 'Short Term Loan (RM `000)',
+        value: 'short_term_loan'
       }, {
-        text: 'Loan',
-        value: 'loan'
+        text: 'Long Term Loan (RM `000)',
+        value: 'long_term_loan'
       }, {
         text: 'Gearing',
         value: 'gearing'
       }, {
-        text: 'FCF',
-        value: 'fcf'
+        text: 'FCF/share (sen)',
+        value: 'fcf_share'
       }, {
         text: 'GP Cashflow',
         value: 'gp_cash'
       }, {
-        text: 'Net Margin',
+        text: 'Net Margin (%)',
         value: 'net_margin'
       }, {
         text: 'ROE',
@@ -2471,8 +2492,8 @@ __webpack_require__.r(__webpack_exports__);
         text: 'ROA',
         value: 'roa'
       }, {
-        text: 'Asset Turnover',
-        value: 'asset_turnover'
+        text: 'Stock',
+        value: 'code'
       }],
       fDataContent: [{
         fye: '1',
@@ -2510,6 +2531,28 @@ __webpack_require__.r(__webpack_exports__);
         asset_turnover: 159
       }]
     };
+  },
+  created: function created() {
+    this.getFundamental();
+  },
+  methods: {
+    getFundamental: function getFundamental() {
+      var _this = this;
+
+      axios({
+        url: '/api/fundamentals',
+        method: 'get' // data: _formData,
+        // headers: {
+        //   'Content-Type': 'multipart/form-data'
+        // }
+
+      }).then(function (response) {
+        // console.log(response.data.data);
+        _this.fDataContent = response.data.data;
+      }).catch(function (error) {
+        return console.log(error.response);
+      });
+    }
   }
 });
 
@@ -22710,17 +22753,44 @@ var render = function() {
   return _c(
     "v-card",
     [
-      _c("v-card-title", { attrs: { "primary-title": "" } }, [
-        _c("div", [
-          _c("h3", { staticClass: "headline mb-0" }, [
-            _vm._v("Fundamental Data")
-          ])
-        ])
-      ]),
+      _c(
+        "v-card-title",
+        { attrs: { "primary-title": "" } },
+        [
+          _c("div", [
+            _c("h3", { staticClass: "headline mb-0" }, [
+              _vm._v("Fundamental Data")
+            ])
+          ]),
+          _vm._v(" "),
+          _c("v-spacer"),
+          _vm._v(" "),
+          _c("v-text-field", {
+            attrs: {
+              "append-icon": "search",
+              label: "Search",
+              "single-line": "",
+              "hide-details": ""
+            },
+            model: {
+              value: _vm.search,
+              callback: function($$v) {
+                _vm.search = $$v
+              },
+              expression: "search"
+            }
+          })
+        ],
+        1
+      ),
       _vm._v(" "),
       _c("v-data-table", {
         staticClass: "elevation-1",
-        attrs: { headers: _vm.fDataHeaders, items: _vm.fDataContent },
+        attrs: {
+          search: _vm.search,
+          headers: _vm.fDataHeaders,
+          items: _vm.fDataContent
+        },
         scopedSlots: _vm._u([
           {
             key: "items",
@@ -22729,15 +22799,19 @@ var render = function() {
                 _c("td", [_vm._v(_vm._s(props.item.fye))]),
                 _vm._v(" "),
                 _c("td", { staticClass: "text-xs-right" }, [
-                  _vm._v(_vm._s(props.item.stock))
+                  _vm._v(_vm._s(props.item.name))
                 ]),
                 _vm._v(" "),
                 _c("td", { staticClass: "text-xs-right" }, [
-                  _vm._v(_vm._s(props.item.pe_bv))
+                  _vm._v(_vm._s(props.item.pe))
                 ]),
                 _vm._v(" "),
                 _c("td", { staticClass: "text-xs-right" }, [
-                  _vm._v(_vm._s(props.item.dividend))
+                  _vm._v(_vm._s(props.item.dy))
+                ]),
+                _vm._v(" "),
+                _c("td", { staticClass: "text-xs-right" }, [
+                  _vm._v(_vm._s(props.item.dps))
                 ]),
                 _vm._v(" "),
                 _c("td", { staticClass: "text-xs-right" }, [
@@ -22749,15 +22823,19 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("td", { staticClass: "text-xs-right" }, [
-                  _vm._v(_vm._s(props.item.revenue))
+                  _vm._v(_vm._s(props.item.gp_cash))
                 ]),
                 _vm._v(" "),
                 _c("td", { staticClass: "text-xs-right" }, [
-                  _vm._v(_vm._s(props.item.cash))
+                  _vm._v(_vm._s(props.item.total_cash))
                 ]),
                 _vm._v(" "),
                 _c("td", { staticClass: "text-xs-right" }, [
-                  _vm._v(_vm._s(props.item.loan))
+                  _vm._v(_vm._s(props.item.short_term_loan))
+                ]),
+                _vm._v(" "),
+                _c("td", { staticClass: "text-xs-right" }, [
+                  _vm._v(_vm._s(props.item.long_term_loan))
                 ]),
                 _vm._v(" "),
                 _c("td", { staticClass: "text-xs-right" }, [
@@ -22765,7 +22843,7 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("td", { staticClass: "text-xs-right" }, [
-                  _vm._v(_vm._s(props.item.fcf))
+                  _vm._v(_vm._s(props.item.fcf_share))
                 ]),
                 _vm._v(" "),
                 _c("td", { staticClass: "text-xs-right" }, [
@@ -22785,7 +22863,7 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("td", { staticClass: "text-xs-right" }, [
-                  _vm._v(_vm._s(props.item.asset_turnover))
+                  _vm._v(_vm._s(props.item.code))
                 ])
               ]
             }
