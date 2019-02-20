@@ -28,8 +28,7 @@
               >
                 <template slot="items" slot-scope="props">
                   <td>{{ props.item.code }}</td>
-                  <td class="text-xs-right">{{ props.item.name }}</td>
-                  <td class="text-xs-right">{{ props.item.price }}</td>
+                  <td class="text-xs-right">{{ props.item.short_name }}</td>
                 </template>
                 <v-alert slot="no-results" :value="true" color="error" icon="warning">
                   Your search for "{{ search }}" found no results.
@@ -97,21 +96,29 @@
             sortable: false,
             value: 'code'
           },
-          { text: 'Name', value: 'name' },
-          { text: 'Price (RM)', value: 'price' }
+          { text: 'Name', value: 'name' }
         ],
-        stocks: [
-          {
-            code: 'Frozen Yogurt',
-            name: 159,
-            price: 6.0
-          },
-          {
-            code: 'Ice cream sandwich',
-            name: 237,
-            price: 9.0
-          }
-        ]
+        stocks: [],
+      }
+    },
+    created (){
+      this.getStocks();
+    },
+    methods: {
+      getStocks(){
+        axios({
+          url: '/api/stocks',
+          method: 'get',
+          // data: _formData,
+          // headers: {
+          //   'Content-Type': 'multipart/form-data'
+          // }
+        })
+        .then(response => {
+          // console.log(response.data.data);
+          this.stocks = response.data.data;
+        })
+        .catch(error => console.log(error.response));
       }
     }
   }
