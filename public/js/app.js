@@ -2776,7 +2776,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 
@@ -2805,20 +2804,31 @@ __webpack_require__.r(__webpack_exports__);
       }, {
         text: 'Name',
         value: 'name'
-      }, {
-        text: 'Price (RM)',
-        value: 'price'
       }],
-      stocks: [{
-        code: 'Frozen Yogurt',
-        name: 159,
-        price: 6.0
-      }, {
-        code: 'Ice cream sandwich',
-        name: 237,
-        price: 9.0
-      }]
+      stocks: []
     };
+  },
+  created: function created() {
+    this.getStocks();
+  },
+  methods: {
+    getStocks: function getStocks() {
+      var _this = this;
+
+      axios({
+        url: '/api/stocks',
+        method: 'get' // data: _formData,
+        // headers: {
+        //   'Content-Type': 'multipart/form-data'
+        // }
+
+      }).then(function (response) {
+        // console.log(response.data.data);
+        _this.stocks = response.data.data;
+      }).catch(function (error) {
+        return console.log(error.response);
+      });
+    }
   }
 });
 
@@ -2903,7 +2913,7 @@ __webpack_require__.r(__webpack_exports__);
         // }
 
       }).then(function (response) {
-        console.log(response.data.data[0]);
+        // console.log(response.data.data[0]);
         _this.watchlistContent = response.data.data;
       }).catch(function (error) {
         return console.log(error.response);
@@ -23130,13 +23140,7 @@ var render = function() {
                                       _c(
                                         "td",
                                         { staticClass: "text-xs-right" },
-                                        [_vm._v(_vm._s(props.item.name))]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "td",
-                                        { staticClass: "text-xs-right" },
-                                        [_vm._v(_vm._s(props.item.price))]
+                                        [_vm._v(_vm._s(props.item.short_name))]
                                       )
                                     ]
                                   }

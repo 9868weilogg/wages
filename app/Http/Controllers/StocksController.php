@@ -6,9 +6,12 @@ use Illuminate\Http\Request;
 use Illuminate\Http\File;
 use Illuminate\Support\Facades\Storage;
 
+use App\Models\EndOfDayData;
 use App\Models\Industry;
 use App\Models\Sector;
 use App\Models\Stock;
+
+use App\Http\Resources\StockCollection;
 
 class StocksController extends Controller
 {
@@ -19,7 +22,10 @@ class StocksController extends Controller
      */
     public function index()
     {
-        return 'a';
+
+        $stocks = Stock::with('sector','industry')->where('industry_id','!=','0')->get();
+     
+        return new StockCollection($stocks);
     }
 
     /**

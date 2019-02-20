@@ -17,6 +17,14 @@ class Stock extends Model
       'industry_id',
     ];
 
+    public function sector(){
+      return $this->belongsTo('App\Models\Sector');
+    }
+
+    public function industry(){
+      return $this->belongsTo('App\Models\Industry');
+    }
+
     public static function retrieveCsvLines($request) {
       $path = $request->file('file')->storeAs(
         'stocks', $request->filename
