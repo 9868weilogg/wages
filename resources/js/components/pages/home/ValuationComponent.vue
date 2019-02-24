@@ -43,6 +43,11 @@
           </v-flex>
         </v-layout>
         <v-layout>
+          <v-flex xs12 sm12 pa-4>
+            <fcf-yield></fcf-yield>
+          </v-flex>
+        </v-layout>
+        <v-layout>
           <v-flex xs12 sm6 pa-4>
             <intrinsic-value></intrinsic-value>
           </v-flex>
@@ -75,6 +80,7 @@
   import BuffettApproach from './BuffettApproach.vue'
   import FisherApproach from './FisherApproach.vue'
   import FundamentalAnalysis from './FundamentalAnalysis.vue'
+  import FcfYield from './FcfYield.vue'
 
   export default {
     components: { 
@@ -85,6 +91,7 @@
       BuffettApproach,
       FisherApproach,
       FundamentalAnalysis,
+      FcfYield,
     },
     data () {
       return {
@@ -109,10 +116,6 @@
         axios({
           url: '/api/stocks',
           method: 'get',
-          // data: _formData,
-          // headers: {
-          //   'Content-Type': 'multipart/form-data'
-          // }
         })
         .then(response => {
           // console.log(response.data.data);
