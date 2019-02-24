@@ -2229,6 +2229,193 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/home/FcfYield.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/home/FcfYield.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      expand: false,
+      loading: true,
+      search: '',
+      fcfYieldHeadersAll: [{
+        text: 'Stock Name',
+        align: 'left',
+        sortable: false,
+        value: 'name'
+      }, {
+        text: 'Price (RM)',
+        value: 'close'
+      }, {
+        text: '52 Week Low (RM)',
+        value: 'low52week'
+      }, {
+        text: '52 Week High (RM)',
+        value: 'high52week'
+      }, {
+        text: 'Buy Price (RM)',
+        value: 'buy_price'
+      }, {
+        text: '2018',
+        value: 'y2018'
+      }, {
+        text: '2017',
+        value: 'y2017'
+      }, {
+        text: '2016',
+        value: 'y2016'
+      }, {
+        text: '2015',
+        value: 'y2015'
+      }, {
+        text: '2014',
+        value: 'y2014'
+      }, {
+        text: '2013',
+        value: 'y2013'
+      }, {
+        text: '2012',
+        value: 'y2012'
+      }, {
+        text: '2011',
+        value: 'y2011'
+      }, {
+        text: '2010',
+        value: 'y2010'
+      }, {
+        text: '2009',
+        value: 'y2009'
+      }, {
+        text: '2008',
+        value: 'y2008'
+      }, {
+        text: 'PE',
+        value: 'pe'
+      }, {
+        text: 'ROE',
+        value: 'roe'
+      }, {
+        text: 'Net Profit GR (%)',
+        value: 'net_profit_gr'
+      }, {
+        text: 'Dividend Yield (%)',
+        value: 'dy'
+      }],
+      fcfYieldHeaders: [{
+        text: 'Stock Name',
+        align: 'left',
+        sortable: false,
+        value: 'name'
+      }, {
+        text: 'Price (RM)',
+        value: 'close'
+      }, {
+        text: '52 Week Low (RM)',
+        value: 'low52week'
+      }, {
+        text: '52 Week High (RM)',
+        value: 'high52week'
+      }, {
+        text: 'Buy Price (RM)',
+        value: 'buy_price'
+      }, {
+        text: 'PE',
+        value: 'pe'
+      }, {
+        text: 'ROE',
+        value: 'roe'
+      }, {
+        text: 'Net Profit GR (%)',
+        value: 'net_profit_gr'
+      }, {
+        text: 'Dividend Yield (%)',
+        value: 'dy'
+      }],
+      fcfYieldContent: []
+    };
+  },
+  created: function created() {
+    this.getFundamental();
+  },
+  methods: {
+    getFundamental: function getFundamental() {
+      var _this = this;
+
+      axios({
+        url: '/api/fcf-yields',
+        method: 'get'
+      }).then(function (response) {
+        // console.log(response.data.data);
+        _this.fcfYieldContent = response.data.data;
+        _this.loading = false;
+      }).catch(function (error) {
+        return console.log(error.response);
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/home/FisherApproach.vue?vue&type=script&lang=js&":
 /*!************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/home/FisherApproach.vue?vue&type=script&lang=js& ***!
@@ -2750,6 +2937,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _BuffettApproach_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./BuffettApproach.vue */ "./resources/js/components/pages/home/BuffettApproach.vue");
 /* harmony import */ var _FisherApproach_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./FisherApproach.vue */ "./resources/js/components/pages/home/FisherApproach.vue");
 /* harmony import */ var _FundamentalAnalysis_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./FundamentalAnalysis.vue */ "./resources/js/components/pages/home/FundamentalAnalysis.vue");
+/* harmony import */ var _FcfYield_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./FcfYield.vue */ "./resources/js/components/pages/home/FcfYield.vue");
 //
 //
 //
@@ -2819,6 +3007,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+
 
 
 
@@ -2834,7 +3028,8 @@ __webpack_require__.r(__webpack_exports__);
     FairValue: _FairValue_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
     BuffettApproach: _BuffettApproach_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
     FisherApproach: _FisherApproach_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
-    FundamentalAnalysis: _FundamentalAnalysis_vue__WEBPACK_IMPORTED_MODULE_6__["default"]
+    FundamentalAnalysis: _FundamentalAnalysis_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
+    FcfYield: _FcfYield_vue__WEBPACK_IMPORTED_MODULE_7__["default"]
   },
   data: function data() {
     return {
@@ -2860,11 +3055,7 @@ __webpack_require__.r(__webpack_exports__);
 
       axios({
         url: '/api/stocks',
-        method: 'get' // data: _formData,
-        // headers: {
-        //   'Content-Type': 'multipart/form-data'
-        // }
-
+        method: 'get'
       }).then(function (response) {
         // console.log(response.data.data);
         _this.stocks = response.data.data;
@@ -22621,6 +22812,398 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/home/FcfYield.vue?vue&type=template&id=7e24cb8e&":
+/*!**********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/home/FcfYield.vue?vue&type=template&id=7e24cb8e& ***!
+  \**********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-card",
+    [
+      _c(
+        "v-card-title",
+        { attrs: { "primary-title": "" } },
+        [
+          _c("div", [
+            _c("h3", { staticClass: "headline mb-0" }, [
+              _vm._v("Free Cash Flow Yield")
+            ])
+          ]),
+          _vm._v(" "),
+          _c("v-spacer"),
+          _vm._v(" "),
+          _c("v-text-field", {
+            attrs: {
+              "append-icon": "search",
+              label: "Search",
+              "single-line": "",
+              "hide-details": ""
+            },
+            model: {
+              value: _vm.search,
+              callback: function($$v) {
+                _vm.search = $$v
+              },
+              expression: "search"
+            }
+          }),
+          _vm._v(" "),
+          _c("v-spacer"),
+          _vm._v(" "),
+          _c(
+            "v-btn",
+            {
+              attrs: { color: "primary", dark: "" },
+              on: {
+                click: function($event) {
+                  _vm.expand = !_vm.expand
+                }
+              }
+            },
+            [
+              _vm._v(
+                "\n      " +
+                  _vm._s(_vm.expand ? "Show" : "Hide") +
+                  " FCF \n    "
+              )
+            ]
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("v-data-table", {
+        staticClass: "elevation-1",
+        attrs: {
+          loading: _vm.loading,
+          search: _vm.search,
+          headers: _vm.expand ? _vm.fcfYieldHeadersAll : _vm.fcfYieldHeaders,
+          items: _vm.fcfYieldContent
+        },
+        scopedSlots: _vm._u([
+          {
+            key: "items",
+            fn: function(props) {
+              return [
+                _c("td", [_vm._v(_vm._s(props.item.name))]),
+                _vm._v(" "),
+                _c("td", { staticClass: "text-xs-right" }, [
+                  _vm._v(_vm._s(props.item.close))
+                ]),
+                _vm._v(" "),
+                _c("td", { staticClass: "text-xs-right" }, [
+                  _vm._v(_vm._s(props.item.low52week))
+                ]),
+                _vm._v(" "),
+                _c("td", { staticClass: "text-xs-right" }, [
+                  _vm._v(_vm._s(props.item.high52week))
+                ]),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  {
+                    staticClass: "text-xs-right",
+                    style: {
+                      backgroundColor:
+                        props.item.close < props.item.buy_price
+                          ? "#b6f9f7"
+                          : "transparent"
+                    }
+                  },
+                  [_vm._v(_vm._s(props.item.buy_price))]
+                ),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.expand,
+                        expression: "expand"
+                      }
+                    ],
+                    staticClass: "text-xs-right",
+                    style: {
+                      backgroundColor:
+                        props.item.y2018 > 5 ? "#8ee3c7" : "transparent"
+                    }
+                  },
+                  [_vm._v(_vm._s(props.item.y2018))]
+                ),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.expand,
+                        expression: "expand"
+                      }
+                    ],
+                    staticClass: "text-xs-right",
+                    style: {
+                      backgroundColor:
+                        props.item.y2017 > 5 ? "#8ee3c7" : "transparent"
+                    }
+                  },
+                  [_vm._v(_vm._s(props.item.y2017))]
+                ),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.expand,
+                        expression: "expand"
+                      }
+                    ],
+                    staticClass: "text-xs-right",
+                    style: {
+                      backgroundColor:
+                        props.item.y2016 > 5 ? "#8ee3c7" : "transparent"
+                    }
+                  },
+                  [_vm._v(_vm._s(props.item.y2016))]
+                ),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.expand,
+                        expression: "expand"
+                      }
+                    ],
+                    staticClass: "text-xs-right",
+                    style: {
+                      backgroundColor:
+                        props.item.y2015 > 5 ? "#8ee3c7" : "transparent"
+                    }
+                  },
+                  [_vm._v(_vm._s(props.item.y2015))]
+                ),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.expand,
+                        expression: "expand"
+                      }
+                    ],
+                    staticClass: "text-xs-right",
+                    style: {
+                      backgroundColor:
+                        props.item.y2014 > 5 ? "#8ee3c7" : "transparent"
+                    }
+                  },
+                  [_vm._v(_vm._s(props.item.y2014))]
+                ),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.expand,
+                        expression: "expand"
+                      }
+                    ],
+                    staticClass: "text-xs-right",
+                    style: {
+                      backgroundColor:
+                        props.item.y2013 > 5 ? "#8ee3c7" : "transparent"
+                    }
+                  },
+                  [_vm._v(_vm._s(props.item.y2013))]
+                ),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.expand,
+                        expression: "expand"
+                      }
+                    ],
+                    staticClass: "text-xs-right",
+                    style: {
+                      backgroundColor:
+                        props.item.y2012 > 5 ? "#8ee3c7" : "transparent"
+                    }
+                  },
+                  [_vm._v(_vm._s(props.item.y2012))]
+                ),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.expand,
+                        expression: "expand"
+                      }
+                    ],
+                    staticClass: "text-xs-right",
+                    style: {
+                      backgroundColor:
+                        props.item.y2011 > 5 ? "#8ee3c7" : "transparent"
+                    }
+                  },
+                  [_vm._v(_vm._s(props.item.y2011))]
+                ),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.expand,
+                        expression: "expand"
+                      }
+                    ],
+                    staticClass: "text-xs-right",
+                    style: {
+                      backgroundColor:
+                        props.item.y2010 > 5 ? "#8ee3c7" : "transparent"
+                    }
+                  },
+                  [_vm._v(_vm._s(props.item.y2010))]
+                ),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.expand,
+                        expression: "expand"
+                      }
+                    ],
+                    staticClass: "text-xs-right",
+                    style: {
+                      backgroundColor:
+                        props.item.y2009 > 5 ? "#8ee3c7" : "transparent"
+                    }
+                  },
+                  [_vm._v(_vm._s(props.item.y2009))]
+                ),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.expand,
+                        expression: "expand"
+                      }
+                    ],
+                    staticClass: "text-xs-right",
+                    style: {
+                      backgroundColor:
+                        props.item.y2008 > 5 ? "#8ee3c7" : "transparent"
+                    }
+                  },
+                  [_vm._v(_vm._s(props.item.y2008))]
+                ),
+                _vm._v(" "),
+                _c("td", { staticClass: "text-xs-right" }, [
+                  _vm._v(_vm._s(props.item.pe))
+                ]),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  {
+                    staticClass: "text-xs-right",
+                    style: {
+                      backgroundColor:
+                        props.item.roe > 15 ? "#6decac" : "transparent"
+                    }
+                  },
+                  [_vm._v(_vm._s(props.item.roe))]
+                ),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  {
+                    staticClass: "text-xs-right",
+                    style: {
+                      backgroundColor:
+                        props.item.net_profit_gr > 15
+                          ? "#6495ed"
+                          : "transparent"
+                    }
+                  },
+                  [_vm._v(_vm._s(props.item.net_profit_gr))]
+                ),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  {
+                    staticClass: "text-xs-right",
+                    style: {
+                      backgroundColor:
+                        props.item.dy > 6
+                          ? "#6decac"
+                          : props.item.dy > 4
+                          ? "#FFFF00"
+                          : "transparent"
+                    }
+                  },
+                  [_vm._v(_vm._s(props.item.dy))]
+                )
+              ]
+            }
+          }
+        ])
+      })
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/home/FisherApproach.vue?vue&type=template&id=32e35b97&":
 /*!****************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/home/FisherApproach.vue?vue&type=template&id=32e35b97& ***!
@@ -23265,6 +23848,19 @@ var render = function() {
                     "v-flex",
                     { attrs: { xs12: "", sm12: "", "pa-4": "" } },
                     [_c("fundamental-data")],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-layout",
+                [
+                  _c(
+                    "v-flex",
+                    { attrs: { xs12: "", sm12: "", "pa-4": "" } },
+                    [_c("fcf-yield")],
                     1
                   )
                 ],
@@ -59871,6 +60467,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FairValue_vue_vue_type_template_id_503b49d3___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FairValue_vue_vue_type_template_id_503b49d3___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/home/FcfYield.vue":
+/*!*********************************************************!*\
+  !*** ./resources/js/components/pages/home/FcfYield.vue ***!
+  \*********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _FcfYield_vue_vue_type_template_id_7e24cb8e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./FcfYield.vue?vue&type=template&id=7e24cb8e& */ "./resources/js/components/pages/home/FcfYield.vue?vue&type=template&id=7e24cb8e&");
+/* harmony import */ var _FcfYield_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./FcfYield.vue?vue&type=script&lang=js& */ "./resources/js/components/pages/home/FcfYield.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _FcfYield_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _FcfYield_vue_vue_type_template_id_7e24cb8e___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _FcfYield_vue_vue_type_template_id_7e24cb8e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/pages/home/FcfYield.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/home/FcfYield.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/components/pages/home/FcfYield.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FcfYield_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./FcfYield.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/home/FcfYield.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FcfYield_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/home/FcfYield.vue?vue&type=template&id=7e24cb8e&":
+/*!****************************************************************************************!*\
+  !*** ./resources/js/components/pages/home/FcfYield.vue?vue&type=template&id=7e24cb8e& ***!
+  \****************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FcfYield_vue_vue_type_template_id_7e24cb8e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./FcfYield.vue?vue&type=template&id=7e24cb8e& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/home/FcfYield.vue?vue&type=template&id=7e24cb8e&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FcfYield_vue_vue_type_template_id_7e24cb8e___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FcfYield_vue_vue_type_template_id_7e24cb8e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
