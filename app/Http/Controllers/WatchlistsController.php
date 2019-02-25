@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Models\Watchlist;
+
 class WatchlistsController extends Controller
 {
     /**
@@ -13,7 +15,9 @@ class WatchlistsController extends Controller
      */
     public function index()
     {
-        //
+        $watchlists = Watchlist::get()->pluck('name');
+
+        return response()->json($watchlists);
     }
 
     /**
@@ -34,7 +38,11 @@ class WatchlistsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $watchlist = Watchlist::create([
+          'name' => $request->watchlist,
+          'user_id' => 1,
+        ]);
+        if($watchlist) return response()->json('Success add watchlist');
     }
 
     /**

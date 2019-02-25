@@ -66,7 +66,6 @@
             <fisher-approach></fisher-approach>
           </v-flex>
         </v-layout>
-        <intrinsic-fair-value></intrinsic-fair-value>
       </v-container>
     </v-content>
   </v-app>
