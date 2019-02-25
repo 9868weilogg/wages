@@ -3011,7 +3011,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 
@@ -3099,9 +3098,66 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      search: null,
+      dialog: false,
+      editedIndex: -1,
+      editedItem: {
+        name: ''
+      },
+      defaultItem: {
+        name: ''
+      },
+      watchlists: [],
       watchlistHeaders: [{
         text: 'Code',
         align: 'left',
@@ -3113,26 +3169,11 @@ __webpack_require__.r(__webpack_exports__);
       }, {
         text: 'Change',
         value: 'stock'
+      }, {
+        text: '',
+        value: ''
       }],
-      watchlistContent: [] // watchlistContent: [
-      //   {
-      //     code: 'Frozen Yogurt',
-      //     watchlist_id: 159
-      //   },
-      //   {
-      //     code: 'Ice cream sandwich',
-      //     watchlist_id: 159
-      //   },
-      //   {
-      //     code: 'Eclair',
-      //     watchlist_id: 159
-      //   },
-      //   {
-      //     code: 'Cupcake',
-      //     watchlist_id: 159
-      //   }
-      // ]
-
+      watchlistContent: []
     };
   },
   methods: {
@@ -3141,21 +3182,69 @@ __webpack_require__.r(__webpack_exports__);
 
       axios({
         url: '/api/watchlist-items',
-        method: 'get' // data: _formData,
-        // headers: {
-        //   'Content-Type': 'multipart/form-data'
-        // }
-
+        method: 'get'
       }).then(function (response) {
-        // console.log(response.data.data[0]);
         _this.watchlistContent = response.data.data;
       }).catch(function (error) {
         return console.log(error.response);
       });
+    },
+    addWatchlist: function addWatchlist(name) {
+      axios({
+        url: '/api/watchlists',
+        method: 'post',
+        data: {
+          watchlist: name
+        } // headers: {
+        //   'Content-Type': 'multipart/form-data'
+        // }
+
+      }).then(function (response) {
+        console.log(response);
+      }).catch(function (error) {
+        return console.log(error.response);
+      });
+    },
+    getWatchlists: function getWatchlists() {
+      var _this2 = this;
+
+      axios({
+        url: '/api/watchlists',
+        method: 'get'
+      }).then(function (response) {
+        // console.log(response.data);
+        _this2.watchlists = response.data;
+      }).catch(function (error) {
+        return console.log(error.response);
+      });
+    },
+    close: function close() {
+      var _this3 = this;
+
+      this.dialog = false;
+      setTimeout(function () {
+        _this3.editedItem = Object.assign({}, _this3.defaultItem);
+        _this3.editedIndex = -1;
+      }, 300);
+    },
+    save: function save() {
+      if (this.editedIndex > -1) {// Object.assign(this.desserts[this.editedIndex], this.editedItem)
+      } else {
+        this.watchlists.push(this.editedItem.name);
+        this.addWatchlist(this.editedItem.name);
+      }
+
+      this.close();
+    }
+  },
+  computed: {
+    formTitle: function formTitle() {
+      return this.editedIndex === -1 ? 'New Watchlist' : 'Edit Watchlist';
     }
   },
   created: function created() {
     this.getWatchlistItems();
+    this.getWatchlists();
   }
 });
 
@@ -23912,9 +24001,7 @@ var render = function() {
                   )
                 ],
                 1
-              ),
-              _vm._v(" "),
-              _c("intrinsic-fair-value")
+              )
             ],
             1
           )
@@ -23948,39 +24035,193 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "v-card",
+    "div",
     [
-      _c("v-card-title", { attrs: { "primary-title": "" } }, [
-        _c("div", [
-          _c("h3", { staticClass: "headline mb-0" }, [_vm._v("Watchlist")])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("v-data-table", {
-        staticClass: "elevation-1",
-        attrs: { headers: _vm.watchlistHeaders, items: _vm.watchlistContent },
-        scopedSlots: _vm._u([
-          {
-            key: "items",
-            fn: function(props) {
-              return [
-                _c("td", [_vm._v(_vm._s(props.item.code))]),
-                _vm._v(" "),
-                _c("td", { staticClass: "text-xs-right" }, [
-                  _vm._v("RM " + _vm._s(props.item.stock.close))
-                ]),
-                _vm._v(" "),
-                _c("td", { staticClass: "text-xs-right" }, [
-                  _vm._v(
-                    "RM " +
-                      _vm._s(props.item.stock.close - props.item.stock.open)
+      _c(
+        "v-toolbar",
+        { attrs: { flat: "", color: "white" } },
+        [
+          _c("v-toolbar-title", [_vm._v("Watchlist")]),
+          _vm._v(" "),
+          _c("v-divider", {
+            staticClass: "mx-2",
+            attrs: { inset: "", vertical: "" }
+          }),
+          _vm._v(" "),
+          _c("v-select", {
+            attrs: { items: _vm.watchlists, label: "Watchlists" }
+          }),
+          _vm._v(" "),
+          _c(
+            "v-dialog",
+            {
+              attrs: { "max-width": "500px" },
+              model: {
+                value: _vm.dialog,
+                callback: function($$v) {
+                  _vm.dialog = $$v
+                },
+                expression: "dialog"
+              }
+            },
+            [
+              _c(
+                "v-btn",
+                {
+                  staticClass: "mb-2",
+                  attrs: { slot: "activator", color: "primary", dark: "" },
+                  slot: "activator"
+                },
+                [_vm._v("Add")]
+              ),
+              _vm._v(" "),
+              _c(
+                "v-card",
+                [
+                  _c("v-card-title", [
+                    _c("span", { staticClass: "headline" }, [
+                      _vm._v(_vm._s(_vm.formTitle))
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "v-card-text",
+                    [
+                      _c(
+                        "v-container",
+                        { attrs: { "grid-list-md": "" } },
+                        [
+                          _c(
+                            "v-layout",
+                            { attrs: { wrap: "" } },
+                            [
+                              _c(
+                                "v-flex",
+                                { attrs: { xs12: "", sm12: "" } },
+                                [
+                                  _c("v-text-field", {
+                                    attrs: {
+                                      label: "Watchlist Name",
+                                      outline: ""
+                                    },
+                                    model: {
+                                      value: _vm.editedItem.name,
+                                      callback: function($$v) {
+                                        _vm.$set(_vm.editedItem, "name", $$v)
+                                      },
+                                      expression: "editedItem.name"
+                                    }
+                                  })
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-card-actions",
+                    [
+                      _c("v-spacer"),
+                      _vm._v(" "),
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: { color: "blue darken-1", flat: "" },
+                          on: { click: _vm.close }
+                        },
+                        [_vm._v("Cancel")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: { color: "blue darken-1", flat: "" },
+                          on: { click: _vm.save }
+                        },
+                        [_vm._v("Save")]
+                      )
+                    ],
+                    1
                   )
-                ])
-              ]
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-data-table",
+        {
+          staticClass: "elevation-1",
+          attrs: { headers: _vm.watchlistHeaders, items: _vm.watchlistContent },
+          scopedSlots: _vm._u([
+            {
+              key: "items",
+              fn: function(props) {
+                return [
+                  _c("td", [_vm._v(_vm._s(props.item.code))]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "text-xs-right" }, [
+                    _vm._v(_vm._s(props.item.stock.close))
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "text-xs-right" }, [
+                    _vm._v(
+                      _vm._s(props.item.stock.close - props.item.stock.open)
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    { staticClass: "justify-center layout px-0" },
+                    [
+                      _c(
+                        "v-icon",
+                        {
+                          attrs: { small: "" },
+                          on: {
+                            click: function($event) {
+                              _vm.deleteItem(props.item)
+                            }
+                          }
+                        },
+                        [_vm._v("\n          delete\n        ")]
+                      )
+                    ],
+                    1
+                  )
+                ]
+              }
             }
-          }
-        ])
-      })
+          ])
+        },
+        [
+          _c(
+            "template",
+            { slot: "no-data" },
+            [
+              _c(
+                "v-alert",
+                { attrs: { value: true, color: "error", icon: "warning" } },
+                [_vm._v("\n        Sorry, nothing to display here :(\n      ")]
+              )
+            ],
+            1
+          )
+        ],
+        2
+      )
     ],
     1
   )
