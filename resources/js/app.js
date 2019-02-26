@@ -42,3 +42,4 @@ Vue.component('admin-page', require('./components/pages/admins/AdminPage.vue').d
 const app = new Vue({
     el: '#app'
 });
+

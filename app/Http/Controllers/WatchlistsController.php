@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Models\Watchlist;
 
+use App\Http\Resources\WatchlistCollection;
+
 class WatchlistsController extends Controller
 {
     /**
@@ -15,9 +17,9 @@ class WatchlistsController extends Controller
      */
     public function index()
     {
-        $watchlists = Watchlist::get()->pluck('name');
+        $watchlists = Watchlist::get();
 
-        return response()->json($watchlists);
+        return new WatchlistCollection($watchlists);
     }
 
     /**

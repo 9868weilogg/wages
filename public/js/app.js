@@ -2393,8 +2393,7 @@ __webpack_require__.r(__webpack_exports__);
       fcfYieldContent: []
     };
   },
-  created: function created() {
-    this.getFundamental();
+  created: function created() {// this.getFundamental();
   },
   methods: {
     getFundamental: function getFundamental() {
@@ -2921,6 +2920,198 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/home/SearchStock.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/home/SearchStock.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      dialog: false,
+      editedIndex: -1,
+      editedItem: {
+        stockCode: '',
+        watchlistId: ''
+      },
+      defaultItem: {
+        stockCode: '',
+        watchlistId: ''
+      },
+      search: '',
+      headers: [{
+        text: 'Stock Code',
+        align: 'left',
+        sortable: false,
+        value: 'code'
+      }, {
+        text: 'Name',
+        value: 'name'
+      }, {
+        text: '',
+        value: ''
+      }],
+      stocks: [],
+      watchlists: []
+    };
+  },
+  methods: {
+    getWatchlists: function getWatchlists() {
+      var _this = this;
+
+      axios({
+        url: '/api/watchlists',
+        method: 'get'
+      }).then(function (response) {
+        // console.log(response.data);
+        _this.watchlists = response.data.data;
+      }).catch(function (error) {
+        return console.log(error.response);
+      });
+    },
+    getStocks: function getStocks() {
+      var _this2 = this;
+
+      axios({
+        url: '/api/stocks',
+        method: 'get'
+      }).then(function (response) {
+        // console.log(response.data.data);
+        _this2.stocks = response.data.data;
+      }).catch(function (error) {
+        return console.log(error.response);
+      });
+    },
+    addWatchlistItem: function addWatchlistItem() {
+      axios({
+        url: '/api/watchlist-items',
+        method: 'post',
+        data: {
+          'stockCode': this.editedItem.stockCode,
+          'watchlistId': this.editedItem.watchlistId
+        }
+      }).then(function (response) {// console.log(response);
+      }).catch(function (error) {
+        return console.log(error.response);
+      });
+    },
+    addItem: function addItem(item) {
+      this.editedItem.stockCode = Object.assign({}, item).code;
+      this.dialog = true;
+    },
+    close: function close() {
+      var _this3 = this;
+
+      this.dialog = false;
+      setTimeout(function () {
+        _this3.editedItem = Object.assign({}, _this3.defaultItem);
+        _this3.editedIndex = -1;
+      }, 300);
+    },
+    save: function save() {
+      if (this.editedIndex > -1) {} else {
+        this.addWatchlistItem(this.editedItem);
+      }
+
+      this.close();
+    }
+  },
+  computed: {
+    formTitle: function formTitle() {
+      return this.editedIndex === -1 ? 'New Watchlist' : 'Edit Watchlist';
+    }
+  },
+  created: function created() {
+    this.getWatchlists();
+    this.getStocks();
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/home/ValuationComponent.vue?vue&type=script&lang=js&":
 /*!****************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/home/ValuationComponent.vue?vue&type=script&lang=js& ***!
@@ -2938,6 +3129,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _FisherApproach_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./FisherApproach.vue */ "./resources/js/components/pages/home/FisherApproach.vue");
 /* harmony import */ var _FundamentalAnalysis_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./FundamentalAnalysis.vue */ "./resources/js/components/pages/home/FundamentalAnalysis.vue");
 /* harmony import */ var _FcfYield_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./FcfYield.vue */ "./resources/js/components/pages/home/FcfYield.vue");
+/* harmony import */ var _SearchStock_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./SearchStock.vue */ "./resources/js/components/pages/home/SearchStock.vue");
 //
 //
 //
@@ -2984,33 +3176,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
 
 
 
@@ -3028,7 +3194,8 @@ __webpack_require__.r(__webpack_exports__);
     BuffettApproach: _BuffettApproach_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
     FisherApproach: _FisherApproach_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
     FundamentalAnalysis: _FundamentalAnalysis_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
-    FcfYield: _FcfYield_vue__WEBPACK_IMPORTED_MODULE_7__["default"]
+    FcfYield: _FcfYield_vue__WEBPACK_IMPORTED_MODULE_7__["default"],
+    SearchStock: _SearchStock_vue__WEBPACK_IMPORTED_MODULE_8__["default"]
   },
   data: function data() {
     return {
@@ -3041,6 +3208,9 @@ __webpack_require__.r(__webpack_exports__);
       }, {
         text: 'Name',
         value: 'name'
+      }, {
+        text: '',
+        value: ''
       }],
       stocks: []
     };
@@ -3076,6 +3246,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
 //
 //
 //
@@ -3184,7 +3356,8 @@ __webpack_require__.r(__webpack_exports__);
         url: '/api/watchlist-items',
         method: 'get'
       }).then(function (response) {
-        _this.watchlistContent = response.data.data;
+        // console.log(response.data.data);
+        _this.watchlistContent = response.data.data; // console.log(this.watchlistContent);
       }).catch(function (error) {
         return console.log(error.response);
       });
@@ -3195,10 +3368,7 @@ __webpack_require__.r(__webpack_exports__);
         method: 'post',
         data: {
           watchlist: name
-        } // headers: {
-        //   'Content-Type': 'multipart/form-data'
-        // }
-
+        }
       }).then(function (response) {
         console.log(response);
       }).catch(function (error) {
@@ -3213,7 +3383,7 @@ __webpack_require__.r(__webpack_exports__);
         method: 'get'
       }).then(function (response) {
         // console.log(response.data);
-        _this2.watchlists = response.data;
+        _this2.watchlists = response.data.data;
       }).catch(function (error) {
         return console.log(error.response);
       });
@@ -3228,8 +3398,7 @@ __webpack_require__.r(__webpack_exports__);
       }, 300);
     },
     save: function save() {
-      if (this.editedIndex > -1) {// Object.assign(this.desserts[this.editedIndex], this.editedItem)
-      } else {
+      if (this.editedIndex > -1) {} else {
         this.watchlists.push(this.editedItem.name);
         this.addWatchlist(this.editedItem.name);
       }
@@ -23797,6 +23966,242 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/home/SearchStock.vue?vue&type=template&id=d0526118&":
+/*!*************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/home/SearchStock.vue?vue&type=template&id=d0526118& ***!
+  \*************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c(
+        "v-toolbar",
+        { attrs: { flat: "", color: "white" } },
+        [
+          _c("v-toolbar-title", [_vm._v("Search")]),
+          _vm._v(" "),
+          _c("v-divider", {
+            staticClass: "mx-2",
+            attrs: { inset: "", vertical: "" }
+          }),
+          _vm._v(" "),
+          _c("v-text-field", {
+            attrs: {
+              "append-icon": "search",
+              label: "Search",
+              "single-line": "",
+              "hide-details": ""
+            },
+            model: {
+              value: _vm.search,
+              callback: function($$v) {
+                _vm.search = $$v
+              },
+              expression: "search"
+            }
+          }),
+          _vm._v(" "),
+          _c(
+            "v-dialog",
+            {
+              attrs: { "max-width": "500px" },
+              model: {
+                value: _vm.dialog,
+                callback: function($$v) {
+                  _vm.dialog = $$v
+                },
+                expression: "dialog"
+              }
+            },
+            [
+              _c(
+                "v-card",
+                [
+                  _c("v-card-title", [
+                    _c("span", { staticClass: "headline" }, [
+                      _vm._v(_vm._s(_vm.formTitle))
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "v-card-text",
+                    [
+                      _c(
+                        "v-container",
+                        { attrs: { "grid-list-md": "" } },
+                        [
+                          _c(
+                            "v-layout",
+                            { attrs: { wrap: "" } },
+                            [
+                              _c(
+                                "v-flex",
+                                { attrs: { xs12: "", sm12: "" } },
+                                [
+                                  _c("v-select", {
+                                    attrs: {
+                                      items: _vm.watchlists,
+                                      "item-value": "id",
+                                      "item-text": "name",
+                                      label: "Watchlists"
+                                    },
+                                    model: {
+                                      value: _vm.editedItem.watchlistId,
+                                      callback: function($$v) {
+                                        _vm.$set(
+                                          _vm.editedItem,
+                                          "watchlistId",
+                                          $$v
+                                        )
+                                      },
+                                      expression: "editedItem.watchlistId"
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("v-text-field", {
+                                    attrs: {
+                                      label: "Stock Code",
+                                      "single-line": "",
+                                      "hide-details": ""
+                                    },
+                                    model: {
+                                      value: _vm.editedItem.stockCode,
+                                      callback: function($$v) {
+                                        _vm.$set(
+                                          _vm.editedItem,
+                                          "stockCode",
+                                          $$v
+                                        )
+                                      },
+                                      expression: "editedItem.stockCode"
+                                    }
+                                  })
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-card-actions",
+                    [
+                      _c("v-spacer"),
+                      _vm._v(" "),
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: { color: "blue darken-1", flat: "" },
+                          on: { click: _vm.close }
+                        },
+                        [_vm._v("Cancel")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: { color: "blue darken-1", flat: "" },
+                          on: { click: _vm.save }
+                        },
+                        [_vm._v("Save")]
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-data-table",
+        {
+          staticClass: "elevation-1",
+          attrs: {
+            headers: _vm.headers,
+            items: _vm.stocks,
+            search: _vm.search
+          },
+          scopedSlots: _vm._u([
+            {
+              key: "items",
+              fn: function(props) {
+                return [
+                  _c("td", [_vm._v(_vm._s(props.item.code))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(props.item.short_name))]),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    [
+                      _c(
+                        "v-icon",
+                        {
+                          attrs: { small: "" },
+                          on: {
+                            click: function($event) {
+                              _vm.addItem(props.item)
+                            }
+                          }
+                        },
+                        [_vm._v("\n          add\n        ")]
+                      )
+                    ],
+                    1
+                  )
+                ]
+              }
+            }
+          ])
+        },
+        [
+          _c(
+            "template",
+            { slot: "no-data" },
+            [
+              _c(
+                "v-alert",
+                { attrs: { value: true, color: "error", icon: "warning" } },
+                [_vm._v("\n        Sorry, nothing to display here :(\n      ")]
+              )
+            ],
+            1
+          )
+        ],
+        2
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/home/ValuationComponent.vue?vue&type=template&id=174dd174&":
 /*!********************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/home/ValuationComponent.vue?vue&type=template&id=174dd174& ***!
@@ -23836,94 +24241,7 @@ var render = function() {
                   _c(
                     "v-flex",
                     { attrs: { xs12: "", sm6: "", "pa-4": "" } },
-                    [
-                      _c(
-                        "v-card",
-                        [
-                          _c(
-                            "v-card-title",
-                            [
-                              _c("div", [
-                                _c("h3", { staticClass: "headline mb-0" }, [
-                                  _vm._v("Search")
-                                ])
-                              ]),
-                              _vm._v(" "),
-                              _c("v-spacer"),
-                              _vm._v(" "),
-                              _c("v-text-field", {
-                                attrs: {
-                                  "append-icon": "search",
-                                  label: "Search",
-                                  "single-line": "",
-                                  "hide-details": ""
-                                },
-                                model: {
-                                  value: _vm.search,
-                                  callback: function($$v) {
-                                    _vm.search = $$v
-                                  },
-                                  expression: "search"
-                                }
-                              })
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-data-table",
-                            {
-                              attrs: {
-                                headers: _vm.headers,
-                                items: _vm.stocks,
-                                search: _vm.search
-                              },
-                              scopedSlots: _vm._u([
-                                {
-                                  key: "items",
-                                  fn: function(props) {
-                                    return [
-                                      _c("td", [
-                                        _vm._v(_vm._s(props.item.code))
-                                      ]),
-                                      _vm._v(" "),
-                                      _c(
-                                        "td",
-                                        { staticClass: "text-xs-right" },
-                                        [_vm._v(_vm._s(props.item.short_name))]
-                                      )
-                                    ]
-                                  }
-                                }
-                              ])
-                            },
-                            [
-                              _c(
-                                "v-alert",
-                                {
-                                  attrs: {
-                                    slot: "no-results",
-                                    value: true,
-                                    color: "error",
-                                    icon: "warning"
-                                  },
-                                  slot: "no-results"
-                                },
-                                [
-                                  _vm._v(
-                                    '\n                Your search for "' +
-                                      _vm._s(_vm.search) +
-                                      '" found no results.\n              '
-                                  )
-                                ]
-                              )
-                            ],
-                            1
-                          )
-                        ],
-                        1
-                      )
-                    ],
+                    [_c("search-stock")],
                     1
                   )
                 ],
@@ -24049,7 +24367,12 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("v-select", {
-            attrs: { items: _vm.watchlists, label: "Watchlists" }
+            attrs: {
+              items: _vm.watchlists,
+              "item-value": "id",
+              "item-text": "name",
+              label: "Watchlists"
+            }
           }),
           _vm._v(" "),
           _c(
@@ -24173,12 +24496,18 @@ var render = function() {
                   _c("td", [_vm._v(_vm._s(props.item.code))]),
                   _vm._v(" "),
                   _c("td", { staticClass: "text-xs-right" }, [
-                    _vm._v(_vm._s(props.item.stock.close))
+                    _vm._v(
+                      _vm._s(props.item.stock ? props.item.stock.close : "-")
+                    )
                   ]),
                   _vm._v(" "),
                   _c("td", { staticClass: "text-xs-right" }, [
                     _vm._v(
-                      _vm._s(props.item.stock.close - props.item.stock.open)
+                      _vm._s(
+                        props.item.stock
+                          ? props.item.stock.close - props.item.stock.open
+                          : "-"
+                      )
                     )
                   ]),
                   _vm._v(" "),
@@ -61122,6 +61451,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_IntrinsicValue_vue_vue_type_template_id_6a560894___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_IntrinsicValue_vue_vue_type_template_id_6a560894___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/home/SearchStock.vue":
+/*!************************************************************!*\
+  !*** ./resources/js/components/pages/home/SearchStock.vue ***!
+  \************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _SearchStock_vue_vue_type_template_id_d0526118___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SearchStock.vue?vue&type=template&id=d0526118& */ "./resources/js/components/pages/home/SearchStock.vue?vue&type=template&id=d0526118&");
+/* harmony import */ var _SearchStock_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SearchStock.vue?vue&type=script&lang=js& */ "./resources/js/components/pages/home/SearchStock.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _SearchStock_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _SearchStock_vue_vue_type_template_id_d0526118___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _SearchStock_vue_vue_type_template_id_d0526118___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/pages/home/SearchStock.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/home/SearchStock.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/components/pages/home/SearchStock.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SearchStock_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./SearchStock.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/home/SearchStock.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SearchStock_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/home/SearchStock.vue?vue&type=template&id=d0526118&":
+/*!*******************************************************************************************!*\
+  !*** ./resources/js/components/pages/home/SearchStock.vue?vue&type=template&id=d0526118& ***!
+  \*******************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SearchStock_vue_vue_type_template_id_d0526118___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./SearchStock.vue?vue&type=template&id=d0526118& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/home/SearchStock.vue?vue&type=template&id=d0526118&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SearchStock_vue_vue_type_template_id_d0526118___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SearchStock_vue_vue_type_template_id_d0526118___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

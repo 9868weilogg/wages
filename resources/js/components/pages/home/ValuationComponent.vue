@@ -7,34 +7,7 @@
             <watchlist-component></watchlist-component>
           </v-flex>
           <v-flex xs12 sm6 pa-4>
-            <v-card>
-              <v-card-title>
-                <div>
-                  <h3 class="headline mb-0">Search</h3>
-                </div>
-                <v-spacer></v-spacer>
-                <v-text-field
-                  v-model="search"
-                  append-icon="search"
-                  label="Search"
-                  single-line
-                  hide-details
-                ></v-text-field>
-              </v-card-title>
-              <v-data-table
-                :headers="headers"
-                :items="stocks"
-                :search="search"
-              >
-                <template slot="items" slot-scope="props">
-                  <td>{{ props.item.code }}</td>
-                  <td class="text-xs-right">{{ props.item.short_name }}</td>
-                </template>
-                <v-alert slot="no-results" :value="true" color="error" icon="warning">
-                  Your search for "{{ search }}" found no results.
-                </v-alert>
-              </v-data-table>
-            </v-card>
+            <search-stock></search-stock>
           </v-flex>
         </v-layout>
         <v-layout>
@@ -80,6 +53,7 @@
   import FisherApproach from './FisherApproach.vue'
   import FundamentalAnalysis from './FundamentalAnalysis.vue'
   import FcfYield from './FcfYield.vue'
+  import SearchStock from './SearchStock.vue'
 
   export default {
     components: { 
@@ -91,6 +65,7 @@
       FisherApproach,
       FundamentalAnalysis,
       FcfYield,
+      SearchStock,
     },
     data () {
       return {
@@ -102,7 +77,8 @@
             sortable: false,
             value: 'code'
           },
-          { text: 'Name', value: 'name' }
+          { text: 'Name', value: 'name' },
+          { text: '', value: '' }
         ],
         stocks: [],
       }
