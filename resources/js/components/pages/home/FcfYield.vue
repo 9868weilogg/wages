@@ -105,7 +105,7 @@
       }
     },
     created () {
-      this.getFundamental();
+      // this.getFundamental();
     }, 
     methods: {
       getFundamental(){

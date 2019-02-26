@@ -43,7 +43,12 @@ class WatchlistItemsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $item = WatchlistItem::firstOrCreate([
+          'code' => $request->stockCode,
+          'watchlist_id' => $request->watchlistId,
+        ]);
+
+        if($item) return response()->json('Success add watchlist item');
     }
 
     /**
