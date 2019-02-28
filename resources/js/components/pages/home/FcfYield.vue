@@ -13,6 +13,9 @@
         hide-details
       ></v-text-field>
       <v-spacer></v-spacer>
+      <v-btn color="primary" dark @click="getFundamental">
+        Load 
+      </v-btn>
       <v-btn color="primary" dark @click="expand = !expand">
         {{ expand ? 'Show' : 'Hide' }} FCF 
       </v-btn>
@@ -56,7 +59,7 @@
     data () {
       return {
         expand: false,
-        loading: true,
+        loading: false,
         search: '',
         fcfYieldHeadersAll: [
           {
@@ -105,16 +108,15 @@
       }
     },
     created () {
-      // this.getFundamental();
     }, 
     methods: {
       getFundamental(){
+        this.loading = true;
         axios({
           url: '/api/fcf-yields',
           method: 'get',
         })
         .then(response => {
-          // console.log(response.data.data);
           this.fcfYieldContent = response.data.data;
           this.loading = false;
         })

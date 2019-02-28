@@ -12,6 +12,7 @@
         item-value="id"
         item-text="name"
         label="Watchlists"
+        @change="switchWatchlist"
       ></v-select>
       <v-dialog v-model="dialog" max-width="500px">
         <v-btn slot="activator" color="primary" dark class="mb-2">Add</v-btn>
@@ -98,19 +99,28 @@
       }
     },
     methods: {
+      switchWatchlist(id) {
+        axios({
+          url: '/api/watchlist-items',
+          method: 'get',
+          params: {
+            'watchlist_id': id,
+            'get': "watchlist_item",
+          }
+        })
+        .then(response => {
+          this.watchlistContent = response.data.data;
+        })
+        .catch(error => console.log(error.response));
+      },
+
       deleteWatchlistItem(watchlistItemId,index){
         axios({
           url: '/api/watchlist-items/' + watchlistItemId,
           method: 'delete',
-          // data: {
-          //   '_method': 'DELETE',
-          //   'watchlistItemId': watchlistItemId,
-          // }
         })
         .then(response => {
           this.watchlistContent.splice(index, 1)
-          console.log(response);
-          // console.log(this.watchlistContent);
         })
         .catch(error => console.log(error.response));
       },
@@ -119,11 +129,13 @@
         axios({
           url: '/api/watchlist-items',
           method: 'get',
+          params: {
+            'watchlist_id' : 1,
+            'get' : "watchlist_item",
+          }
         })
         .then(response => {
-          // console.log(response.data.data);
           this.watchlistContent = response.data.data;
-          // console.log(this.watchlistContent);
         })
         .catch(error => console.log(error.response));
       },
@@ -148,7 +160,6 @@
           method: 'get',
         })
         .then(response => {
-          // console.log(response.data);
           this.watchlists = response.data.data;
         })
         .catch(error => console.log(error.response));

@@ -2291,11 +2291,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       expand: false,
-      loading: true,
+      loading: false,
       search: '',
       fcfYieldHeadersAll: [{
         text: 'Stock Name',
@@ -2393,17 +2396,16 @@ __webpack_require__.r(__webpack_exports__);
       fcfYieldContent: []
     };
   },
-  created: function created() {// this.getFundamental();
-  },
+  created: function created() {},
   methods: {
     getFundamental: function getFundamental() {
       var _this = this;
 
+      this.loading = true;
       axios({
         url: '/api/fcf-yields',
         method: 'get'
       }).then(function (response) {
-        // console.log(response.data.data);
         _this.fcfYieldContent = response.data.data;
         _this.loading = false;
       }).catch(function (error) {
@@ -3317,6 +3319,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -3349,33 +3352,46 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    deleteWatchlistItem: function deleteWatchlistItem(watchlistItemId, index) {
+    switchWatchlist: function switchWatchlist(id) {
       var _this = this;
 
       axios({
-        url: '/api/watchlist-items/' + watchlistItemId,
-        method: 'delete' // data: {
-        //   '_method': 'DELETE',
-        //   'watchlistItemId': watchlistItemId,
-        // }
-
+        url: '/api/watchlist-items',
+        method: 'get',
+        params: {
+          'watchlist_id': id,
+          'get': "watchlist_item"
+        }
       }).then(function (response) {
-        _this.watchlistContent.splice(index, 1);
+        _this.watchlistContent = response.data.data;
+      }).catch(function (error) {
+        return console.log(error.response);
+      });
+    },
+    deleteWatchlistItem: function deleteWatchlistItem(watchlistItemId, index) {
+      var _this2 = this;
 
-        console.log(response); // console.log(this.watchlistContent);
+      axios({
+        url: '/api/watchlist-items/' + watchlistItemId,
+        method: 'delete'
+      }).then(function (response) {
+        _this2.watchlistContent.splice(index, 1);
       }).catch(function (error) {
         return console.log(error.response);
       });
     },
     getWatchlistItems: function getWatchlistItems() {
-      var _this2 = this;
+      var _this3 = this;
 
       axios({
         url: '/api/watchlist-items',
-        method: 'get'
+        method: 'get',
+        params: {
+          'watchlist_id': 1,
+          'get': "watchlist_item"
+        }
       }).then(function (response) {
-        // console.log(response.data.data);
-        _this2.watchlistContent = response.data.data; // console.log(this.watchlistContent);
+        _this3.watchlistContent = response.data.data;
       }).catch(function (error) {
         return console.log(error.response);
       });
@@ -3394,25 +3410,24 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     getWatchlists: function getWatchlists() {
-      var _this3 = this;
+      var _this4 = this;
 
       axios({
         url: '/api/watchlists',
         method: 'get'
       }).then(function (response) {
-        // console.log(response.data);
-        _this3.watchlists = response.data.data;
+        _this4.watchlists = response.data.data;
       }).catch(function (error) {
         return console.log(error.response);
       });
     },
     close: function close() {
-      var _this4 = this;
+      var _this5 = this;
 
       this.dialog = false;
       setTimeout(function () {
-        _this4.editedItem = Object.assign({}, _this4.defaultItem);
-        _this4.editedIndex = -1;
+        _this5.editedItem = Object.assign({}, _this5.defaultItem);
+        _this5.editedIndex = -1;
       }, 300);
     },
     save: function save() {
@@ -23144,6 +23159,15 @@ var render = function() {
             "v-btn",
             {
               attrs: { color: "primary", dark: "" },
+              on: { click: _vm.getFundamental }
+            },
+            [_vm._v("\n      Load \n    ")]
+          ),
+          _vm._v(" "),
+          _c(
+            "v-btn",
+            {
+              attrs: { color: "primary", dark: "" },
               on: {
                 click: function($event) {
                   _vm.expand = !_vm.expand
@@ -24394,7 +24418,8 @@ var render = function() {
               "item-value": "id",
               "item-text": "name",
               label: "Watchlists"
-            }
+            },
+            on: { change: _vm.switchWatchlist }
           }),
           _vm._v(" "),
           _c(
