@@ -93,6 +93,8 @@ class WatchlistItemsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $item = WatchlistItem::find($id)->delete();
+
+        if($item) return response()->json("Success delete watchlist item.");
     }
 }
