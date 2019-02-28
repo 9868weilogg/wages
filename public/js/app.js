@@ -3349,15 +3349,33 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    getWatchlistItems: function getWatchlistItems() {
+    deleteWatchlistItem: function deleteWatchlistItem(watchlistItemId, index) {
       var _this = this;
+
+      axios({
+        url: '/api/watchlist-items/' + watchlistItemId,
+        method: 'delete' // data: {
+        //   '_method': 'DELETE',
+        //   'watchlistItemId': watchlistItemId,
+        // }
+
+      }).then(function (response) {
+        _this.watchlistContent.splice(index, 1);
+
+        console.log(response); // console.log(this.watchlistContent);
+      }).catch(function (error) {
+        return console.log(error.response);
+      });
+    },
+    getWatchlistItems: function getWatchlistItems() {
+      var _this2 = this;
 
       axios({
         url: '/api/watchlist-items',
         method: 'get'
       }).then(function (response) {
         // console.log(response.data.data);
-        _this.watchlistContent = response.data.data; // console.log(this.watchlistContent);
+        _this2.watchlistContent = response.data.data; // console.log(this.watchlistContent);
       }).catch(function (error) {
         return console.log(error.response);
       });
@@ -3376,25 +3394,25 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     getWatchlists: function getWatchlists() {
-      var _this2 = this;
+      var _this3 = this;
 
       axios({
         url: '/api/watchlists',
         method: 'get'
       }).then(function (response) {
         // console.log(response.data);
-        _this2.watchlists = response.data.data;
+        _this3.watchlists = response.data.data;
       }).catch(function (error) {
         return console.log(error.response);
       });
     },
     close: function close() {
-      var _this3 = this;
+      var _this4 = this;
 
       this.dialog = false;
       setTimeout(function () {
-        _this3.editedItem = Object.assign({}, _this3.defaultItem);
-        _this3.editedIndex = -1;
+        _this4.editedItem = Object.assign({}, _this4.defaultItem);
+        _this4.editedIndex = -1;
       }, 300);
     },
     save: function save() {
@@ -3404,6 +3422,10 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       this.close();
+    },
+    deleteItem: function deleteItem(item) {
+      var index = this.watchlistContent.indexOf(item);
+      confirm('Are you sure you want to delete this item?') && this.deleteWatchlistItem(item.id, index);
     }
   },
   computed: {

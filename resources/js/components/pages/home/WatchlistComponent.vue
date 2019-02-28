@@ -98,6 +98,23 @@
       }
     },
     methods: {
+      deleteWatchlistItem(watchlistItemId,index){
+        axios({
+          url: '/api/watchlist-items/' + watchlistItemId,
+          method: 'delete',
+          // data: {
+          //   '_method': 'DELETE',
+          //   'watchlistItemId': watchlistItemId,
+          // }
+        })
+        .then(response => {
+          this.watchlistContent.splice(index, 1)
+          console.log(response);
+          // console.log(this.watchlistContent);
+        })
+        .catch(error => console.log(error.response));
+      },
+
       getWatchlistItems(){
         axios({
           url: '/api/watchlist-items',
@@ -153,6 +170,12 @@
           this.addWatchlist(this.editedItem.name);
         }
         this.close()
+      },
+
+      deleteItem (item) {
+        const index = this.watchlistContent.indexOf(item)
+        confirm('Are you sure you want to delete this item?') && this.deleteWatchlistItem(item.id,index)
+        
       },
       
     },
