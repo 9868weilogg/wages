@@ -3,17 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\File;
-use Illuminate\Support\Facades\Storage;
 
-use App\Models\EndOfDayData;
-use App\Models\Industry;
-use App\Models\Sector;
-use App\Models\Stock;
+use App\Models\Watchlist;
 
-use App\Http\Resources\StockCollection;
+use App\Http\Resources\WatchlistCollection;
 
-class StocksController extends Controller
+class WatchlistsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,10 +17,9 @@ class StocksController extends Controller
      */
     public function index()
     {
+        $watchlists = Watchlist::get();
 
-        $stocks = Stock::with('sector','industry')->where('industry_id','!=','0')->get();
-     
-        return new StockCollection($stocks);
+        return new WatchlistCollection($watchlists);
     }
 
     /**
@@ -46,31 +40,11 @@ class StocksController extends Controller
      */
     public function store(Request $request)
     {
-        if($request->process == "upload_bursa_stock_list") {
-          if($request->hasFile('file') ){
-
-            Stock::updateStockList($request,['stocks']);
-
-            $response = "Update Stock List Successfully";
-            
-
-          } else {
-            $response = "Failed Update Stock List";
-
-          }
-        } elseif($request->process == "upload_sector_industry_code") {
-          if($request->hasFile('file') ){
-            
-            Stock::updateSectorIndustry($request,['sectors','industries']);
-
-            $response = "Update Sector and Industry Successfully";
-
-          } else {
-            $response = "Failed Update Sector and Industry";
-
-          } 
-        }
-        return response()->json($response);
+        $watchlist = Watchlist::create([
+          'name' => $request->watchlist,
+          'user_id' => 1,
+        ]);
+        if($watchlist) return response()->json('Success add watchlist');
     }
 
     /**
@@ -104,9 +78,7 @@ class StocksController extends Controller
      */
     public function update(Request $request, $id)
     {
-          // return response()->json('a');
-        return response()->json($request);
-
+        //
     }
 
     /**

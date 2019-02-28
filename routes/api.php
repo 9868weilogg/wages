@@ -18,3 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::resource('stocks','StocksController');
+Route::resource('fundamentals','FundamentalsController');
+Route::resource('watchlist-items','WatchlistItemsController');
+Route::resource('watchlists','WatchlistsController');
+Route::resource('fcf-yields','FcfYieldsController');

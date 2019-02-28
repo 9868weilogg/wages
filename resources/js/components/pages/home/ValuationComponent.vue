@@ -7,33 +7,17 @@
             <watchlist-component></watchlist-component>
           </v-flex>
           <v-flex xs12 sm6 pa-4>
-            <v-card>
-              <v-card-title primary-title>
-                <div>
-                  <h3 class="headline mb-0">Search</h3>
-                </div>
-              </v-card-title>
-
-              <v-data-table
-                :headers="headers"
-                :items="desserts"
-                class="elevation-1"
-              >
-                <template slot="items" slot-scope="props">
-                  <td>{{ props.item.name }}</td>
-                  <td class="text-xs-right">{{ props.item.calories }}</td>
-                  <td class="text-xs-right">{{ props.item.fat }}</td>
-                  <td class="text-xs-right">{{ props.item.carbs }}</td>
-                  <td class="text-xs-right">{{ props.item.protein }}</td>
-                  <td class="text-xs-right">{{ props.item.iron }}</td>
-                </template>
-              </v-data-table>
-            </v-card>
+            <search-stock></search-stock>
           </v-flex>
         </v-layout>
         <v-layout>
           <v-flex xs12 sm12 pa-4>
             <fundamental-data></fundamental-data>
+          </v-flex>
+        </v-layout>
+        <v-layout>
+          <v-flex xs12 sm12 pa-4>
+            <fcf-yield></fcf-yield>
           </v-flex>
         </v-layout>
         <v-layout>
@@ -55,7 +39,6 @@
             <fisher-approach></fisher-approach>
           </v-flex>
         </v-layout>
-        <intrinsic-fair-value></intrinsic-fair-value>
       </v-container>
     </v-content>
   </v-app>
@@ -69,6 +52,8 @@
   import BuffettApproach from './BuffettApproach.vue'
   import FisherApproach from './FisherApproach.vue'
   import FundamentalAnalysis from './FundamentalAnalysis.vue'
+  import FcfYield from './FcfYield.vue'
+  import SearchStock from './SearchStock.vue'
 
   export default {
     components: { 
@@ -79,10 +64,39 @@
       BuffettApproach,
       FisherApproach,
       FundamentalAnalysis,
+      FcfYield,
+      SearchStock,
     },
     data () {
       return {
-        
+        search: '',
+        headers: [
+          {
+            text: 'Stock Code',
+            align: 'left',
+            sortable: false,
+            value: 'code'
+          },
+          { text: 'Name', value: 'name' },
+          { text: '', value: '' }
+        ],
+        stocks: [],
+      }
+    },
+    created (){
+      this.getStocks();
+    },
+    methods: {
+      getStocks(){
+        axios({
+          url: '/api/stocks',
+          method: 'get',
+        })
+        .then(response => {
+          // console.log(response.data.data);
+          this.stocks = response.data.data;
+        })
+        .catch(error => console.log(error.response));
       }
     }
   }

@@ -1,21 +1,20 @@
 <template>
   <div>
     <v-toolbar flat color="white">
-      <v-toolbar-title>Watchlist</v-toolbar-title>
+      <v-toolbar-title>Search</v-toolbar-title>
       <v-divider
         class="mx-2"
         inset
         vertical
       ></v-divider>
-      <v-select
-        :items="watchlists"
-        item-value="id"
-        item-text="name"
-        label="Watchlists"
-        @change="switchWatchlist"
-      ></v-select>
+      <v-text-field
+        v-model="search"
+        append-icon="search"
+        label="Search"
+        single-line
+        hide-details
+      ></v-text-field>
       <v-dialog v-model="dialog" max-width="500px">
-        <v-btn slot="activator" color="primary" dark class="mb-2">Add</v-btn>
         <v-card>
           <v-card-title>
             <span class="headline">{{ formTitle }}</span>
@@ -25,10 +24,18 @@
             <v-container grid-list-md>
               <v-layout wrap>
                 <v-flex xs12 sm12>
+                  <v-select
+                    v-model="editedItem.watchlistId"
+                    :items="watchlists"
+                    item-value="id"
+                    item-text="name"
+                    label="Watchlists"
+                  ></v-select>
                   <v-text-field
-                    label="Watchlist Name"
-                    v-model="editedItem.name"
-                    outline
+                    v-model="editedItem.stockCode"
+                    label="Stock Code"
+                    single-line
+                    hide-details
                   ></v-text-field>
                 </v-flex>
               </v-layout>
@@ -44,20 +51,20 @@
       </v-dialog>
     </v-toolbar>
     <v-data-table
-      :headers="watchlistHeaders"
-      :items="watchlistContent"
+      :headers="headers"
+      :items="stocks"
+      :search="search"
       class="elevation-1"
     >
       <template slot="items" slot-scope="props">
         <td>{{ props.item.code }}</td>
-        <td class="text-xs-right">{{ props.item.stock?props.item.stock.close:'-' }}</td>
-        <td class="text-xs-right">{{ props.item.stock?(props.item.stock.close - props.item.stock.open):'-' }}</td>
-        <td class="justify-center layout px-0">
+        <td>{{ props.item.short_name }}</td>
+        <td>
           <v-icon
             small
-            @click="deleteItem(props.item)"
+            @click="addItem(props.item)"
           >
-            delete
+            add
           </v-icon>
         </td>
       </template>
@@ -74,85 +81,32 @@
   export default {
     data () {
       return {
-        search: null,
         dialog: false,
         editedIndex: -1,
         editedItem: {
-          name: ''
+          stockCode: '',
+          watchlistId: ''
         },
         defaultItem: {
-          name: ''
+          stockCode: '',
+          watchlistId: ''
         },
-        watchlists:[],
-        watchlistHeaders: [
+        search: '',
+        headers: [
           {
-            text: 'Code',
+            text: 'Stock Code',
             align: 'left',
             sortable: false,
             value: 'code'
           },
-          { text: 'Price (RM)', value: 'stock' },
-          { text: 'Change', value: 'stock' },
-          { text: '', value: '' },
+          { text: 'Name', value: 'name' },
+          { text: '', value: '' }
         ],
-        watchlistContent : [],
+        stocks: [],
+        watchlists:[],
       }
     },
     methods: {
-      switchWatchlist(id) {
-        axios({
-          url: '/api/watchlist-items',
-          method: 'get',
-          params: {
-            'watchlist_id': id,
-            'get': "watchlist_item",
-          }
-        })
-        .then(response => {
-          this.watchlistContent = response.data.data;
-        })
-        .catch(error => console.log(error.response));
-      },
-
-      deleteWatchlistItem(watchlistItemId,index){
-        axios({
-          url: '/api/watchlist-items/' + watchlistItemId,
-          method: 'delete',
-        })
-        .then(response => {
-          this.watchlistContent.splice(index, 1)
-        })
-        .catch(error => console.log(error.response));
-      },
-
-      getWatchlistItems(){
-        axios({
-          url: '/api/watchlist-items',
-          method: 'get',
-          params: {
-            'watchlist_id' : 1,
-            'get' : "watchlist_item",
-          }
-        })
-        .then(response => {
-          this.watchlistContent = response.data.data;
-        })
-        .catch(error => console.log(error.response));
-      },
-
-      addWatchlist(name){
-        axios({
-          url: '/api/watchlists',
-          method: 'post',
-          data: {
-            watchlist : name,
-          },
-        })
-        .then(response => {
-          console.log(response);
-        })
-        .catch(error => console.log(error.response));
-      },
 
       getWatchlists(){
         axios({
@@ -160,9 +114,42 @@
           method: 'get',
         })
         .then(response => {
+          // console.log(response.data);
           this.watchlists = response.data.data;
         })
         .catch(error => console.log(error.response));
+      },
+
+      getStocks(){
+        axios({
+          url: '/api/stocks',
+          method: 'get',
+        })
+        .then(response => {
+          // console.log(response.data.data);
+          this.stocks = response.data.data;
+        })
+        .catch(error => console.log(error.response));
+      },
+
+      addWatchlistItem(){
+        axios({
+          url: '/api/watchlist-items',
+          method: 'post',
+          data: {
+            'stockCode' : this.editedItem.stockCode,
+            'watchlistId' : this.editedItem.watchlistId,
+          }
+        })
+        .then(response => {
+          // console.log(response);
+        })
+        .catch(error => console.log(error.response));
+      },
+
+      addItem (item) {
+        this.editedItem.stockCode = Object.assign({}, item).code;
+        this.dialog = true
       },
 
       close () {
@@ -175,18 +162,10 @@
 
       save () {
         if (this.editedIndex > -1) {
-
         } else {
-          this.watchlists.push(this.editedItem.name);
-          this.addWatchlist(this.editedItem.name);
+          this.addWatchlistItem(this.editedItem);
         }
         this.close()
-      },
-
-      deleteItem (item) {
-        const index = this.watchlistContent.indexOf(item)
-        confirm('Are you sure you want to delete this item?') && this.deleteWatchlistItem(item.id,index)
-        
       },
       
     },
@@ -196,8 +175,8 @@
       }
     },
     created () {
-      this.getWatchlistItems();
       this.getWatchlists();
+      this.getStocks();
     },
   }
 </script>
