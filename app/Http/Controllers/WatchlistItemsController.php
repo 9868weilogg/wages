@@ -16,13 +16,16 @@ class WatchlistItemsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $items = WatchlistItem::all();
-        foreach($items as $item){
-          $item->stock = EndOfDayData::where('code',$item->code)->orderBy('created_at','desc')->first();
-        }
-        return new WatchlistItemCollection($items);
+        if($request->get == "watchlist_item") {
+          $items = WatchlistItem::where('watchlist_id', $request->watchlist_id)->get();
+          foreach($items as $item){
+            $item->stock = EndOfDayData::where('code',$item->code)->orderBy('created_at','desc')->first();
+          }
+          return new WatchlistItemCollection($items);
+        } 
+        
     }
 
     /**
