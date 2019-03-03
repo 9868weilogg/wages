@@ -26,7 +26,7 @@
                 <v-flex xs12 sm12>
                   <v-select
                     v-model="editedItem.watchlistId"
-                    :items="watchlists"
+                    :items="$store.state.watchlists"
                     item-value="id"
                     item-text="name"
                     label="Watchlists"
@@ -51,8 +51,9 @@
       </v-dialog>
     </v-toolbar>
     <v-data-table
+      :loading="$store.state.searchLoading"
       :headers="headers"
-      :items="stocks"
+      :items="$store.state.stocks"
       :search="search"
       class="elevation-1"
     >
@@ -102,35 +103,9 @@
           { text: 'Name', value: 'name' },
           { text: '', value: '' }
         ],
-        stocks: [],
-        watchlists:[],
       }
     },
     methods: {
-
-      getWatchlists(){
-        axios({
-          url: '/api/watchlists',
-          method: 'get',
-        })
-        .then(response => {
-          // console.log(response.data);
-          this.watchlists = response.data.data;
-        })
-        .catch(error => console.log(error.response));
-      },
-
-      getStocks(){
-        axios({
-          url: '/api/stocks',
-          method: 'get',
-        })
-        .then(response => {
-          // console.log(response.data.data);
-          this.stocks = response.data.data;
-        })
-        .catch(error => console.log(error.response));
-      },
 
       addWatchlistItem(){
         axios({
@@ -173,10 +148,6 @@
       formTitle () {
         return this.editedIndex === -1 ? 'New Watchlist' : 'Edit Watchlist'
       }
-    },
-    created () {
-      this.getWatchlists();
-      this.getStocks();
     },
   }
 </script>

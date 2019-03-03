@@ -8,7 +8,7 @@
         vertical
       ></v-divider>
       <v-select
-        :items="watchlists"
+        :items="$store.state.watchlists"
         item-value="id"
         item-text="name"
         label="Watchlists"
@@ -44,8 +44,9 @@
       </v-dialog>
     </v-toolbar>
     <v-data-table
+      :loading="$store.state.watchlistLoading"
       :headers="watchlistHeaders"
-      :items="watchlistContent"
+      :items="$store.state.watchlistItems"
       class="elevation-1"
     >
       <template slot="items" slot-scope="props">
@@ -83,7 +84,6 @@
         defaultItem: {
           name: ''
         },
-        watchlists:[],
         watchlistHeaders: [
           {
             text: 'Code',
@@ -95,7 +95,6 @@
           { text: 'Change', value: 'stock' },
           { text: '', value: '' },
         ],
-        watchlistContent : [],
       }
     },
     methods: {
@@ -109,7 +108,7 @@
           }
         })
         .then(response => {
-          this.watchlistContent = response.data.data;
+          this.watchlistItems = response.data.data;
         })
         .catch(error => console.log(error.response));
       },
@@ -120,22 +119,7 @@
           method: 'delete',
         })
         .then(response => {
-          this.watchlistContent.splice(index, 1)
-        })
-        .catch(error => console.log(error.response));
-      },
-
-      getWatchlistItems(){
-        axios({
-          url: '/api/watchlist-items',
-          method: 'get',
-          params: {
-            'watchlist_id' : 1,
-            'get' : "watchlist_item",
-          }
-        })
-        .then(response => {
-          this.watchlistContent = response.data.data;
+          this.watchlistItems.splice(index, 1)
         })
         .catch(error => console.log(error.response));
       },
@@ -150,17 +134,6 @@
         })
         .then(response => {
           console.log(response);
-        })
-        .catch(error => console.log(error.response));
-      },
-
-      getWatchlists(){
-        axios({
-          url: '/api/watchlists',
-          method: 'get',
-        })
-        .then(response => {
-          this.watchlists = response.data.data;
         })
         .catch(error => console.log(error.response));
       },
@@ -184,7 +157,7 @@
       },
 
       deleteItem (item) {
-        const index = this.watchlistContent.indexOf(item)
+        const index = this.watchlistItems.indexOf(item)
         confirm('Are you sure you want to delete this item?') && this.deleteWatchlistItem(item.id,index)
         
       },
@@ -194,10 +167,6 @@
       formTitle () {
         return this.editedIndex === -1 ? 'New Watchlist' : 'Edit Watchlist'
       }
-    },
-    created () {
-      this.getWatchlistItems();
-      this.getWatchlists();
     },
   }
 </script>

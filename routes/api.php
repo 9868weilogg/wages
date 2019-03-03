@@ -22,3 +22,4 @@ Route::resource('fundamentals','FundamentalsController');
 Route::resource('watchlist-items','WatchlistItemsController');
 Route::resource('watchlists','WatchlistsController');
 Route::resource('fcf-yields','FcfYieldsController');
+Route::resource('stock-prices','StockPricesController');
