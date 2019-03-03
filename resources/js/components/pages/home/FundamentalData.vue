@@ -15,9 +15,10 @@
     </v-card-title>
 
     <v-data-table
+      :loading="$store.state.fundamentalLoading"
       :search="search"
       :headers="fDataHeaders"
-      :items="fDataContent"
+      :items="$store.state.fDataContent"
       class="elevation-1"
     >
       <template slot="items" slot-scope="props">
@@ -78,65 +79,9 @@
           { text: 'Stock', value: 'code' },
           // { text: 'Asset Turnover', value: 'asset_turnover' }
         ],
-        fDataContent: [
-          {
-            fye: '1',
-            stock: 159,
-            pe_bv: 159,
-            dividend: 159,
-            eps: 159,
-            net_profit_gr: 159,
-            revenue: 159,
-            cash: 159,
-            loan: 159,
-            gearing: 159,
-            fcf: 159,
-            gp_cash: 159,
-            net_margin: 159,
-            roe: 159,
-            roa: 159,
-            asset_turnover: 159
-          },
-          {
-            fye: '1',
-            stock: 159,
-            pe_bv: 159,
-            dividend: 159,
-            eps: 159,
-            net_profit_gr: 159,
-            revenue: 159,
-            cash: 159,
-            loan: 159,
-            gearing: 159,
-            fcf: 159,
-            gp_cash: 159,
-            net_margin: 159,
-            roe: 159,
-            roa: 159,
-            asset_turnover: 159
-          } 
-        ]
       }
     },
-    created () {
-      this.getFundamental();
-    }, 
     methods: {
-      getFundamental(){
-        axios({
-          url: '/api/fundamentals',
-          method: 'get',
-          // data: _formData,
-          // headers: {
-          //   'Content-Type': 'multipart/form-data'
-          // }
-        })
-        .then(response => {
-          // console.log(response.data.data);
-          this.fDataContent = response.data.data;
-        })
-        .catch(error => console.log(error.response));
-      }
     }
   }
 </script>

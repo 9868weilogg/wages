@@ -11,11 +11,14 @@ window.Vue = require('vue');
 
 import Vue from 'vue'
 import Vuetify from 'vuetify'
+import Vuex from 'vuex'
+
 // index.js or main.js
 import 'vuetify/dist/vuetify.min.css' // Ensure you are using css-loader
 import 'font-awesome/css/font-awesome.min.css' // Ensure you are using css-loader
 
 Vue.use(Vuetify)
+Vue.use(Vuex)
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -39,7 +42,33 @@ Vue.component('admin-page', require('./components/pages/admins/AdminPage.vue').d
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+ const store = new Vuex.Store({
+    state: {
+      // table loading
+      searchLoading: true,
+      watchlistLoading: true,
+      fundamentalLoading: true,
+
+      // table data
+      stocks: [],
+      watchlistItems: [],
+      watchlists: [],
+      fDataContent: [],
+      eods: [],
+    },
+    mutations: {
+
+    }
+});
+
+
+
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+    store,
+    data: {
+      stocks: "",
+      watchlistItems: "",
+    }
 });
 

@@ -80,11 +80,14 @@
           { text: 'Name', value: 'name' },
           { text: '', value: '' }
         ],
-        stocks: [],
       }
     },
-    created (){
+    created() {
       this.getStocks();
+      this.getWatchlists();
+      this.getWatchlistItems();
+      this.getFundamental();
+      this.getEods();
     },
     methods: {
       getStocks(){
@@ -94,7 +97,67 @@
         })
         .then(response => {
           // console.log(response.data.data);
-          this.stocks = response.data.data;
+          // this.stocks = response.data.data;
+          this.$store.state.stocks = response.data.data;
+          // console.log(this.$store.state.stocks);
+          this.$store.state.searchLoading = false;
+        })
+        .catch(error => console.log(error.response));
+      },
+      getWatchlists(){
+        axios({
+          url: '/api/watchlists',
+          method: 'get',
+        })
+        .then(response => {
+          // console.log(response.data);
+          this.$store.state.watchlists = response.data.data;
+          this.$store.state.watchlistLoading = false;
+        })
+        .catch(error => console.log(error.response));
+      },
+      getWatchlistItems(){
+        axios({
+          url: '/api/watchlist-items',
+          method: 'get',
+          params: {
+            'watchlist_id' : 1,
+            'get' : "watchlist_item",
+          }
+        })
+        .then(response => {
+          // this.watchlistItems = response.data.data;
+          this.$store.state.watchlistItems = response.data.data;
+          // console.log(this.$store.state.watchlistItems);
+
+        })
+        .catch(error => console.log(error.response));
+      },
+      getFundamental(){
+        axios({
+          url: '/api/fundamentals',
+          method: 'get',
+          // data: _formData,
+          // headers: {
+          //   'Content-Type': 'multipart/form-data'
+          // }
+        })
+        .then(response => {
+          // console.log(response.data.data);
+          this.$store.state.fDataContent = response.data.data;
+          this.$store.state.fundamentalLoading = false;
+        })
+        .catch(error => console.log(error.response));
+      },
+      getEods() {
+        axios({
+          url: '/api/stock-prices',
+          method: 'get',
+        })
+        .then(response => {
+          // console.log(response);
+          this.$store.state.eods = response.data.data;
+          // console.log(this.$store.state.eods);
         })
         .catch(error => console.log(error.response));
       }
