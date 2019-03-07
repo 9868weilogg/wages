@@ -13,7 +13,8 @@
         hide-details
       ></v-text-field>
       <v-spacer></v-spacer>
-      <v-btn color="primary" dark @click="getFundamental">
+      <v-btn color="primary" dark>
+      <!-- <v-btn color="primary" dark @click="getFundamental"> -->
         Load 
       </v-btn>
       <v-btn color="primary" dark @click="expand = !expand">
@@ -22,10 +23,10 @@
     </v-card-title>
 
     <v-data-table
-      :loading="loading"
+      :loading="$store.state.fcfYieldLoading"
       :search="search"
       :headers="expand ? fcfYieldHeadersAll : fcfYieldHeaders"
-      :items="fcfYieldContent"
+      :items="$store.state.fcfYieldContent"
       class="elevation-1"
     >
       <template slot="items" slot-scope="props">
@@ -110,18 +111,115 @@
     created () {
     }, 
     methods: {
-      getFundamental(){
-        this.loading = true;
-        axios({
-          url: '/api/fcf-yields',
-          method: 'get',
-        })
-        .then(response => {
-          this.fcfYieldContent = response.data.data;
-          this.loading = false;
-        })
-        .catch(error => console.log(error.response));
-      },
+      // getFundamentalAvg(fundamentals, fundamentals2017, currentValue, fundamentalArray, avgArray, reducer) {
+      //   let companyFundamentals = fundamentals.filter(fundamental => fundamental.code == fundamentals2017[i].code)
+      //   companyFundamentals.forEach(function(currentValue){
+      //     fundamentalArray.pe.push(parseFloat(currentValue['pe']))
+      //     fundamentalArray.roe.push(parseFloat(currentValue['roe']))
+      //     fundamentalArray.netProfitGR.push(parseFloat(currentValue['net_profit_gr']))
+      //     fundamentalArray.dy.push(parseFloat(currentValue['dy']))
+      //   })
+      //   avgArray.pe = fundamentalArray.pe.reduce(reducer)/fundamentalArray.pe.length
+      //   avgArray.roe = fundamentalArray.roe.reduce(reducer)/fundamentalArray.roe.length
+      //   avgArray.netProfitGR = fundamentalArray.netProfitGR.reduce(reducer)/fundamentalArray.netProfitGR.length
+      //   avgArray.dy = fundamentalArray.dy.reduce(reducer)/fundamentalArray.dy.length
+      // },
+
+      // get52HighLow(eods, currentValue, eodArray) {
+      //   let companyEods = eods.filter(eod => eod.code == fundamentals2017[i].code)
+      //   companyEods.forEach(function(currentValue){
+      //     eodArray.close.push(parseFloat(currentValue['close']))
+      //     // eodArray.createdDates.push(Date(currentValue['created_at']))
+          
+      //   })
+      //   eodArray.high52week = Math.max.apply(Math,eodArray.close)
+      //   eodArray.low52week = Math.min.apply(Math,eodArray.close)
+      // },
+      
+      // calculateFcfYield(companyFundamentals, fcfYieldCalculation, avgArray, eodArray) {
+      //   if(companyFundamentals[0].eps == 0) {
+      //     fcfYieldCalculation.total10YrEps = companyFundamentals[1].eps / 100 * Math.pow(1.1,10)
+      //   } else {
+      //     fcfYieldCalculation.total10YrEps = companyFundamentals[0].eps / 100 * Math.pow(1.1,10)
+      //   }
+      //   fcfYieldCalculation.total10YrDps = fcfYieldCalculation.total10YrEps * avgArray.dy / 100
+      //   fcfYieldCalculation.total10YrReturn = fcfYieldCalculation.total10YrEps + fcfYieldCalculation.total10YrDps
+      //   fcfYieldCalculation.estimatePrice = fcfYieldCalculation.total10YrEps * avgArray.pe
+      //   fcfYieldCalculation.intrinsicValue = fcfYieldCalculation.estimatePrice / Math.pow(1.1,10)
+      //   fcfYieldCalculation.intrinsic_25_discount = fcfYieldCalculation.intrinsicValue * 0.75
+      //   fcfYieldCalculation.low52week_33_premium = ((eodArray.high52week - eodArray.low52week) * 0.33) + eodArray.low52week
+      //   fcfYieldCalculation.buy_price = Math.min(fcfYieldCalculation.intrinsic_25_discount, fcfYieldCalculation.low52week_33_premium)
+      // },
+
+      // defineObjects (){
+      //   let fundamentalArray = {
+      //     pe: [],
+      //     roe: [],
+      //     netProfitGR: [],
+      //     dy: [],
+      //   }
+
+      //   let avgArray = {
+      //     pe: 0,
+      //     roe: 0,
+      //     netProfitGR: 0,
+      //     dy: 0,
+      //   }
+
+      //   let eodArray = {
+      //     close: [],
+      //     high52week: 0,
+      //     low52week: 0,
+
+      //   }
+
+      //   let fcfYieldCalculation = {
+      //     total10YrEps: 0,
+      //     total10YrDps: 0,
+      //     total10YrReturn: 0,
+      //     estimatePrice: 0,
+      //     intrinsicValue: 0,
+      //     intrinsic_25_discount: 0,
+      //     low52week_33_premium: 0,
+      //     buy_price: 0,
+      //   }
+      // },
+
+      // getFundamental(){
+      //   let fundamentals = this.$store.state.fDataContent
+      //   let stocks = this.$store.state.stocks
+      //   let eods = this.$store.state.eods
+
+      //   let fundamentals2017 = fundamentals.filter(year => year.fye == "2017")
+      //   let fcfYield = []
+        
+      //   const reducer = (accumulator, currentValue) => accumulator + currentValue;
+
+      //   for (var i=0; i<fundamentals2017.length; i++ ){
+
+      //     this.defineObjects()
+      //     this.getFundamentalAvg(fundamentals, fundamentals2017, currentValue, fundamentalArray, avgArray, reducer)
+      //     this.get52HighLow(eods, currentValue, eodArray)
+      //     this.calculateFcfYield(companyFundamentals, fcfYieldCalculation, avgArray, eodArray)
+
+      //     fcfYield.push({ 
+      //       'name': stocks.find(stock => stock.code == fundamentals2017[i].code).name,
+      //       'buy_price': fcfYieldCalculation.buy_price,
+      //       'close': eodArray.close[0],
+      //       'low52week': eodArray.low52week,
+      //       'high52week': eodArray.high52week,
+      //       'pe': avgArray.pe,
+      //       'roe': avgArray.roe,
+      //       'net_profit_gr': avgArray.netProfitGR,
+      //       'dy': avgArray.dy,
+      //       'code': fundamentals2017[i].code,
+      //     })
+      //   }
+
+      //     console.log(fcfYield)          
+      //   this.$store.state.fcfYieldContent = fcfYield
+      // }
+      
     }
   }
 </script>

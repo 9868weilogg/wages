@@ -24,7 +24,7 @@ class StockPricesController extends Controller
         ini_set('memory_limit', '-1');
         
         $lastYear = Carbon::now()->subYear(1);
-        $eods = EndOfDayData::whereDate('created_at','>',$lastYear)->get();
+        $eods = EndOfDayData::whereDate('created_at','>',$lastYear)->orderBy('created_at','desc')->get();
 
         return new StockPriceCollection($eods);
     }
