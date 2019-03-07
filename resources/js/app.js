@@ -48,6 +48,7 @@ Vue.component('admin-page', require('./components/pages/admins/AdminPage.vue').d
       searchLoading: true,
       watchlistLoading: true,
       fundamentalLoading: true,
+      fcfYieldLoading: true,
 
       // table data
       stocks: [],
@@ -55,6 +56,7 @@ Vue.component('admin-page', require('./components/pages/admins/AdminPage.vue').d
       watchlists: [],
       fDataContent: [],
       eods: [],
+      fcfYieldContent: [],
     },
     mutations: {
 
