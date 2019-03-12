@@ -150,7 +150,7 @@
         if (this.editedIndex > -1) {
 
         } else {
-          this.watchlists.push(this.editedItem.name);
+          this.$store.state.watchlists.push(this.editedItem.name);
           this.addWatchlist(this.editedItem.name);
         }
         this.close()

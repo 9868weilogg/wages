@@ -3505,7 +3505,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     save: function save() {
       if (this.editedIndex > -1) {} else {
-        this.watchlists.push(this.editedItem.name);
+        this.$store.state.watchlists.push(this.editedItem.name);
         this.addWatchlist(this.editedItem.name);
       }
 
@@ -61789,11 +61789,11 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
 });
 var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   el: '#app',
-  store: store,
-  data: {
-    stocks: "",
-    watchlistItems: ""
-  }
+  store: store // data: {
+  // stocks: "",
+  // watchlistItems: "",
+  // }
+
 });
 
 /***/ }),
