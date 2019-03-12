@@ -3464,7 +3464,7 @@ __webpack_require__.r(__webpack_exports__);
           'get': "watchlist_item"
         }
       }).then(function (response) {
-        _this.watchlistItems = response.data.data;
+        _this.$store.state.watchlistItems = response.data.data;
       }).catch(function (error) {
         return console.log(error.response);
       });
@@ -3476,7 +3476,7 @@ __webpack_require__.r(__webpack_exports__);
         url: '/api/watchlist-items/' + watchlistItemId,
         method: 'delete'
       }).then(function (response) {
-        _this2.watchlistItems.splice(index, 1);
+        _this2.$store.state.watchlistItems.splice(index, 1);
       }).catch(function (error) {
         return console.log(error.response);
       });
@@ -3512,7 +3512,7 @@ __webpack_require__.r(__webpack_exports__);
       this.close();
     },
     deleteItem: function deleteItem(item) {
-      var index = this.watchlistItems.indexOf(item);
+      var index = this.$store.state.watchlistItems.indexOf(item);
       confirm('Are you sure you want to delete this item?') && this.deleteWatchlistItem(item.id, index);
     }
   },
