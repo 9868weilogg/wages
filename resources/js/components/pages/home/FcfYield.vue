@@ -13,10 +13,6 @@
         hide-details
       ></v-text-field>
       <v-spacer></v-spacer>
-      <v-btn color="primary" dark>
-      <!-- <v-btn color="primary" dark @click="getFundamental"> -->
-        Load 
-      </v-btn>
       <v-btn color="primary" dark @click="expand = !expand">
         {{ expand ? 'Show' : 'Hide' }} FCF 
       </v-btn>
@@ -34,7 +30,7 @@
         <td class="text-xs-right">{{ props.item.close }}</td>
         <td class="text-xs-right">{{ props.item.low52week }}</td>
         <td class="text-xs-right">{{ props.item.high52week }}</td>
-        <td class="text-xs-right" :style="{backgroundColor: (props.item.close < props.item.buy_price ? '#b6f9f7' : 'transparent' ) }">{{ props.item.buy_price }}</td>
+        <td class="text-xs-right" :style="{backgroundColor: (props.item.close < props.item.buy_price ? '#b6f9f7' : 'transparent' ) }">{{ props.item.buy_price.toFixed(3) }}</td>
         <td v-show="expand" class="text-xs-right" :style="{backgroundColor: (props.item.y2018 > 5 ? '#8ee3c7' : 'transparent' ) }">{{ props.item.y2018 }}</td>
         <td v-show="expand" class="text-xs-right" :style="{backgroundColor: (props.item.y2017 > 5 ? '#8ee3c7' : 'transparent' ) }">{{ props.item.y2017 }}</td>
         <td v-show="expand" class="text-xs-right" :style="{backgroundColor: (props.item.y2016 > 5 ? '#8ee3c7' : 'transparent' ) }">{{ props.item.y2016 }}</td>
@@ -46,10 +42,10 @@
         <td v-show="expand" class="text-xs-right" :style="{backgroundColor: (props.item.y2010 > 5 ? '#8ee3c7' : 'transparent' ) }">{{ props.item.y2010 }}</td>
         <td v-show="expand" class="text-xs-right" :style="{backgroundColor: (props.item.y2009 > 5 ? '#8ee3c7' : 'transparent' ) }">{{ props.item.y2009 }}</td>
         <td v-show="expand" class="text-xs-right" :style="{backgroundColor: (props.item.y2008 > 5 ? '#8ee3c7' : 'transparent' ) }">{{ props.item.y2008 }}</td>
-        <td class="text-xs-right">{{ props.item.pe }}</td>
-        <td class="text-xs-right" :style="{backgroundColor: (props.item.roe > 15 ? '#6decac' : 'transparent' ) }">{{ props.item.roe }}</td>
-        <td class="text-xs-right" :style="{backgroundColor: (props.item.net_profit_gr > 15 ? '#6495ed' : 'transparent' ) }">{{ props.item.net_profit_gr }}</td>
-        <td class="text-xs-right" :style="{backgroundColor: (props.item.dy > 6 ? '#6decac' : props.item.dy > 4 ? '#FFFF00' : 'transparent' ) }">{{ props.item.dy }}</td>
+        <td class="text-xs-right">{{ props.item.pe.toFixed(3) }}</td>
+        <td class="text-xs-right" :style="{backgroundColor: (props.item.roe > 15 ? '#6decac' : 'transparent' ) }">{{ props.item.roe.toFixed(3) }}</td>
+        <td class="text-xs-right" :style="{backgroundColor: (props.item.net_profit_gr > 15 ? '#6495ed' : 'transparent' ) }">{{ props.item.net_profit_gr.toFixed(3) }}</td>
+        <td class="text-xs-right" :style="{backgroundColor: (props.item.dy > 6 ? '#6decac' : props.item.dy > 4 ? '#FFFF00' : 'transparent' ) }">{{ props.item.dy.toFixed(3) }}</td>
       </template>
     </v-data-table>
   </v-card>
@@ -111,114 +107,7 @@
     created () {
     }, 
     methods: {
-      // getFundamentalAvg(fundamentals, fundamentals2017, currentValue, fundamentalArray, avgArray, reducer) {
-      //   let companyFundamentals = fundamentals.filter(fundamental => fundamental.code == fundamentals2017[i].code)
-      //   companyFundamentals.forEach(function(currentValue){
-      //     fundamentalArray.pe.push(parseFloat(currentValue['pe']))
-      //     fundamentalArray.roe.push(parseFloat(currentValue['roe']))
-      //     fundamentalArray.netProfitGR.push(parseFloat(currentValue['net_profit_gr']))
-      //     fundamentalArray.dy.push(parseFloat(currentValue['dy']))
-      //   })
-      //   avgArray.pe = fundamentalArray.pe.reduce(reducer)/fundamentalArray.pe.length
-      //   avgArray.roe = fundamentalArray.roe.reduce(reducer)/fundamentalArray.roe.length
-      //   avgArray.netProfitGR = fundamentalArray.netProfitGR.reduce(reducer)/fundamentalArray.netProfitGR.length
-      //   avgArray.dy = fundamentalArray.dy.reduce(reducer)/fundamentalArray.dy.length
-      // },
-
-      // get52HighLow(eods, currentValue, eodArray) {
-      //   let companyEods = eods.filter(eod => eod.code == fundamentals2017[i].code)
-      //   companyEods.forEach(function(currentValue){
-      //     eodArray.close.push(parseFloat(currentValue['close']))
-      //     // eodArray.createdDates.push(Date(currentValue['created_at']))
-          
-      //   })
-      //   eodArray.high52week = Math.max.apply(Math,eodArray.close)
-      //   eodArray.low52week = Math.min.apply(Math,eodArray.close)
-      // },
       
-      // calculateFcfYield(companyFundamentals, fcfYieldCalculation, avgArray, eodArray) {
-      //   if(companyFundamentals[0].eps == 0) {
-      //     fcfYieldCalculation.total10YrEps = companyFundamentals[1].eps / 100 * Math.pow(1.1,10)
-      //   } else {
-      //     fcfYieldCalculation.total10YrEps = companyFundamentals[0].eps / 100 * Math.pow(1.1,10)
-      //   }
-      //   fcfYieldCalculation.total10YrDps = fcfYieldCalculation.total10YrEps * avgArray.dy / 100
-      //   fcfYieldCalculation.total10YrReturn = fcfYieldCalculation.total10YrEps + fcfYieldCalculation.total10YrDps
-      //   fcfYieldCalculation.estimatePrice = fcfYieldCalculation.total10YrEps * avgArray.pe
-      //   fcfYieldCalculation.intrinsicValue = fcfYieldCalculation.estimatePrice / Math.pow(1.1,10)
-      //   fcfYieldCalculation.intrinsic_25_discount = fcfYieldCalculation.intrinsicValue * 0.75
-      //   fcfYieldCalculation.low52week_33_premium = ((eodArray.high52week - eodArray.low52week) * 0.33) + eodArray.low52week
-      //   fcfYieldCalculation.buy_price = Math.min(fcfYieldCalculation.intrinsic_25_discount, fcfYieldCalculation.low52week_33_premium)
-      // },
-
-      // defineObjects (){
-      //   let fundamentalArray = {
-      //     pe: [],
-      //     roe: [],
-      //     netProfitGR: [],
-      //     dy: [],
-      //   }
-
-      //   let avgArray = {
-      //     pe: 0,
-      //     roe: 0,
-      //     netProfitGR: 0,
-      //     dy: 0,
-      //   }
-
-      //   let eodArray = {
-      //     close: [],
-      //     high52week: 0,
-      //     low52week: 0,
-
-      //   }
-
-      //   let fcfYieldCalculation = {
-      //     total10YrEps: 0,
-      //     total10YrDps: 0,
-      //     total10YrReturn: 0,
-      //     estimatePrice: 0,
-      //     intrinsicValue: 0,
-      //     intrinsic_25_discount: 0,
-      //     low52week_33_premium: 0,
-      //     buy_price: 0,
-      //   }
-      // },
-
-      // getFundamental(){
-      //   let fundamentals = this.$store.state.fDataContent
-      //   let stocks = this.$store.state.stocks
-      //   let eods = this.$store.state.eods
-
-      //   let fundamentals2017 = fundamentals.filter(year => year.fye == "2017")
-      //   let fcfYield = []
-        
-      //   const reducer = (accumulator, currentValue) => accumulator + currentValue;
-
-      //   for (var i=0; i<fundamentals2017.length; i++ ){
-
-      //     this.defineObjects()
-      //     this.getFundamentalAvg(fundamentals, fundamentals2017, currentValue, fundamentalArray, avgArray, reducer)
-      //     this.get52HighLow(eods, currentValue, eodArray)
-      //     this.calculateFcfYield(companyFundamentals, fcfYieldCalculation, avgArray, eodArray)
-
-      //     fcfYield.push({ 
-      //       'name': stocks.find(stock => stock.code == fundamentals2017[i].code).name,
-      //       'buy_price': fcfYieldCalculation.buy_price,
-      //       'close': eodArray.close[0],
-      //       'low52week': eodArray.low52week,
-      //       'high52week': eodArray.high52week,
-      //       'pe': avgArray.pe,
-      //       'roe': avgArray.roe,
-      //       'net_profit_gr': avgArray.netProfitGR,
-      //       'dy': avgArray.dy,
-      //       'code': fundamentals2017[i].code,
-      //     })
-      //   }
-
-      //     console.log(fcfYield)          
-      //   this.$store.state.fcfYieldContent = fcfYield
-      // }
       
     }
   }
