@@ -24574,7 +24574,7 @@ var render = function() {
               key: "items",
               fn: function(props) {
                 return [
-                  _c("td", [_vm._v(_vm._s(props.item.code))]),
+                  _c("td", [_vm._v(_vm._s(props.item.name))]),
                   _vm._v(" "),
                   _c("td", { staticClass: "text-xs-right" }, [
                     _vm._v(
@@ -24586,7 +24586,9 @@ var render = function() {
                     _vm._v(
                       _vm._s(
                         props.item.stock
-                          ? props.item.stock.close - props.item.stock.open
+                          ? (
+                              props.item.stock.close - props.item.stock.open
+                            ).toFixed(4)
                           : "-"
                       )
                     )

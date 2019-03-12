@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\EndOfDayData;
+use App\Models\Stock;
 use App\Models\WatchlistItem;
 
 use App\Http\Resources\WatchlistItemCollection;
@@ -22,6 +23,7 @@ class WatchlistItemsController extends Controller
           $items = WatchlistItem::where('watchlist_id', $request->watchlist_id)->get();
           foreach($items as $item){
             $item->stock = EndOfDayData::where('code',$item->code)->orderBy('created_at','desc')->first();
+            $item->name = Stock::where('code',$item->code)->first()->short_name;
           }
           return new WatchlistItemCollection($items);
         } 
