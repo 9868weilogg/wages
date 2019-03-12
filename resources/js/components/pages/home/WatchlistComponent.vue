@@ -108,7 +108,7 @@
           }
         })
         .then(response => {
-          this.watchlistItems = response.data.data;
+          this.$store.state.watchlistItems = response.data.data;
         })
         .catch(error => console.log(error.response));
       },
@@ -119,7 +119,7 @@
           method: 'delete',
         })
         .then(response => {
-          this.watchlistItems.splice(index, 1)
+          this.$store.state.watchlistItems.splice(index, 1)
         })
         .catch(error => console.log(error.response));
       },
@@ -157,7 +157,7 @@
       },
 
       deleteItem (item) {
-        const index = this.watchlistItems.indexOf(item)
+        const index = this.$store.state.watchlistItems.indexOf(item)
         confirm('Are you sure you want to delete this item?') && this.deleteWatchlistItem(item.id,index)
         
       },
