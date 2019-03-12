@@ -2967,19 +2967,6 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    addWatchlistItem: function addWatchlistItem() {
-      axios({
-        url: '/api/watchlist-items',
-        method: 'post',
-        data: {
-          'stockCode': this.editedItem.stockCode,
-          'watchlistId': this.editedItem.watchlistId
-        }
-      }).then(function (response) {// console.log(response);
-      }).catch(function (error) {
-        return console.log(error.response);
-      });
-    },
     addItem: function addItem(item) {
       this.editedItem.stockCode = Object.assign({}, item).code;
       this.dialog = true;
@@ -2995,7 +2982,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     save: function save() {
       if (this.editedIndex > -1) {} else {
-        this.addWatchlistItem(this.editedItem);
+        this.$store.commit('addWatchlistItem', this.editedItem);
       }
 
       this.close();
@@ -3115,7 +3102,7 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     this.getStocks();
     this.getWatchlists();
-    this.getWatchlistItems();
+    this.$store.commit('getWatchlistItems');
     this.getFundamental();
     this.getEods();
   },
@@ -3128,9 +3115,7 @@ __webpack_require__.r(__webpack_exports__);
         method: 'get'
       }).then(function (response) {
         // console.log(response.data.data);
-        // this.stocks = response.data.data;
-        _this.$store.state.stocks = response.data.data; // console.log(this.$store.state.stocks);
-
+        _this.$store.state.stocks = response.data.data;
         _this.$store.state.searchLoading = false;
       }).catch(function (error) {
         return console.log(error.response);
@@ -3150,25 +3135,8 @@ __webpack_require__.r(__webpack_exports__);
         return console.log(error.response);
       });
     },
-    getWatchlistItems: function getWatchlistItems() {
-      var _this3 = this;
-
-      axios({
-        url: '/api/watchlist-items',
-        method: 'get',
-        params: {
-          'watchlist_id': 1,
-          'get': "watchlist_item"
-        }
-      }).then(function (response) {
-        // this.watchlistItems = response.data.data;
-        _this3.$store.state.watchlistItems = response.data.data; // console.log(this.$store.state.watchlistItems);
-      }).catch(function (error) {
-        return console.log(error.response);
-      });
-    },
     getFundamental: function getFundamental() {
-      var _this4 = this;
+      var _this3 = this;
 
       axios({
         url: '/api/fundamentals',
@@ -3179,23 +3147,23 @@ __webpack_require__.r(__webpack_exports__);
 
       }).then(function (response) {
         // console.log(response.data.data);
-        _this4.$store.state.fDataContent = response.data.data;
-        _this4.$store.state.fundamentalLoading = false;
+        _this3.$store.state.fDataContent = response.data.data;
+        _this3.$store.state.fundamentalLoading = false;
       }).catch(function (error) {
         return console.log(error.response);
       });
     },
     getEods: function getEods() {
-      var _this5 = this;
+      var _this4 = this;
 
       axios({
         url: '/api/stock-prices',
         method: 'get'
       }).then(function (response) {
         // console.log(response);
-        _this5.$store.state.eods = response.data.data;
+        _this4.$store.state.eods = response.data.data;
 
-        _this5.getFcfYield(); // console.log(this.$store.state.eods);
+        _this4.getFcfYield(); // console.log(this.$store.state.eods);
 
       }).catch(function (error) {
         return console.log(error.response);
@@ -61749,6 +61717,7 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 
  // Ensure you are using css-loader
 
+
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuetify__WEBPACK_IMPORTED_MODULE_1___default.a);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__["default"]);
 /**
@@ -61785,15 +61754,42 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
     eods: [],
     fcfYieldContent: []
   },
-  mutations: {}
+  mutations: {
+    addWatchlistItem: function addWatchlistItem(state, editedItem) {
+      axios({
+        url: '/api/watchlist-items',
+        method: 'post',
+        data: {
+          'stockCode': editedItem.stockCode,
+          'watchlistId': editedItem.watchlistId
+        }
+      }).then(function (response) {
+        // console.log(response);
+        store.commit('getWatchlistItems');
+      }).catch(function (error) {
+        return console.log(error.response);
+      });
+    },
+    getWatchlistItems: function getWatchlistItems(state) {
+      axios({
+        url: '/api/watchlist-items',
+        method: 'get',
+        params: {
+          'watchlist_id': 1,
+          'get': "watchlist_item"
+        }
+      }).then(function (response) {
+        state.watchlistItems = response.data.data; // console.log(state.watchlistItems);
+      }).catch(function (error) {
+        return console.log(error.response);
+      });
+    }
+  }
 });
 var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   el: '#app',
-  store: store // data: {
-  // stocks: "",
-  // watchlistItems: "",
-  // }
-
+  store: store,
+  methods: Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapMutations"])(['addWatchlistItem', 'getWatchlistItems'])
 });
 
 /***/ }),

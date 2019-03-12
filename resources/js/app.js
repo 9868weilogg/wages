@@ -16,6 +16,7 @@ import Vuex from 'vuex'
 // index.js or main.js
 import 'vuetify/dist/vuetify.min.css' // Ensure you are using css-loader
 import 'font-awesome/css/font-awesome.min.css' // Ensure you are using css-loader
+import { mapState, mapMutations } from 'vuex';
 
 Vue.use(Vuetify)
 Vue.use(Vuex)
@@ -57,20 +58,52 @@ Vue.component('admin-page', require('./components/pages/admins/AdminPage.vue').d
       fDataContent: [],
       eods: [],
       fcfYieldContent: [],
+
     },
     mutations: {
+      addWatchlistItem(state, editedItem) {
+        axios({
+          url: '/api/watchlist-items',
+          method: 'post',
+          data: {
+            'stockCode' : editedItem.stockCode,
+            'watchlistId' : editedItem.watchlistId,
+          }
+        })
+        .then(response => {
+          // console.log(response);
+          store.commit('getWatchlistItems')
 
-    }
+        })
+        .catch(error => console.log(error.response));
+      },
+      getWatchlistItems(state){
+        axios({
+          url: '/api/watchlist-items',
+          method: 'get',
+          params: {
+            'watchlist_id' : 1,
+            'get' : "watchlist_item",
+          }
+        })
+        .then(response => {
+          state.watchlistItems = response.data.data;
+          // console.log(state.watchlistItems);
+
+        })
+        .catch(error => console.log(error.response));
+      },
+    },
+
 });
-
 
 
 const app = new Vue({
     el: '#app',
     store,
-    // data: {
-      // stocks: "",
-      // watchlistItems: "",
-    // }
+    methods: mapMutations([
+      'addWatchlistItem',
+      'getWatchlistItems',
+    ])
 });
 
