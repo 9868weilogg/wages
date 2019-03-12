@@ -2291,10 +2291,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2398,100 +2394,7 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {},
-  methods: {// getFundamentalAvg(fundamentals, fundamentals2017, currentValue, fundamentalArray, avgArray, reducer) {
-    //   let companyFundamentals = fundamentals.filter(fundamental => fundamental.code == fundamentals2017[i].code)
-    //   companyFundamentals.forEach(function(currentValue){
-    //     fundamentalArray.pe.push(parseFloat(currentValue['pe']))
-    //     fundamentalArray.roe.push(parseFloat(currentValue['roe']))
-    //     fundamentalArray.netProfitGR.push(parseFloat(currentValue['net_profit_gr']))
-    //     fundamentalArray.dy.push(parseFloat(currentValue['dy']))
-    //   })
-    //   avgArray.pe = fundamentalArray.pe.reduce(reducer)/fundamentalArray.pe.length
-    //   avgArray.roe = fundamentalArray.roe.reduce(reducer)/fundamentalArray.roe.length
-    //   avgArray.netProfitGR = fundamentalArray.netProfitGR.reduce(reducer)/fundamentalArray.netProfitGR.length
-    //   avgArray.dy = fundamentalArray.dy.reduce(reducer)/fundamentalArray.dy.length
-    // },
-    // get52HighLow(eods, currentValue, eodArray) {
-    //   let companyEods = eods.filter(eod => eod.code == fundamentals2017[i].code)
-    //   companyEods.forEach(function(currentValue){
-    //     eodArray.close.push(parseFloat(currentValue['close']))
-    //     // eodArray.createdDates.push(Date(currentValue['created_at']))
-    //   })
-    //   eodArray.high52week = Math.max.apply(Math,eodArray.close)
-    //   eodArray.low52week = Math.min.apply(Math,eodArray.close)
-    // },
-    // calculateFcfYield(companyFundamentals, fcfYieldCalculation, avgArray, eodArray) {
-    //   if(companyFundamentals[0].eps == 0) {
-    //     fcfYieldCalculation.total10YrEps = companyFundamentals[1].eps / 100 * Math.pow(1.1,10)
-    //   } else {
-    //     fcfYieldCalculation.total10YrEps = companyFundamentals[0].eps / 100 * Math.pow(1.1,10)
-    //   }
-    //   fcfYieldCalculation.total10YrDps = fcfYieldCalculation.total10YrEps * avgArray.dy / 100
-    //   fcfYieldCalculation.total10YrReturn = fcfYieldCalculation.total10YrEps + fcfYieldCalculation.total10YrDps
-    //   fcfYieldCalculation.estimatePrice = fcfYieldCalculation.total10YrEps * avgArray.pe
-    //   fcfYieldCalculation.intrinsicValue = fcfYieldCalculation.estimatePrice / Math.pow(1.1,10)
-    //   fcfYieldCalculation.intrinsic_25_discount = fcfYieldCalculation.intrinsicValue * 0.75
-    //   fcfYieldCalculation.low52week_33_premium = ((eodArray.high52week - eodArray.low52week) * 0.33) + eodArray.low52week
-    //   fcfYieldCalculation.buy_price = Math.min(fcfYieldCalculation.intrinsic_25_discount, fcfYieldCalculation.low52week_33_premium)
-    // },
-    // defineObjects (){
-    //   let fundamentalArray = {
-    //     pe: [],
-    //     roe: [],
-    //     netProfitGR: [],
-    //     dy: [],
-    //   }
-    //   let avgArray = {
-    //     pe: 0,
-    //     roe: 0,
-    //     netProfitGR: 0,
-    //     dy: 0,
-    //   }
-    //   let eodArray = {
-    //     close: [],
-    //     high52week: 0,
-    //     low52week: 0,
-    //   }
-    //   let fcfYieldCalculation = {
-    //     total10YrEps: 0,
-    //     total10YrDps: 0,
-    //     total10YrReturn: 0,
-    //     estimatePrice: 0,
-    //     intrinsicValue: 0,
-    //     intrinsic_25_discount: 0,
-    //     low52week_33_premium: 0,
-    //     buy_price: 0,
-    //   }
-    // },
-    // getFundamental(){
-    //   let fundamentals = this.$store.state.fDataContent
-    //   let stocks = this.$store.state.stocks
-    //   let eods = this.$store.state.eods
-    //   let fundamentals2017 = fundamentals.filter(year => year.fye == "2017")
-    //   let fcfYield = []
-    //   const reducer = (accumulator, currentValue) => accumulator + currentValue;
-    //   for (var i=0; i<fundamentals2017.length; i++ ){
-    //     this.defineObjects()
-    //     this.getFundamentalAvg(fundamentals, fundamentals2017, currentValue, fundamentalArray, avgArray, reducer)
-    //     this.get52HighLow(eods, currentValue, eodArray)
-    //     this.calculateFcfYield(companyFundamentals, fcfYieldCalculation, avgArray, eodArray)
-    //     fcfYield.push({ 
-    //       'name': stocks.find(stock => stock.code == fundamentals2017[i].code).name,
-    //       'buy_price': fcfYieldCalculation.buy_price,
-    //       'close': eodArray.close[0],
-    //       'low52week': eodArray.low52week,
-    //       'high52week': eodArray.high52week,
-    //       'pe': avgArray.pe,
-    //       'roe': avgArray.roe,
-    //       'net_profit_gr': avgArray.netProfitGR,
-    //       'dy': avgArray.dy,
-    //       'code': fundamentals2017[i].code,
-    //     })
-    //   }
-    //     console.log(fcfYield)          
-    //   this.$store.state.fcfYieldContent = fcfYield
-    // }
-  }
+  methods: {}
 });
 
 /***/ }),
@@ -3393,14 +3296,14 @@ __webpack_require__.r(__webpack_exports__);
           'name': stocks.find(function (stock) {
             return stock.code == fundamentals2017[i].code;
           }).name,
-          'buy_price': fcfYieldCalculation.buy_price.toFixed(3),
-          'close': eodArray.close[0].toFixed(3),
-          'low52week': eodArray.low52week.toFixed(3),
-          'high52week': eodArray.high52week.toFixed(3),
-          'pe': avgArray.pe.toFixed(3),
-          'roe': avgArray.roe.toFixed(3),
-          'net_profit_gr': avgArray.netProfitGR.toFixed(3),
-          'dy': avgArray.dy.toFixed(3),
+          'buy_price': fcfYieldCalculation.buy_price,
+          'close': eodArray.close[0],
+          'low52week': eodArray.low52week,
+          'high52week': eodArray.high52week,
+          'pe': avgArray.pe,
+          'roe': avgArray.roe,
+          'net_profit_gr': avgArray.netProfitGR,
+          'dy': avgArray.dy,
           'code': fundamentals2017[i].code
         });
 
@@ -23321,10 +23224,6 @@ var render = function() {
           _vm._v(" "),
           _c("v-spacer"),
           _vm._v(" "),
-          _c("v-btn", { attrs: { color: "primary", dark: "" } }, [
-            _vm._v("\n      Load \n    ")
-          ]),
-          _vm._v(" "),
           _c(
             "v-btn",
             {
@@ -23385,7 +23284,7 @@ var render = function() {
                           : "transparent"
                     }
                   },
-                  [_vm._v(_vm._s(props.item.buy_price))]
+                  [_vm._v(_vm._s(props.item.buy_price.toFixed(3)))]
                 ),
                 _vm._v(" "),
                 _c(
@@ -23609,7 +23508,7 @@ var render = function() {
                 ),
                 _vm._v(" "),
                 _c("td", { staticClass: "text-xs-right" }, [
-                  _vm._v(_vm._s(props.item.pe))
+                  _vm._v(_vm._s(props.item.pe.toFixed(3)))
                 ]),
                 _vm._v(" "),
                 _c(
@@ -23621,7 +23520,7 @@ var render = function() {
                         props.item.roe > 15 ? "#6decac" : "transparent"
                     }
                   },
-                  [_vm._v(_vm._s(props.item.roe))]
+                  [_vm._v(_vm._s(props.item.roe.toFixed(3)))]
                 ),
                 _vm._v(" "),
                 _c(
@@ -23635,7 +23534,7 @@ var render = function() {
                           : "transparent"
                     }
                   },
-                  [_vm._v(_vm._s(props.item.net_profit_gr))]
+                  [_vm._v(_vm._s(props.item.net_profit_gr.toFixed(3)))]
                 ),
                 _vm._v(" "),
                 _c(
@@ -23651,7 +23550,7 @@ var render = function() {
                           : "transparent"
                     }
                   },
-                  [_vm._v(_vm._s(props.item.dy))]
+                  [_vm._v(_vm._s(props.item.dy.toFixed(3)))]
                 )
               ]
             }

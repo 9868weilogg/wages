@@ -259,14 +259,14 @@
 
           fcfYield.push({ 
             'name': stocks.find(stock => stock.code == fundamentals2017[i].code).name,
-            'buy_price': fcfYieldCalculation.buy_price.toFixed(3),
-            'close': eodArray.close[0].toFixed(3),
-            'low52week': eodArray.low52week.toFixed(3),
-            'high52week': eodArray.high52week.toFixed(3),
-            'pe': avgArray.pe.toFixed(3),
-            'roe': avgArray.roe.toFixed(3),
-            'net_profit_gr': avgArray.netProfitGR.toFixed(3),
-            'dy': avgArray.dy.toFixed(3),
+            'buy_price': fcfYieldCalculation.buy_price,
+            'close': eodArray.close[0],
+            'low52week': eodArray.low52week,
+            'high52week': eodArray.high52week,
+            'pe': avgArray.pe,
+            'roe': avgArray.roe,
+            'net_profit_gr': avgArray.netProfitGR,
+            'dy': avgArray.dy,
             'code': fundamentals2017[i].code,
           })
 
