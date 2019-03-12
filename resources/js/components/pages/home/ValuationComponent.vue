@@ -85,7 +85,7 @@
     created() {
       this.getStocks();
       this.getWatchlists();
-      this.getWatchlistItems();
+      this.$store.commit('getWatchlistItems');
       this.getFundamental();
       this.getEods();
     },
@@ -97,9 +97,7 @@
         })
         .then(response => {
           // console.log(response.data.data);
-          // this.stocks = response.data.data;
           this.$store.state.stocks = response.data.data;
-          // console.log(this.$store.state.stocks);
           this.$store.state.searchLoading = false;
         })
         .catch(error => console.log(error.response));
@@ -113,23 +111,6 @@
           // console.log(response.data);
           this.$store.state.watchlists = response.data.data;
           this.$store.state.watchlistLoading = false;
-        })
-        .catch(error => console.log(error.response));
-      },
-      getWatchlistItems(){
-        axios({
-          url: '/api/watchlist-items',
-          method: 'get',
-          params: {
-            'watchlist_id' : 1,
-            'get' : "watchlist_item",
-          }
-        })
-        .then(response => {
-          // this.watchlistItems = response.data.data;
-          this.$store.state.watchlistItems = response.data.data;
-          // console.log(this.$store.state.watchlistItems);
-
         })
         .catch(error => console.log(error.response));
       },

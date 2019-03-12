@@ -107,21 +107,6 @@
     },
     methods: {
 
-      addWatchlistItem(){
-        axios({
-          url: '/api/watchlist-items',
-          method: 'post',
-          data: {
-            'stockCode' : this.editedItem.stockCode,
-            'watchlistId' : this.editedItem.watchlistId,
-          }
-        })
-        .then(response => {
-          // console.log(response);
-        })
-        .catch(error => console.log(error.response));
-      },
-
       addItem (item) {
         this.editedItem.stockCode = Object.assign({}, item).code;
         this.dialog = true
@@ -138,7 +123,7 @@
       save () {
         if (this.editedIndex > -1) {
         } else {
-          this.addWatchlistItem(this.editedItem);
+          this.$store.commit('addWatchlistItem',this.editedItem);
         }
         this.close()
       },
