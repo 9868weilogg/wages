@@ -50,9 +50,9 @@
       class="elevation-1"
     >
       <template slot="items" slot-scope="props">
-        <td>{{ props.item.code }}</td>
+        <td>{{ props.item.name }}</td>
         <td class="text-xs-right">{{ props.item.stock?props.item.stock.close:'-' }}</td>
-        <td class="text-xs-right">{{ props.item.stock?(props.item.stock.close - props.item.stock.open):'-' }}</td>
+        <td class="text-xs-right">{{ props.item.stock?(props.item.stock.close - props.item.stock.open).toFixed(4):'-' }}</td>
         <td class="justify-center layout px-0">
           <v-icon
             small
