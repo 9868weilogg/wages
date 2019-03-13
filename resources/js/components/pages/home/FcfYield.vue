@@ -22,30 +22,32 @@
       :loading="$store.state.fcfYieldLoading"
       :search="search"
       :headers="expand ? fcfYieldHeadersAll : fcfYieldHeaders"
-      :items="$store.state.fcfYieldContent"
+      :items="this.$store.state.fcfYieldContent"
       class="elevation-1"
     >
       <template slot="items" slot-scope="props">
-        <td>{{ props.item.name }}</td>
-        <td class="text-xs-right">{{ props.item.close }}</td>
-        <td class="text-xs-right">{{ props.item.low52week }}</td>
-        <td class="text-xs-right">{{ props.item.high52week }}</td>
-        <td class="text-xs-right" :style="{backgroundColor: (props.item.close < props.item.buy_price ? '#b6f9f7' : 'transparent' ) }">{{ props.item.buy_price.toFixed(3) }}</td>
-        <td v-show="expand" class="text-xs-right" :style="{backgroundColor: (props.item.y2018 > 5 ? '#8ee3c7' : 'transparent' ) }">{{ props.item.y2018 }}</td>
-        <td v-show="expand" class="text-xs-right" :style="{backgroundColor: (props.item.y2017 > 5 ? '#8ee3c7' : 'transparent' ) }">{{ props.item.y2017 }}</td>
-        <td v-show="expand" class="text-xs-right" :style="{backgroundColor: (props.item.y2016 > 5 ? '#8ee3c7' : 'transparent' ) }">{{ props.item.y2016 }}</td>
-        <td v-show="expand" class="text-xs-right" :style="{backgroundColor: (props.item.y2015 > 5 ? '#8ee3c7' : 'transparent' ) }">{{ props.item.y2015 }}</td>
-        <td v-show="expand" class="text-xs-right" :style="{backgroundColor: (props.item.y2014 > 5 ? '#8ee3c7' : 'transparent' ) }">{{ props.item.y2014 }}</td>
-        <td v-show="expand" class="text-xs-right" :style="{backgroundColor: (props.item.y2013 > 5 ? '#8ee3c7' : 'transparent' ) }">{{ props.item.y2013 }}</td>
-        <td v-show="expand" class="text-xs-right" :style="{backgroundColor: (props.item.y2012 > 5 ? '#8ee3c7' : 'transparent' ) }">{{ props.item.y2012 }}</td>
-        <td v-show="expand" class="text-xs-right" :style="{backgroundColor: (props.item.y2011 > 5 ? '#8ee3c7' : 'transparent' ) }">{{ props.item.y2011 }}</td>
-        <td v-show="expand" class="text-xs-right" :style="{backgroundColor: (props.item.y2010 > 5 ? '#8ee3c7' : 'transparent' ) }">{{ props.item.y2010 }}</td>
-        <td v-show="expand" class="text-xs-right" :style="{backgroundColor: (props.item.y2009 > 5 ? '#8ee3c7' : 'transparent' ) }">{{ props.item.y2009 }}</td>
-        <td v-show="expand" class="text-xs-right" :style="{backgroundColor: (props.item.y2008 > 5 ? '#8ee3c7' : 'transparent' ) }">{{ props.item.y2008 }}</td>
-        <td class="text-xs-right">{{ props.item.pe.toFixed(3) }}</td>
-        <td class="text-xs-right" :style="{backgroundColor: (props.item.roe > 15 ? '#6decac' : 'transparent' ) }">{{ props.item.roe.toFixed(3) }}</td>
-        <td class="text-xs-right" :style="{backgroundColor: (props.item.net_profit_gr > 15 ? '#6495ed' : 'transparent' ) }">{{ props.item.net_profit_gr.toFixed(3) }}</td>
-        <td class="text-xs-right" :style="{backgroundColor: (props.item.dy > 6 ? '#6decac' : props.item.dy > 4 ? '#FFFF00' : 'transparent' ) }">{{ props.item.dy.toFixed(3) }}</td>
+        <tr @click="getIntrinsicFairValue(props.item)">
+          <td>{{ props.item.name }}</td>
+          <td class="text-xs-right">{{ props.item.close }}</td>
+          <td class="text-xs-right">{{ props.item.low52week }}</td>
+          <td class="text-xs-right">{{ props.item.high52week }}</td>
+          <td class="text-xs-right" :style="{backgroundColor: (props.item.close < props.item.buy_price ? '#b6f9f7' : 'transparent' ) }">{{ props.item.buy_price.toFixed(3) }}</td>
+          <td v-show="expand" class="text-xs-right" :style="{backgroundColor: (props.item.y2018 > 5 ? '#8ee3c7' : 'transparent' ) }">{{ props.item.y2018 }}</td>
+          <td v-show="expand" class="text-xs-right" :style="{backgroundColor: (props.item.y2017 > 5 ? '#8ee3c7' : 'transparent' ) }">{{ props.item.y2017 }}</td>
+          <td v-show="expand" class="text-xs-right" :style="{backgroundColor: (props.item.y2016 > 5 ? '#8ee3c7' : 'transparent' ) }">{{ props.item.y2016 }}</td>
+          <td v-show="expand" class="text-xs-right" :style="{backgroundColor: (props.item.y2015 > 5 ? '#8ee3c7' : 'transparent' ) }">{{ props.item.y2015 }}</td>
+          <td v-show="expand" class="text-xs-right" :style="{backgroundColor: (props.item.y2014 > 5 ? '#8ee3c7' : 'transparent' ) }">{{ props.item.y2014 }}</td>
+          <td v-show="expand" class="text-xs-right" :style="{backgroundColor: (props.item.y2013 > 5 ? '#8ee3c7' : 'transparent' ) }">{{ props.item.y2013 }}</td>
+          <td v-show="expand" class="text-xs-right" :style="{backgroundColor: (props.item.y2012 > 5 ? '#8ee3c7' : 'transparent' ) }">{{ props.item.y2012 }}</td>
+          <td v-show="expand" class="text-xs-right" :style="{backgroundColor: (props.item.y2011 > 5 ? '#8ee3c7' : 'transparent' ) }">{{ props.item.y2011 }}</td>
+          <td v-show="expand" class="text-xs-right" :style="{backgroundColor: (props.item.y2010 > 5 ? '#8ee3c7' : 'transparent' ) }">{{ props.item.y2010 }}</td>
+          <td v-show="expand" class="text-xs-right" :style="{backgroundColor: (props.item.y2009 > 5 ? '#8ee3c7' : 'transparent' ) }">{{ props.item.y2009 }}</td>
+          <td v-show="expand" class="text-xs-right" :style="{backgroundColor: (props.item.y2008 > 5 ? '#8ee3c7' : 'transparent' ) }">{{ props.item.y2008 }}</td>
+          <td class="text-xs-right">{{ props.item.pe.toFixed(3) }}</td>
+          <td class="text-xs-right" :style="{backgroundColor: (props.item.roe > 15 ? '#6decac' : 'transparent' ) }">{{ props.item.roe.toFixed(3) }}</td>
+          <td class="text-xs-right" :style="{backgroundColor: (props.item.net_profit_gr > 15 ? '#6495ed' : 'transparent' ) }">{{ props.item.net_profit_gr.toFixed(3) }}</td>
+          <td class="text-xs-right" :style="{backgroundColor: (props.item.dy > 6 ? '#6decac' : props.item.dy > 4 ? '#FFFF00' : 'transparent' ) }">{{ props.item.dy.toFixed(3) }}</td>
+        </tr>
       </template>
     </v-data-table>
   </v-card>
@@ -56,7 +58,6 @@
     data () {
       return {
         expand: false,
-        loading: false,
         search: '',
         fcfYieldHeadersAll: [
           {
@@ -101,13 +102,15 @@
           { text: 'Net Profit GR (%)', value: 'net_profit_gr' },
           { text: 'Dividend Yield (%)', value: 'dy' },
         ],
-        fcfYieldContent: [],
       }
     },
     created () {
     }, 
     methods: {
-      
+      getIntrinsicFairValue(item) {
+        this.$store.state.intrinsicValue = this.$store.getters.getStockIntrinsicFairValue(item.code).filter(value => value.type === "intrinsic")
+        this.$store.state.fairValue = this.$store.getters.getStockIntrinsicFairValue(item.code).filter(value => value.type === "fair")
+      }
       
     }
   }

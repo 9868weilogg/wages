@@ -236,7 +236,54 @@
           fcfYieldCalculation.low52week_33_premium = ((eodArray.high52week - eodArray.low52week) * 0.33) + eodArray.low52week
           fcfYieldCalculation.buy_price = Math.min(fcfYieldCalculation.intrinsic_25_discount, fcfYieldCalculation.low52week_33_premium)
 
-          
+          this.$store.state.intrinsicFairValue.push({
+            'code': fundamentals2017[i].code,
+            'key': '10Y Total EPS',
+            'value': 'RM ' + fcfYieldCalculation.total10YrEps.toFixed(3),
+            'type': 'intrinsic',
+          })
+
+          this.$store.state.intrinsicFairValue.push({
+            'code': fundamentals2017[i].code,
+            'key': '10Y Total DPS',
+            'value': 'RM ' + fcfYieldCalculation.total10YrDps.toFixed(3),
+            'type': 'intrinsic',
+          })
+
+          this.$store.state.intrinsicFairValue.push({
+            'code': fundamentals2017[i].code,
+            'key': '10Y Total Return',
+            'value': 'RM ' + fcfYieldCalculation.total10YrReturn.toFixed(3),
+            'type': 'intrinsic',
+          })
+
+          this.$store.state.intrinsicFairValue.push({
+            'code': fundamentals2017[i].code,
+            'key': 'Estimate Price',
+            'value': 'RM ' + fcfYieldCalculation.estimatePrice.toFixed(3),
+            'type': 'intrinsic',
+          })
+
+          this.$store.state.intrinsicFairValue.push({
+            'code': fundamentals2017[i].code,
+            'key': 'Intrinsic Value',
+            'value': 'RM ' + fcfYieldCalculation.intrinsicValue.toFixed(3),
+            'type': 'fair',
+          })
+
+          this.$store.state.intrinsicFairValue.push({
+            'code': fundamentals2017[i].code,
+            'key': 'Fair Value',
+            'value': 'RM ' + fcfYieldCalculation.buy_price.toFixed(3),
+            'type': 'fair',
+          })
+
+          this.$store.state.intrinsicFairValue.push({
+            'code': fundamentals2017[i].code,
+            'key': '52 week price',
+            'value': 'RM ' + eodArray.low52week.toFixed(3) + " - RM " + eodArray.high52week.toFixed(3),
+            'type': 'fair',
+          })
 
           fcfYield.push({ 
             'name': stocks.find(stock => stock.code == fundamentals2017[i].code).name,

@@ -2208,20 +2208,10 @@ __webpack_require__.r(__webpack_exports__);
         text: '',
         align: 'left',
         sortable: false,
-        value: 'a1'
+        value: 'key'
       }, {
         text: '',
-        value: 'b1'
-      }],
-      desserts: [{
-        a1: '52 week price',
-        b1: 159
-      }, {
-        a1: 'Current Price',
-        b1: 159
-      }, {
-        a1: 'Fair Value',
-        b1: 159
+        value: 'value'
       }]
     };
   }
@@ -2291,11 +2281,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       expand: false,
-      loading: false,
       search: '',
       fcfYieldHeadersAll: [{
         text: 'Stock Name',
@@ -2389,12 +2380,20 @@ __webpack_require__.r(__webpack_exports__);
       }, {
         text: 'Dividend Yield (%)',
         value: 'dy'
-      }],
-      fcfYieldContent: []
+      }]
     };
   },
   created: function created() {},
-  methods: {}
+  methods: {
+    getIntrinsicFairValue: function getIntrinsicFairValue(item) {
+      this.$store.state.intrinsicValue = this.$store.getters.getStockIntrinsicFairValue(item.code).filter(function (value) {
+        return value.type === "intrinsic";
+      });
+      this.$store.state.fairValue = this.$store.getters.getStockIntrinsicFairValue(item.code).filter(function (value) {
+        return value.type === "fair";
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -2825,23 +2824,10 @@ __webpack_require__.r(__webpack_exports__);
         text: '',
         align: 'left',
         sortable: false,
-        value: 'a1'
+        value: 'key'
       }, {
         text: '',
-        value: 'b1'
-      }],
-      desserts: [{
-        a1: '5-yr Average',
-        b1: 159
-      }, {
-        a1: 'Projected 5-yr accumulate earning and dividend',
-        b1: 159
-      }, {
-        a1: 'Estimate Price',
-        b1: 159
-      }, {
-        a1: 'Current Intrinsic Value',
-        b1: 159
+        value: 'value'
       }]
     };
   }
@@ -3170,6 +3156,8 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     getFcfYield: function getFcfYield() {
+      var _this5 = this;
+
       Array.prototype.groupBy = function (prop) {
         return this.reduce(function (groups, item) {
           var val = item[prop];
@@ -3260,6 +3248,56 @@ __webpack_require__.r(__webpack_exports__);
         fcfYieldCalculation.intrinsic_25_discount = fcfYieldCalculation.intrinsicValue * 0.75;
         fcfYieldCalculation.low52week_33_premium = (eodArray.high52week - eodArray.low52week) * 0.33 + eodArray.low52week;
         fcfYieldCalculation.buy_price = Math.min(fcfYieldCalculation.intrinsic_25_discount, fcfYieldCalculation.low52week_33_premium);
+
+        _this5.$store.state.intrinsicFairValue.push({
+          'code': fundamentals2017[i].code,
+          'key': '10Y Total EPS',
+          'value': 'RM ' + fcfYieldCalculation.total10YrEps.toFixed(3),
+          'type': 'intrinsic'
+        });
+
+        _this5.$store.state.intrinsicFairValue.push({
+          'code': fundamentals2017[i].code,
+          'key': '10Y Total DPS',
+          'value': 'RM ' + fcfYieldCalculation.total10YrDps.toFixed(3),
+          'type': 'intrinsic'
+        });
+
+        _this5.$store.state.intrinsicFairValue.push({
+          'code': fundamentals2017[i].code,
+          'key': '10Y Total Return',
+          'value': 'RM ' + fcfYieldCalculation.total10YrReturn.toFixed(3),
+          'type': 'intrinsic'
+        });
+
+        _this5.$store.state.intrinsicFairValue.push({
+          'code': fundamentals2017[i].code,
+          'key': 'Estimate Price',
+          'value': 'RM ' + fcfYieldCalculation.estimatePrice.toFixed(3),
+          'type': 'intrinsic'
+        });
+
+        _this5.$store.state.intrinsicFairValue.push({
+          'code': fundamentals2017[i].code,
+          'key': 'Intrinsic Value',
+          'value': 'RM ' + fcfYieldCalculation.intrinsicValue.toFixed(3),
+          'type': 'fair'
+        });
+
+        _this5.$store.state.intrinsicFairValue.push({
+          'code': fundamentals2017[i].code,
+          'key': 'Fair Value',
+          'value': 'RM ' + fcfYieldCalculation.buy_price.toFixed(3),
+          'type': 'fair'
+        });
+
+        _this5.$store.state.intrinsicFairValue.push({
+          'code': fundamentals2017[i].code,
+          'key': '52 week price',
+          'value': 'RM ' + eodArray.low52week.toFixed(3) + " - RM " + eodArray.high52week.toFixed(3),
+          'type': 'fair'
+        });
+
         fcfYield.push({
           'name': stocks.find(function (stock) {
             return stock.code == fundamentals2017[i].code;
@@ -23117,16 +23155,16 @@ var render = function() {
       _vm._v(" "),
       _c("v-data-table", {
         staticClass: "elevation-1",
-        attrs: { headers: _vm.headers, items: _vm.desserts },
+        attrs: { headers: _vm.headers, items: this.$store.state.fairValue },
         scopedSlots: _vm._u([
           {
             key: "items",
             fn: function(props) {
               return [
-                _c("td", [_vm._v(_vm._s(props.item.a1))]),
+                _c("td", [_vm._v(_vm._s(props.item.key))]),
                 _vm._v(" "),
                 _c("td", { staticClass: "text-xs-right" }, [
-                  _vm._v(_vm._s(props.item.b1))
+                  _vm._v(_vm._s(props.item.value))
                 ])
               ]
             }
@@ -23220,305 +23258,317 @@ var render = function() {
           loading: _vm.$store.state.fcfYieldLoading,
           search: _vm.search,
           headers: _vm.expand ? _vm.fcfYieldHeadersAll : _vm.fcfYieldHeaders,
-          items: _vm.$store.state.fcfYieldContent
+          items: this.$store.state.fcfYieldContent
         },
         scopedSlots: _vm._u([
           {
             key: "items",
             fn: function(props) {
               return [
-                _c("td", [_vm._v(_vm._s(props.item.name))]),
-                _vm._v(" "),
-                _c("td", { staticClass: "text-xs-right" }, [
-                  _vm._v(_vm._s(props.item.close))
-                ]),
-                _vm._v(" "),
-                _c("td", { staticClass: "text-xs-right" }, [
-                  _vm._v(_vm._s(props.item.low52week))
-                ]),
-                _vm._v(" "),
-                _c("td", { staticClass: "text-xs-right" }, [
-                  _vm._v(_vm._s(props.item.high52week))
-                ]),
-                _vm._v(" "),
                 _c(
-                  "td",
+                  "tr",
                   {
-                    staticClass: "text-xs-right",
-                    style: {
-                      backgroundColor:
-                        props.item.close < props.item.buy_price
-                          ? "#b6f9f7"
-                          : "transparent"
-                    }
-                  },
-                  [_vm._v(_vm._s(props.item.buy_price.toFixed(3)))]
-                ),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.expand,
-                        expression: "expand"
+                    on: {
+                      click: function($event) {
+                        _vm.getIntrinsicFairValue(props.item)
                       }
-                    ],
-                    staticClass: "text-xs-right",
-                    style: {
-                      backgroundColor:
-                        props.item.y2018 > 5 ? "#8ee3c7" : "transparent"
                     }
                   },
-                  [_vm._v(_vm._s(props.item.y2018))]
-                ),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    directives: [
+                  [
+                    _c("td", [_vm._v(_vm._s(props.item.name))]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "text-xs-right" }, [
+                      _vm._v(_vm._s(props.item.close))
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "text-xs-right" }, [
+                      _vm._v(_vm._s(props.item.low52week))
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "text-xs-right" }, [
+                      _vm._v(_vm._s(props.item.high52week))
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "td",
                       {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.expand,
-                        expression: "expand"
-                      }
-                    ],
-                    staticClass: "text-xs-right",
-                    style: {
-                      backgroundColor:
-                        props.item.y2017 > 5 ? "#8ee3c7" : "transparent"
-                    }
-                  },
-                  [_vm._v(_vm._s(props.item.y2017))]
-                ),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    directives: [
+                        staticClass: "text-xs-right",
+                        style: {
+                          backgroundColor:
+                            props.item.close < props.item.buy_price
+                              ? "#b6f9f7"
+                              : "transparent"
+                        }
+                      },
+                      [_vm._v(_vm._s(props.item.buy_price.toFixed(3)))]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "td",
                       {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.expand,
-                        expression: "expand"
-                      }
-                    ],
-                    staticClass: "text-xs-right",
-                    style: {
-                      backgroundColor:
-                        props.item.y2016 > 5 ? "#8ee3c7" : "transparent"
-                    }
-                  },
-                  [_vm._v(_vm._s(props.item.y2016))]
-                ),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    directives: [
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.expand,
+                            expression: "expand"
+                          }
+                        ],
+                        staticClass: "text-xs-right",
+                        style: {
+                          backgroundColor:
+                            props.item.y2018 > 5 ? "#8ee3c7" : "transparent"
+                        }
+                      },
+                      [_vm._v(_vm._s(props.item.y2018))]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "td",
                       {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.expand,
-                        expression: "expand"
-                      }
-                    ],
-                    staticClass: "text-xs-right",
-                    style: {
-                      backgroundColor:
-                        props.item.y2015 > 5 ? "#8ee3c7" : "transparent"
-                    }
-                  },
-                  [_vm._v(_vm._s(props.item.y2015))]
-                ),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    directives: [
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.expand,
+                            expression: "expand"
+                          }
+                        ],
+                        staticClass: "text-xs-right",
+                        style: {
+                          backgroundColor:
+                            props.item.y2017 > 5 ? "#8ee3c7" : "transparent"
+                        }
+                      },
+                      [_vm._v(_vm._s(props.item.y2017))]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "td",
                       {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.expand,
-                        expression: "expand"
-                      }
-                    ],
-                    staticClass: "text-xs-right",
-                    style: {
-                      backgroundColor:
-                        props.item.y2014 > 5 ? "#8ee3c7" : "transparent"
-                    }
-                  },
-                  [_vm._v(_vm._s(props.item.y2014))]
-                ),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    directives: [
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.expand,
+                            expression: "expand"
+                          }
+                        ],
+                        staticClass: "text-xs-right",
+                        style: {
+                          backgroundColor:
+                            props.item.y2016 > 5 ? "#8ee3c7" : "transparent"
+                        }
+                      },
+                      [_vm._v(_vm._s(props.item.y2016))]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "td",
                       {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.expand,
-                        expression: "expand"
-                      }
-                    ],
-                    staticClass: "text-xs-right",
-                    style: {
-                      backgroundColor:
-                        props.item.y2013 > 5 ? "#8ee3c7" : "transparent"
-                    }
-                  },
-                  [_vm._v(_vm._s(props.item.y2013))]
-                ),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    directives: [
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.expand,
+                            expression: "expand"
+                          }
+                        ],
+                        staticClass: "text-xs-right",
+                        style: {
+                          backgroundColor:
+                            props.item.y2015 > 5 ? "#8ee3c7" : "transparent"
+                        }
+                      },
+                      [_vm._v(_vm._s(props.item.y2015))]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "td",
                       {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.expand,
-                        expression: "expand"
-                      }
-                    ],
-                    staticClass: "text-xs-right",
-                    style: {
-                      backgroundColor:
-                        props.item.y2012 > 5 ? "#8ee3c7" : "transparent"
-                    }
-                  },
-                  [_vm._v(_vm._s(props.item.y2012))]
-                ),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    directives: [
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.expand,
+                            expression: "expand"
+                          }
+                        ],
+                        staticClass: "text-xs-right",
+                        style: {
+                          backgroundColor:
+                            props.item.y2014 > 5 ? "#8ee3c7" : "transparent"
+                        }
+                      },
+                      [_vm._v(_vm._s(props.item.y2014))]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "td",
                       {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.expand,
-                        expression: "expand"
-                      }
-                    ],
-                    staticClass: "text-xs-right",
-                    style: {
-                      backgroundColor:
-                        props.item.y2011 > 5 ? "#8ee3c7" : "transparent"
-                    }
-                  },
-                  [_vm._v(_vm._s(props.item.y2011))]
-                ),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    directives: [
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.expand,
+                            expression: "expand"
+                          }
+                        ],
+                        staticClass: "text-xs-right",
+                        style: {
+                          backgroundColor:
+                            props.item.y2013 > 5 ? "#8ee3c7" : "transparent"
+                        }
+                      },
+                      [_vm._v(_vm._s(props.item.y2013))]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "td",
                       {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.expand,
-                        expression: "expand"
-                      }
-                    ],
-                    staticClass: "text-xs-right",
-                    style: {
-                      backgroundColor:
-                        props.item.y2010 > 5 ? "#8ee3c7" : "transparent"
-                    }
-                  },
-                  [_vm._v(_vm._s(props.item.y2010))]
-                ),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    directives: [
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.expand,
+                            expression: "expand"
+                          }
+                        ],
+                        staticClass: "text-xs-right",
+                        style: {
+                          backgroundColor:
+                            props.item.y2012 > 5 ? "#8ee3c7" : "transparent"
+                        }
+                      },
+                      [_vm._v(_vm._s(props.item.y2012))]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "td",
                       {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.expand,
-                        expression: "expand"
-                      }
-                    ],
-                    staticClass: "text-xs-right",
-                    style: {
-                      backgroundColor:
-                        props.item.y2009 > 5 ? "#8ee3c7" : "transparent"
-                    }
-                  },
-                  [_vm._v(_vm._s(props.item.y2009))]
-                ),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    directives: [
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.expand,
+                            expression: "expand"
+                          }
+                        ],
+                        staticClass: "text-xs-right",
+                        style: {
+                          backgroundColor:
+                            props.item.y2011 > 5 ? "#8ee3c7" : "transparent"
+                        }
+                      },
+                      [_vm._v(_vm._s(props.item.y2011))]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "td",
                       {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.expand,
-                        expression: "expand"
-                      }
-                    ],
-                    staticClass: "text-xs-right",
-                    style: {
-                      backgroundColor:
-                        props.item.y2008 > 5 ? "#8ee3c7" : "transparent"
-                    }
-                  },
-                  [_vm._v(_vm._s(props.item.y2008))]
-                ),
-                _vm._v(" "),
-                _c("td", { staticClass: "text-xs-right" }, [
-                  _vm._v(_vm._s(props.item.pe.toFixed(3)))
-                ]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "text-xs-right",
-                    style: {
-                      backgroundColor:
-                        props.item.roe > 15 ? "#6decac" : "transparent"
-                    }
-                  },
-                  [_vm._v(_vm._s(props.item.roe.toFixed(3)))]
-                ),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "text-xs-right",
-                    style: {
-                      backgroundColor:
-                        props.item.net_profit_gr > 15
-                          ? "#6495ed"
-                          : "transparent"
-                    }
-                  },
-                  [_vm._v(_vm._s(props.item.net_profit_gr.toFixed(3)))]
-                ),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  {
-                    staticClass: "text-xs-right",
-                    style: {
-                      backgroundColor:
-                        props.item.dy > 6
-                          ? "#6decac"
-                          : props.item.dy > 4
-                          ? "#FFFF00"
-                          : "transparent"
-                    }
-                  },
-                  [_vm._v(_vm._s(props.item.dy.toFixed(3)))]
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.expand,
+                            expression: "expand"
+                          }
+                        ],
+                        staticClass: "text-xs-right",
+                        style: {
+                          backgroundColor:
+                            props.item.y2010 > 5 ? "#8ee3c7" : "transparent"
+                        }
+                      },
+                      [_vm._v(_vm._s(props.item.y2010))]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "td",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.expand,
+                            expression: "expand"
+                          }
+                        ],
+                        staticClass: "text-xs-right",
+                        style: {
+                          backgroundColor:
+                            props.item.y2009 > 5 ? "#8ee3c7" : "transparent"
+                        }
+                      },
+                      [_vm._v(_vm._s(props.item.y2009))]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "td",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.expand,
+                            expression: "expand"
+                          }
+                        ],
+                        staticClass: "text-xs-right",
+                        style: {
+                          backgroundColor:
+                            props.item.y2008 > 5 ? "#8ee3c7" : "transparent"
+                        }
+                      },
+                      [_vm._v(_vm._s(props.item.y2008))]
+                    ),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "text-xs-right" }, [
+                      _vm._v(_vm._s(props.item.pe.toFixed(3)))
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "td",
+                      {
+                        staticClass: "text-xs-right",
+                        style: {
+                          backgroundColor:
+                            props.item.roe > 15 ? "#6decac" : "transparent"
+                        }
+                      },
+                      [_vm._v(_vm._s(props.item.roe.toFixed(3)))]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "td",
+                      {
+                        staticClass: "text-xs-right",
+                        style: {
+                          backgroundColor:
+                            props.item.net_profit_gr > 15
+                              ? "#6495ed"
+                              : "transparent"
+                        }
+                      },
+                      [_vm._v(_vm._s(props.item.net_profit_gr.toFixed(3)))]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "td",
+                      {
+                        staticClass: "text-xs-right",
+                        style: {
+                          backgroundColor:
+                            props.item.dy > 6
+                              ? "#6decac"
+                              : props.item.dy > 4
+                              ? "#FFFF00"
+                              : "transparent"
+                        }
+                      },
+                      [_vm._v(_vm._s(props.item.dy.toFixed(3)))]
+                    )
+                  ]
                 )
               ]
             }
@@ -24014,16 +24064,19 @@ var render = function() {
       _vm._v(" "),
       _c("v-data-table", {
         staticClass: "elevation-1",
-        attrs: { headers: _vm.headers, items: _vm.desserts },
+        attrs: {
+          headers: _vm.headers,
+          items: this.$store.state.intrinsicValue
+        },
         scopedSlots: _vm._u([
           {
             key: "items",
             fn: function(props) {
               return [
-                _c("td", [_vm._v(_vm._s(props.item.a1))]),
+                _c("td", [_vm._v(_vm._s(props.item.key))]),
                 _vm._v(" "),
                 _c("td", { staticClass: "text-xs-right" }, [
-                  _vm._v(_vm._s(props.item.b1))
+                  _vm._v(_vm._s(props.item.value))
                 ])
               ]
             }
@@ -61754,7 +61807,19 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
     watchlists: [],
     fDataContent: [],
     eods: [],
-    fcfYieldContent: []
+    fcfYieldContent: [],
+    intrinsicFairValue: [],
+    intrinsicValue: [],
+    fairValue: []
+  },
+  getters: {
+    getStockIntrinsicFairValue: function getStockIntrinsicFairValue(state) {
+      return function (code) {
+        return state.intrinsicFairValue.filter(function (value) {
+          return value.code === code;
+        });
+      };
+    }
   },
   mutations: {
     addWatchlistItem: function addWatchlistItem(state, editedItem) {
@@ -61791,7 +61856,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
 var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   el: '#app',
   store: store,
-  methods: Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapMutations"])(['addWatchlistItem', 'getWatchlistItems'])
+  methods: Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapMutations"])(['addWatchlistItem', 'getWatchlistItems']),
+  computed: Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapGetters"])(['getStockIntrinsicFairValue'])
 });
 
 /***/ }),

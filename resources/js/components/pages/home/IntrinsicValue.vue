@@ -8,12 +8,12 @@
 
     <v-data-table
       :headers="headers"
-      :items="desserts"
+      :items="this.$store.state.intrinsicValue"
       class="elevation-1"
     >
       <template slot="items" slot-scope="props">
-        <td>{{ props.item.a1 }}</td>
-        <td class="text-xs-right">{{ props.item.b1 }}</td>
+        <td>{{ props.item.key }}</td>
+        <td class="text-xs-right">{{ props.item.value }}</td>
       </template>
     </v-data-table>
   </v-card>
@@ -29,29 +29,10 @@
             text: '',
             align: 'left',
             sortable: false,
-            value: 'a1'
+            value: 'key'
           },
-          { text: '', value: 'b1' }
+          { text: '', value: 'value' }
         ],
-        desserts: [
-          {
-            a1: '5-yr Average',
-            b1: 159
-          },
-          {
-            a1: 'Projected 5-yr accumulate earning and dividend',
-            b1: 159
-          },
-          {
-            a1: 'Estimate Price',
-            b1: 159
-          },
-          {
-            a1: 'Current Intrinsic Value',
-            b1: 159
-          },
-          
-        ]
       }
     }
   }
