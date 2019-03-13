@@ -8,12 +8,12 @@
 
     <v-data-table
       :headers="headers"
-      :items="desserts"
+      :items="this.$store.state.fairValue"
       class="elevation-1"
     >
       <template slot="items" slot-scope="props">
-        <td>{{ props.item.a1 }}</td>
-        <td class="text-xs-right">{{ props.item.b1 }}</td>
+        <td>{{ props.item.key }}</td>
+        <td class="text-xs-right">{{ props.item.value }}</td>
       </template>
     </v-data-table>
   </v-card>
@@ -29,24 +29,10 @@
             text: '',
             align: 'left',
             sortable: false,
-            value: 'a1'
+            value: 'key'
           },
-          { text: '', value: 'b1' }
+          { text: '', value: 'value' }
         ],
-        desserts: [
-          {
-            a1: '52 week price',
-            b1: 159
-          },
-          {
-            a1: 'Current Price',
-            b1: 159
-          },
-          {
-            a1: 'Fair Value',
-            b1: 159
-          }
-        ]
       }
     }
   }

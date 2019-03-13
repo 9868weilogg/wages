@@ -16,7 +16,7 @@ import Vuex from 'vuex'
 // index.js or main.js
 import 'vuetify/dist/vuetify.min.css' // Ensure you are using css-loader
 import 'font-awesome/css/font-awesome.min.css' // Ensure you are using css-loader
-import { mapState, mapMutations } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex';
 
 Vue.use(Vuetify)
 Vue.use(Vuex)
@@ -58,7 +58,15 @@ Vue.component('admin-page', require('./components/pages/admins/AdminPage.vue').d
       fDataContent: [],
       eods: [],
       fcfYieldContent: [],
+      intrinsicFairValue: [],
+      intrinsicValue: [],
+      fairValue: [],
 
+    },
+    getters: {
+      getStockIntrinsicFairValue: (state) => (code) => {
+        return state.intrinsicFairValue.filter(value => value.code === code)
+      },
     },
     mutations: {
       addWatchlistItem(state, editedItem) {
@@ -104,6 +112,9 @@ const app = new Vue({
     methods: mapMutations([
       'addWatchlistItem',
       'getWatchlistItems',
-    ])
+    ]),
+    computed: mapGetters([
+      'getStockIntrinsicFairValue',
+    ]),
 });
 
