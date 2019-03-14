@@ -2116,56 +2116,107 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      dialog: false,
+      factor: {},
+      select: ['1', '2', '3', '4', '5'],
+      mark: "",
       headers: [{
         text: '',
         align: 'left',
         sortable: false,
-        value: 'a1'
+        value: 'key'
       }, {
         text: '',
-        value: 'b1'
+        value: 'value'
       }],
-      desserts: [{
-        a1: 'Business Sexines',
-        b1: 159
+      ranks: [{
+        key: 'Business Sexines',
+        value: 159
       }, {
-        a1: 'Supplier No.',
-        b1: 159
+        key: 'Supplier No.',
+        value: 159
       }, {
-        a1: 'Customer Choices',
-        b1: 159
+        key: 'Customer Choices',
+        value: 159
       }, {
-        a1: 'Entry Barrier',
-        b1: 159
+        key: 'Entry Barrier',
+        value: 159
       }, {
-        a1: 'Substitute',
-        b1: 159
+        key: 'Substitute',
+        value: 159
       }, {
-        a1: 'Competition No.',
-        b1: 159
+        key: 'Competition No.',
+        value: 159
       }, {
-        a1: 'Competitiveness',
-        b1: 159
+        key: 'Competitiveness',
+        value: 159
       }, {
-        a1: 'FPE < 25',
-        b1: 159
+        key: 'FPE < 25',
+        value: 159
       }, {
-        a1: 'Gearing < 1.5',
-        b1: 159
+        key: 'Gearing < 1.5',
+        value: 159
       }, {
-        a1: 'GP Cashflow > 0.88',
-        b1: 159
+        key: 'GP Cashflow > 0.88',
+        value: 159
       }, {
-        a1: 'Good Will',
-        b1: 159
+        key: 'Good Will',
+        value: 159
       }, {
-        a1: 'Customer Loyalty',
-        b1: 159
+        key: 'Customer Loyalty',
+        value: 159
       }]
     };
+  },
+  methods: {
+    openDialog: function openDialog(item) {
+      this.dialog = true;
+      this.factor = item;
+    },
+    save: function save() {
+      var _this = this;
+
+      this.ranks.find(function (rank) {
+        return rank.key == _this.factor.key;
+      }).value = this.mark;
+      this.dialog = false; // axios({
+      //   url: '/api/stock-prices',
+      //   method: 'post',
+      // })
+      // .then(response => {
+      //   // console.log(response);
+      //   this.$store.state.eods = response.data.data;
+      //   this.getFcfYield();
+      //   // console.log(this.$store.state.eods);
+      // })
+      // .catch(error => console.log(error.response));
+    }
   }
 });
 
@@ -2428,41 +2479,92 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      dialog: false,
+      factor: {},
+      select: ['1', '2', '3', '4', '5'],
+      mark: "",
       headers: [{
         text: '',
         align: 'left',
         sortable: false,
-        value: 'a1'
+        value: 'key'
       }, {
         text: '',
-        value: 'b1'
+        value: 'value'
       }],
-      desserts: [{
-        a1: 'Future Grow',
-        b1: 159
+      ranks: [{
+        key: 'Future Grow',
+        value: 159
       }, {
-        a1: 'Competitiveness',
-        b1: 159
+        key: 'Competitiveness',
+        value: 159
       }, {
-        a1: 'Net Margin > 15%',
-        b1: 159
+        key: 'Net Margin > 15%',
+        value: 159
       }, {
-        a1: 'GP Cashflow > 0.88',
-        b1: 159
+        key: 'GP Cashflow > 0.88',
+        value: 159
       }, {
-        a1: 'Marginal Cost (R&D Important)',
-        b1: 159
+        key: 'Marginal Cost (R&D Important)',
+        value: 159
       }, {
-        a1: 'Leadership',
-        b1: 159
+        key: 'Leadership',
+        value: 159
       }, {
-        a1: 'Talent',
-        b1: 159
+        key: 'Talent',
+        value: 159
       }]
     };
+  },
+  methods: {
+    openDialog: function openDialog(item) {
+      this.dialog = true;
+      this.factor = item;
+    },
+    save: function save() {
+      var _this = this;
+
+      this.ranks.find(function (rank) {
+        return rank.key == _this.factor.key;
+      }).value = this.mark;
+      this.dialog = false; // axios({
+      //   url: '/api/stock-prices',
+      //   method: 'post',
+      // })
+      // .then(response => {
+      //   // console.log(response);
+      //   this.$store.state.eods = response.data.data;
+      //   this.getFcfYield();
+      //   // console.log(this.$store.state.eods);
+      // })
+      // .catch(error => console.log(error.response));
+    }
   }
 });
 
@@ -23090,34 +23192,125 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "v-card",
+    "div",
     [
-      _c("v-card-title", { attrs: { "primary-title": "" } }, [
-        _c("div", [
-          _c("h3", { staticClass: "headline mb-0" }, [
-            _vm._v("Buffett Approach")
-          ])
-        ])
-      ]),
+      _c(
+        "v-card",
+        [
+          _c("v-card-title", { attrs: { "primary-title": "" } }, [
+            _c("div", [
+              _c("h3", { staticClass: "headline mb-0" }, [
+                _vm._v("Buffett Approach")
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("v-data-table", {
+            staticClass: "elevation-1",
+            attrs: { headers: _vm.headers, items: _vm.ranks },
+            scopedSlots: _vm._u([
+              {
+                key: "items",
+                fn: function(props) {
+                  return [
+                    _c(
+                      "tr",
+                      {
+                        on: {
+                          click: function($event) {
+                            _vm.openDialog(props.item)
+                          }
+                        }
+                      },
+                      [
+                        _c("td", [_vm._v(_vm._s(props.item.key))]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "text-xs-right" }, [
+                          _vm._v(_vm._s(props.item.value))
+                        ])
+                      ]
+                    )
+                  ]
+                }
+              }
+            ])
+          })
+        ],
+        1
+      ),
       _vm._v(" "),
-      _c("v-data-table", {
-        staticClass: "elevation-1",
-        attrs: { headers: _vm.headers, items: _vm.desserts },
-        scopedSlots: _vm._u([
-          {
-            key: "items",
-            fn: function(props) {
-              return [
-                _c("td", [_vm._v(_vm._s(props.item.a1))]),
-                _vm._v(" "),
-                _c("td", { staticClass: "text-xs-right" }, [
-                  _vm._v(_vm._s(props.item.b1))
-                ])
-              ]
-            }
+      _c(
+        "v-dialog",
+        {
+          attrs: { "max-width": "500px" },
+          model: {
+            value: _vm.dialog,
+            callback: function($$v) {
+              _vm.dialog = $$v
+            },
+            expression: "dialog"
           }
-        ])
-      })
+        },
+        [
+          _c(
+            "v-card",
+            [
+              _c("v-card-title", [_c("h1", [_vm._v(_vm._s(this.factor.key))])]),
+              _vm._v(" "),
+              _c(
+                "v-card-text",
+                [
+                  _c("v-select", {
+                    attrs: {
+                      items: _vm.select,
+                      label: "Evaluate Mark",
+                      "item-value": "text"
+                    },
+                    model: {
+                      value: _vm.mark,
+                      callback: function($$v) {
+                        _vm.mark = $$v
+                      },
+                      expression: "mark"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-card-actions",
+                [
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { color: "primary", flat: "" },
+                      on: {
+                        click: function($event) {
+                          _vm.dialog = false
+                        }
+                      }
+                    },
+                    [_vm._v("Close")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { color: "primary", flat: "" },
+                      on: { click: _vm.save }
+                    },
+                    [_vm._v("Save")]
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
     ],
     1
   )
@@ -23602,34 +23795,125 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "v-card",
+    "div",
     [
-      _c("v-card-title", { attrs: { "primary-title": "" } }, [
-        _c("div", [
-          _c("h3", { staticClass: "headline mb-0" }, [
-            _vm._v("Fisher Approach")
-          ])
-        ])
-      ]),
+      _c(
+        "v-card",
+        [
+          _c("v-card-title", { attrs: { "primary-title": "" } }, [
+            _c("div", [
+              _c("h3", { staticClass: "headline mb-0" }, [
+                _vm._v("Fisher Approach")
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("v-data-table", {
+            staticClass: "elevation-1",
+            attrs: { headers: _vm.headers, items: _vm.ranks },
+            scopedSlots: _vm._u([
+              {
+                key: "items",
+                fn: function(props) {
+                  return [
+                    _c(
+                      "tr",
+                      {
+                        on: {
+                          click: function($event) {
+                            _vm.openDialog(props.item)
+                          }
+                        }
+                      },
+                      [
+                        _c("td", [_vm._v(_vm._s(props.item.key))]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "text-xs-right" }, [
+                          _vm._v(_vm._s(props.item.value))
+                        ])
+                      ]
+                    )
+                  ]
+                }
+              }
+            ])
+          })
+        ],
+        1
+      ),
       _vm._v(" "),
-      _c("v-data-table", {
-        staticClass: "elevation-1",
-        attrs: { headers: _vm.headers, items: _vm.desserts },
-        scopedSlots: _vm._u([
-          {
-            key: "items",
-            fn: function(props) {
-              return [
-                _c("td", [_vm._v(_vm._s(props.item.a1))]),
-                _vm._v(" "),
-                _c("td", { staticClass: "text-xs-right" }, [
-                  _vm._v(_vm._s(props.item.b1))
-                ])
-              ]
-            }
+      _c(
+        "v-dialog",
+        {
+          attrs: { "max-width": "500px" },
+          model: {
+            value: _vm.dialog,
+            callback: function($$v) {
+              _vm.dialog = $$v
+            },
+            expression: "dialog"
           }
-        ])
-      })
+        },
+        [
+          _c(
+            "v-card",
+            [
+              _c("v-card-title", [_c("h1", [_vm._v(_vm._s(this.factor.key))])]),
+              _vm._v(" "),
+              _c(
+                "v-card-text",
+                [
+                  _c("v-select", {
+                    attrs: {
+                      items: _vm.select,
+                      label: "Evaluate Mark",
+                      "item-value": "text"
+                    },
+                    model: {
+                      value: _vm.mark,
+                      callback: function($$v) {
+                        _vm.mark = $$v
+                      },
+                      expression: "mark"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-card-actions",
+                [
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { color: "primary", flat: "" },
+                      on: {
+                        click: function($event) {
+                          _vm.dialog = false
+                        }
+                      }
+                    },
+                    [_vm._v("Close")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { color: "primary", flat: "" },
+                      on: { click: _vm.save }
+                    },
+                    [_vm._v("Save")]
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
     ],
     1
   )
