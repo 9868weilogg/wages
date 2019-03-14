@@ -1,89 +1,136 @@
 <template>
-  <v-card>
-    <v-card-title primary-title>
-      <div>
-        <h3 class="headline mb-0">Buffett Approach</h3>
-      </div>
-    </v-card-title>
+  <div>
+    <v-card>
+      <v-card-title primary-title>
+        <div>
+          <h3 class="headline mb-0">Buffett Approach</h3>
+        </div>
+      </v-card-title>
 
-    <v-data-table
-      :headers="headers"
-      :items="desserts"
-      class="elevation-1"
-    >
-      <template slot="items" slot-scope="props">
-        <td>{{ props.item.a1 }}</td>
-        <td class="text-xs-right">{{ props.item.b1 }}</td>
-      </template>
-    </v-data-table>
-  </v-card>
+      <v-data-table
+        :headers="headers"
+        :items="ranks"
+        class="elevation-1"
+      >
+        <template slot="items" slot-scope="props">
+          <tr @click="openDialog(props.item)">
+            <td>{{ props.item.key }}</td>
+            <td class="text-xs-right">{{ props.item.value }}</td>
+          </tr>
+        </template>
+      </v-data-table>
+    </v-card>
+    <v-dialog v-model="dialog" max-width="500px">
+      <v-card>
+        <v-card-title>
+          <h1>{{ this.factor.key }}</h1>
+        </v-card-title>
+        <v-card-text>
+          <v-select
+            v-model="mark"
+            :items="select"
+            label="Evaluate Mark"
+            item-value="text"
+          ></v-select>
+        </v-card-text>
+        <v-card-actions>
+          <v-btn color="primary" flat @click="dialog=false">Close</v-btn>
+          <v-btn color="primary" flat @click="save">Save</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+  </div>
 </template>
 
 <script>
   export default {
     data () {
       return {
-        
+        dialog: false,
+        factor: {},
+        select:['1','2','3','4','5'],
+        mark: "",
         headers: [
           {
             text: '',
             align: 'left',
             sortable: false,
-            value: 'a1'
+            value: 'key'
           },
-          { text: '', value: 'b1' }
+          { text: '', value: 'value' }
         ],
-        desserts: [
+        ranks: [
           {
-            a1: 'Business Sexines',
-            b1: 159
+            key: 'Business Sexines',
+            value: 159
           },
           {
-            a1: 'Supplier No.',
-            b1: 159
+            key: 'Supplier No.',
+            value: 159
           },
           {
-            a1: 'Customer Choices',
-            b1: 159
+            key: 'Customer Choices',
+            value: 159
           },
           {
-            a1: 'Entry Barrier',
-            b1: 159
+            key: 'Entry Barrier',
+            value: 159
           },
           {
-            a1: 'Substitute',
-            b1: 159
+            key: 'Substitute',
+            value: 159
           },
           {
-            a1: 'Competition No.',
-            b1: 159
+            key: 'Competition No.',
+            value: 159
           },
           {
-            a1: 'Competitiveness',
-            b1: 159
+            key: 'Competitiveness',
+            value: 159
           },
           {
-            a1: 'FPE < 25',
-            b1: 159
+            key: 'FPE < 25',
+            value: 159
           },
           {
-            a1: 'Gearing < 1.5',
-            b1: 159
+            key: 'Gearing < 1.5',
+            value: 159
           },
           {
-            a1: 'GP Cashflow > 0.88',
-            b1: 159
+            key: 'GP Cashflow > 0.88',
+            value: 159
           },
           {
-            a1: 'Good Will',
-            b1: 159
+            key: 'Good Will',
+            value: 159
           },
           {
-            a1: 'Customer Loyalty',
-            b1: 159
+            key: 'Customer Loyalty',
+            value: 159
           },
         ]
       }
+    },
+    methods: {
+      openDialog(item){
+        this.dialog = true
+        this.factor = item
+      },
+      save() {
+        this.ranks.find(rank => rank.key == this.factor.key).value = this.mark
+        this.dialog = false
+        // axios({
+        //   url: '/api/stock-prices',
+        //   method: 'post',
+        // })
+        // .then(response => {
+        //   // console.log(response);
+        //   this.$store.state.eods = response.data.data;
+        //   this.getFcfYield();
+        //   // console.log(this.$store.state.eods);
+        // })
+        // .catch(error => console.log(error.response));
+      },
     }
   }
 </script>
