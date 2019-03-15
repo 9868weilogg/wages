@@ -50,17 +50,19 @@
       class="elevation-1"
     >
       <template slot="items" slot-scope="props">
-        <td>{{ props.item.name }}</td>
-        <td class="text-xs-right">{{ props.item.stock?props.item.stock.close:'-' }}</td>
-        <td class="text-xs-right">{{ props.item.stock?(props.item.stock.close - props.item.stock.open).toFixed(4):'-' }}</td>
-        <td class="justify-center layout px-0">
-          <v-icon
-            small
-            @click="deleteItem(props.item)"
-          >
-            delete
-          </v-icon>
-        </td>
+        <tr @click="setSelectedStock(props.item)">
+          <td>{{ props.item.name }}</td>
+          <td class="text-xs-right">{{ props.item.stock?props.item.stock.close:'-' }}</td>
+          <td class="text-xs-right">{{ props.item.stock?(props.item.stock.close - props.item.stock.open).toFixed(4):'-' }}</td>
+          <td class="justify-center layout px-0">
+            <v-icon
+              small
+              @click="deleteItem(props.item)"
+            >
+              delete
+            </v-icon>
+          </td>
+        </tr>
       </template>
       <template slot="no-data">
         <v-alert :value="true" color="error" icon="warning">
@@ -98,6 +100,12 @@
       }
     },
     methods: {
+      setSelectedStock(item) {
+        this.$store.state.selectedStock = item
+        // console.log(item)
+        this.$store.commit('checkIfWatchlistItem',item)
+      },
+
       switchWatchlist(id) {
         axios({
           url: '/api/watchlist-items',

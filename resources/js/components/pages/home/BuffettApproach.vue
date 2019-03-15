@@ -9,7 +9,7 @@
 
       <v-data-table
         :headers="headers"
-        :items="ranks"
+        :items="$store.state.buffettApproach"
         class="elevation-1"
       >
         <template slot="items" slot-scope="props">
@@ -59,56 +59,6 @@
           },
           { text: '', value: 'value' }
         ],
-        ranks: [
-          {
-            key: 'Business Sexines',
-            value: 159
-          },
-          {
-            key: 'Supplier No.',
-            value: 159
-          },
-          {
-            key: 'Customer Choices',
-            value: 159
-          },
-          {
-            key: 'Entry Barrier',
-            value: 159
-          },
-          {
-            key: 'Substitute',
-            value: 159
-          },
-          {
-            key: 'Competition No.',
-            value: 159
-          },
-          {
-            key: 'Competitiveness',
-            value: 159
-          },
-          {
-            key: 'FPE < 25',
-            value: 159
-          },
-          {
-            key: 'Gearing < 1.5',
-            value: 159
-          },
-          {
-            key: 'GP Cashflow > 0.88',
-            value: 159
-          },
-          {
-            key: 'Good Will',
-            value: 159
-          },
-          {
-            key: 'Customer Loyalty',
-            value: 159
-          },
-        ]
       }
     },
     methods: {
@@ -117,19 +67,24 @@
         this.factor = item
       },
       save() {
-        this.ranks.find(rank => rank.key == this.factor.key).value = this.mark
+        let key = this.factor.key
+        this.$store.state.buffettApproach.find(rank => rank.key == key).value = this.mark
         this.dialog = false
-        // axios({
-        //   url: '/api/stock-prices',
-        //   method: 'post',
-        // })
-        // .then(response => {
-        //   // console.log(response);
-        //   this.$store.state.eods = response.data.data;
-        //   this.getFcfYield();
-        //   // console.log(this.$store.state.eods);
-        // })
-        // .catch(error => console.log(error.response));
+        this.mark = ""
+
+        axios({
+          url: '/api/gis-ranks/' + this.factor.watchlist_item_id,
+          method: 'post',
+          data : { 
+            _method: 'put',
+            key: this.factor.shortKey,
+            value: this.$store.state.buffettApproach.find(rank => rank.key == key).value,
+          }
+        })
+        .then(response => {
+          console.log(response);
+        })
+        .catch(error => console.log(error.response));
       },
     }
   }
