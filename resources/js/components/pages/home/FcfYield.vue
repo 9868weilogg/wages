@@ -110,8 +110,8 @@
       getIntrinsicFairValue(item) {
         this.$store.state.intrinsicValue = this.$store.getters.getStockIntrinsicFairValue(item.code).filter(value => value.type === "intrinsic")
         this.$store.state.fairValue = this.$store.getters.getStockIntrinsicFairValue(item.code).filter(value => value.type === "fair")
-      }
-      
+      },
+
     }
   }
 </script>

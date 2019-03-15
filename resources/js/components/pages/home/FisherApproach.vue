@@ -9,8 +9,7 @@
 
       <v-data-table
         :headers="headers"
-        :items="ranks"
-        class="elevation-1"
+        :items="$store.state.fisherApproach"
       >
         <template slot="items" slot-scope="props">
           <tr @click="openDialog(props.item)">
@@ -59,37 +58,6 @@
           },
           { text: '', value: 'value' }
         ],
-        ranks: [
-          {
-            key: 'Future Grow',
-            value: 159
-          },
-          {
-            key: 'Competitiveness',
-            value: 159
-          },
-          {
-            key: 'Net Margin > 15%',
-            value: 159
-          },
-          {
-            key: 'GP Cashflow > 0.88',
-            value: 159
-          },
-          {
-            key: 'Marginal Cost (R&D Important)',
-            value: 159
-          },
-          {
-            key: 'Leadership',
-            value: 159
-          },
-          {
-            key: 'Talent',
-            value: 159
-          },
-          
-        ]
       }
     },
     methods: {
@@ -98,19 +66,24 @@
         this.factor = item
       },
       save() {
-        this.ranks.find(rank => rank.key == this.factor.key).value = this.mark
+        let key = this.factor.key
+        this.$store.state.fisherApproach.find(rank => rank.key == key).value = this.mark
         this.dialog = false
-        // axios({
-        //   url: '/api/stock-prices',
-        //   method: 'post',
-        // })
-        // .then(response => {
-        //   // console.log(response);
-        //   this.$store.state.eods = response.data.data;
-        //   this.getFcfYield();
-        //   // console.log(this.$store.state.eods);
-        // })
-        // .catch(error => console.log(error.response));
+        this.mark = ""
+
+        axios({
+          url: '/api/gis-ranks/' + this.factor.watchlist_item_id,
+          method: 'post',
+          data : { 
+            _method: 'put',
+            key: this.factor.shortKey,
+            value: this.$store.state.fisherApproach.find(rank => rank.key == key).value,
+          }
+        })
+        .then(response => {
+          console.log(response);
+        })
+        .catch(error => console.log(error.response));
       },
     },
   }

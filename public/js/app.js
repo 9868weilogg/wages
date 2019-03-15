@@ -2154,43 +2154,6 @@ __webpack_require__.r(__webpack_exports__);
       }, {
         text: '',
         value: 'value'
-      }],
-      ranks: [{
-        key: 'Business Sexines',
-        value: 159
-      }, {
-        key: 'Supplier No.',
-        value: 159
-      }, {
-        key: 'Customer Choices',
-        value: 159
-      }, {
-        key: 'Entry Barrier',
-        value: 159
-      }, {
-        key: 'Substitute',
-        value: 159
-      }, {
-        key: 'Competition No.',
-        value: 159
-      }, {
-        key: 'Competitiveness',
-        value: 159
-      }, {
-        key: 'FPE < 25',
-        value: 159
-      }, {
-        key: 'Gearing < 1.5',
-        value: 159
-      }, {
-        key: 'GP Cashflow > 0.88',
-        value: 159
-      }, {
-        key: 'Good Will',
-        value: 159
-      }, {
-        key: 'Customer Loyalty',
-        value: 159
       }]
     };
   },
@@ -2200,22 +2163,27 @@ __webpack_require__.r(__webpack_exports__);
       this.factor = item;
     },
     save: function save() {
-      var _this = this;
-
-      this.ranks.find(function (rank) {
-        return rank.key == _this.factor.key;
+      var key = this.factor.key;
+      this.$store.state.buffettApproach.find(function (rank) {
+        return rank.key == key;
       }).value = this.mark;
-      this.dialog = false; // axios({
-      //   url: '/api/stock-prices',
-      //   method: 'post',
-      // })
-      // .then(response => {
-      //   // console.log(response);
-      //   this.$store.state.eods = response.data.data;
-      //   this.getFcfYield();
-      //   // console.log(this.$store.state.eods);
-      // })
-      // .catch(error => console.log(error.response));
+      this.dialog = false;
+      this.mark = "";
+      axios({
+        url: '/api/gis-ranks/' + this.factor.watchlist_item_id,
+        method: 'post',
+        data: {
+          _method: 'put',
+          key: this.factor.shortKey,
+          value: this.$store.state.buffettApproach.find(function (rank) {
+            return rank.key == key;
+          }).value
+        }
+      }).then(function (response) {
+        console.log(response);
+      }).catch(function (error) {
+        return console.log(error.response);
+      });
     }
   }
 });
@@ -2501,7 +2469,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2517,28 +2484,6 @@ __webpack_require__.r(__webpack_exports__);
       }, {
         text: '',
         value: 'value'
-      }],
-      ranks: [{
-        key: 'Future Grow',
-        value: 159
-      }, {
-        key: 'Competitiveness',
-        value: 159
-      }, {
-        key: 'Net Margin > 15%',
-        value: 159
-      }, {
-        key: 'GP Cashflow > 0.88',
-        value: 159
-      }, {
-        key: 'Marginal Cost (R&D Important)',
-        value: 159
-      }, {
-        key: 'Leadership',
-        value: 159
-      }, {
-        key: 'Talent',
-        value: 159
       }]
     };
   },
@@ -2548,22 +2493,27 @@ __webpack_require__.r(__webpack_exports__);
       this.factor = item;
     },
     save: function save() {
-      var _this = this;
-
-      this.ranks.find(function (rank) {
-        return rank.key == _this.factor.key;
+      var key = this.factor.key;
+      this.$store.state.fisherApproach.find(function (rank) {
+        return rank.key == key;
       }).value = this.mark;
-      this.dialog = false; // axios({
-      //   url: '/api/stock-prices',
-      //   method: 'post',
-      // })
-      // .then(response => {
-      //   // console.log(response);
-      //   this.$store.state.eods = response.data.data;
-      //   this.getFcfYield();
-      //   // console.log(this.$store.state.eods);
-      // })
-      // .catch(error => console.log(error.response));
+      this.dialog = false;
+      this.mark = "";
+      axios({
+        url: '/api/gis-ranks/' + this.factor.watchlist_item_id,
+        method: 'post',
+        data: {
+          _method: 'put',
+          key: this.factor.shortKey,
+          value: this.$store.state.fisherApproach.find(function (rank) {
+            return rank.key == key;
+          }).value
+        }
+      }).then(function (response) {
+        console.log(response);
+      }).catch(function (error) {
+        return console.log(error.response);
+      });
     }
   }
 });
@@ -3531,6 +3481,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -3561,6 +3513,11 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    setSelectedStock: function setSelectedStock(item) {
+      this.$store.state.selectedStock = item; // console.log(item)
+
+      this.$store.commit('checkIfWatchlistItem', item);
+    },
     switchWatchlist: function switchWatchlist(id) {
       var _this = this;
 
@@ -23207,7 +23164,10 @@ var render = function() {
           _vm._v(" "),
           _c("v-data-table", {
             staticClass: "elevation-1",
-            attrs: { headers: _vm.headers, items: _vm.ranks },
+            attrs: {
+              headers: _vm.headers,
+              items: _vm.$store.state.buffettApproach
+            },
             scopedSlots: _vm._u([
               {
                 key: "items",
@@ -23809,8 +23769,10 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("v-data-table", {
-            staticClass: "elevation-1",
-            attrs: { headers: _vm.headers, items: _vm.ranks },
+            attrs: {
+              headers: _vm.headers,
+              items: _vm.$store.state.fisherApproach
+            },
             scopedSlots: _vm._u([
               {
                 key: "items",
@@ -24911,44 +24873,58 @@ var render = function() {
               key: "items",
               fn: function(props) {
                 return [
-                  _c("td", [_vm._v(_vm._s(props.item.name))]),
-                  _vm._v(" "),
-                  _c("td", { staticClass: "text-xs-right" }, [
-                    _vm._v(
-                      _vm._s(props.item.stock ? props.item.stock.close : "-")
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("td", { staticClass: "text-xs-right" }, [
-                    _vm._v(
-                      _vm._s(
-                        props.item.stock
-                          ? (
-                              props.item.stock.close - props.item.stock.open
-                            ).toFixed(4)
-                          : "-"
-                      )
-                    )
-                  ]),
-                  _vm._v(" "),
                   _c(
-                    "td",
-                    { staticClass: "justify-center layout px-0" },
+                    "tr",
+                    {
+                      on: {
+                        click: function($event) {
+                          _vm.setSelectedStock(props.item)
+                        }
+                      }
+                    },
                     [
+                      _c("td", [_vm._v(_vm._s(props.item.name))]),
+                      _vm._v(" "),
+                      _c("td", { staticClass: "text-xs-right" }, [
+                        _vm._v(
+                          _vm._s(
+                            props.item.stock ? props.item.stock.close : "-"
+                          )
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("td", { staticClass: "text-xs-right" }, [
+                        _vm._v(
+                          _vm._s(
+                            props.item.stock
+                              ? (
+                                  props.item.stock.close - props.item.stock.open
+                                ).toFixed(4)
+                              : "-"
+                          )
+                        )
+                      ]),
+                      _vm._v(" "),
                       _c(
-                        "v-icon",
-                        {
-                          attrs: { small: "" },
-                          on: {
-                            click: function($event) {
-                              _vm.deleteItem(props.item)
-                            }
-                          }
-                        },
-                        [_vm._v("\n          delete\n        ")]
+                        "td",
+                        { staticClass: "justify-center layout px-0" },
+                        [
+                          _c(
+                            "v-icon",
+                            {
+                              attrs: { small: "" },
+                              on: {
+                                click: function($event) {
+                                  _vm.deleteItem(props.item)
+                                }
+                              }
+                            },
+                            [_vm._v("\n            delete\n          ")]
+                          )
+                        ],
+                        1
                       )
-                    ],
-                    1
+                    ]
                   )
                 ]
               }
@@ -62094,7 +62070,105 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
     fcfYieldContent: [],
     intrinsicFairValue: [],
     intrinsicValue: [],
-    fairValue: []
+    fairValue: [],
+    selectedStock: {},
+    buffettApproach: [{
+      key: 'Business Sexines',
+      value: '-',
+      shortKey: '',
+      watchlist_item_id: ''
+    }, {
+      key: 'Supplier No.',
+      value: '-',
+      shortKey: '',
+      watchlist_item_id: ''
+    }, {
+      key: 'Customer Choices',
+      value: '-',
+      shortKey: '',
+      watchlist_item_id: ''
+    }, {
+      key: 'Entry Barrier',
+      value: '-',
+      shortKey: '',
+      watchlist_item_id: ''
+    }, {
+      key: 'Substitute',
+      value: '-',
+      shortKey: '',
+      watchlist_item_id: ''
+    }, {
+      key: 'Competition No.',
+      value: '-',
+      shortKey: '',
+      watchlist_item_id: ''
+    }, {
+      key: 'Competitiveness',
+      value: '-',
+      shortKey: '',
+      watchlist_item_id: ''
+    }, {
+      key: 'FPE < 25',
+      value: '-',
+      shortKey: '',
+      watchlist_item_id: ''
+    }, {
+      key: 'Gearing < 1.5',
+      value: '-',
+      shortKey: '',
+      watchlist_item_id: ''
+    }, {
+      key: 'GP Cashflow > 0.88',
+      value: '-',
+      shortKey: '',
+      watchlist_item_id: ''
+    }, {
+      key: 'Good Will',
+      value: '-',
+      shortKey: '',
+      watchlist_item_id: ''
+    }, {
+      key: 'Customer Loyalty',
+      value: '-',
+      shortKey: '',
+      watchlist_item_id: ''
+    }],
+    fisherApproach: [{
+      key: 'Future Grow',
+      value: '-',
+      shortKey: '',
+      watchlist_item_id: ''
+    }, {
+      key: 'Competitiveness',
+      value: '-',
+      shortKey: '',
+      watchlist_item_id: ''
+    }, {
+      key: 'Net Margin > 15%',
+      value: '-',
+      shortKey: '',
+      watchlist_item_id: ''
+    }, {
+      key: 'GP Cashflow > 0.88',
+      value: '-',
+      shortKey: '',
+      watchlist_item_id: ''
+    }, {
+      key: 'Marginal Cost (R&D Important)',
+      value: '-',
+      shortKey: '',
+      watchlist_item_id: ''
+    }, {
+      key: 'Leadership',
+      value: '-',
+      shortKey: '',
+      watchlist_item_id: ''
+    }, {
+      key: 'Talent',
+      value: '-',
+      shortKey: '',
+      watchlist_item_id: ''
+    }]
   },
   getters: {
     getStockIntrinsicFairValue: function getStockIntrinsicFairValue(state) {
@@ -62134,13 +62208,156 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
       }).catch(function (error) {
         return console.log(error.response);
       });
+    },
+    checkIfWatchlistItem: function checkIfWatchlistItem(state, watchlistItem) {
+      var createGisRank = function createGisRank(watchlistItem) {
+        axios({
+          url: '/api/gis-ranks',
+          method: 'post',
+          data: {
+            'watchlist_item_id': watchlistItem.id,
+            'code': watchlistItem.code
+          }
+        }).then(function (response) {// console.log(response);
+        }).catch(function (error) {
+          return console.log(error.response);
+        });
+      };
+
+      var insertGisRankMark = function insertGisRankMark(response) {
+        axios({
+          url: '/api/gis-ranks/' + response.data.id,
+          method: 'get'
+        }).then(function (response) {
+          // console.log(response.data);
+          var gisRank = response.data;
+          store.state.buffettApproach = [{
+            key: 'Business Sexines',
+            value: gisRank.ba1,
+            shortKey: 'ba1',
+            watchlist_item_id: gisRank.watchlist_item_id
+          }, {
+            key: 'Supplier No.',
+            value: gisRank.ba1_1,
+            shortKey: 'ba1_1',
+            watchlist_item_id: gisRank.watchlist_item_id
+          }, {
+            key: 'Customer Choices',
+            value: gisRank.ba1_2,
+            shortKey: 'ba1_2',
+            watchlist_item_id: gisRank.watchlist_item_id
+          }, {
+            key: 'Entry Barrier',
+            value: gisRank.ba1_3,
+            shortKey: 'ba1_3',
+            watchlist_item_id: gisRank.watchlist_item_id
+          }, {
+            key: 'Substitute',
+            shortKey: 'ba1_4',
+            value: gisRank.ba1_4,
+            watchlist_item_id: gisRank.watchlist_item_id
+          }, {
+            key: 'Competition No.',
+            value: gisRank.ba1_5,
+            shortKey: 'ba1_5',
+            watchlist_item_id: gisRank.watchlist_item_id
+          }, {
+            key: 'Competitiveness',
+            value: gisRank.ba2,
+            shortKey: 'ba2',
+            watchlist_item_id: gisRank.watchlist_item_id
+          }, {
+            key: 'FPE < 25',
+            value: gisRank.ba3,
+            shortKey: 'ba3',
+            watchlist_item_id: gisRank.watchlist_item_id
+          }, {
+            key: 'Gearing < 1.5',
+            value: gisRank.ba4,
+            shortKey: 'ba4',
+            watchlist_item_id: gisRank.watchlist_item_id
+          }, {
+            key: 'GP Cashflow > 0.88',
+            value: gisRank.ba5,
+            shortKey: 'ba5',
+            watchlist_item_id: gisRank.watchlist_item_id
+          }, {
+            key: 'Good Will',
+            value: gisRank.ba6,
+            shortKey: 'ba6',
+            watchlist_item_id: gisRank.watchlist_item_id
+          }, {
+            key: 'Customer Loyalty',
+            value: gisRank.ba7,
+            shortKey: 'ba7',
+            watchlist_item_id: gisRank.watchlist_item_id
+          }];
+          store.state.fisherApproach = [{
+            key: 'Future Grow',
+            value: gisRank.fa1,
+            shortKey: 'fa1',
+            watchlist_item_id: gisRank.watchlist_item_id
+          }, {
+            key: 'Competitiveness',
+            value: gisRank.fa2,
+            shortKey: 'fa2',
+            watchlist_item_id: gisRank.watchlist_item_id
+          }, {
+            key: 'Net Margin > 15%',
+            value: gisRank.fa3,
+            shortKey: 'fa3',
+            watchlist_item_id: gisRank.watchlist_item_id
+          }, {
+            key: 'GP Cashflow > 0.88',
+            value: gisRank.fa4,
+            shortKey: 'fa4',
+            watchlist_item_id: gisRank.watchlist_item_id
+          }, {
+            key: 'Marginal Cost (R&D Important)',
+            value: gisRank.fa5,
+            shortKey: 'fa5',
+            watchlist_item_id: gisRank.watchlist_item_id
+          }, {
+            key: 'Leadership',
+            value: gisRank.fa6,
+            shortKey: 'fa6',
+            watchlist_item_id: gisRank.watchlist_item_id
+          }, {
+            key: 'Talent',
+            value: gisRank.fa7,
+            shortKey: 'fa7',
+            watchlist_item_id: gisRank.watchlist_item_id
+          }];
+        }).catch(function (error) {
+          return console.log(error.response);
+        });
+      };
+
+      axios({
+        url: '/api/gis-ranks',
+        method: 'get',
+        params: {
+          'watchlist_item_id': watchlistItem.id,
+          'get': "checkIfExist"
+        }
+      }).then(function (response) {
+        // console.log(response);
+        if (response.data == false) {
+          createGisRank(watchlistItem);
+        } else {
+          // console.log(response.data)
+          insertGisRankMark(response);
+        }
+      }).catch(function (error) {
+        return console.log(error.response);
+      });
     }
   }
 });
 var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   el: '#app',
   store: store,
-  methods: Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapMutations"])(['addWatchlistItem', 'getWatchlistItems']),
+  methods: Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapMutations"])(['addWatchlistItem', 'getWatchlistItems', 'checkIfWatchlistItem']),
   computed: Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapGetters"])(['getStockIntrinsicFairValue'])
 });
 
