@@ -3,18 +3,23 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\File;
-use Illuminate\Support\Facades\Storage;
 
-use App\Models\EndOfDayData;
-use App\Models\Industry;
-use App\Models\Sector;
 use App\Models\Stock;
 
 use App\Http\Resources\StockCollection;
 
+use App\Services\StockService;
+
 class StocksController extends Controller
 {
+    private $stockService;
+    private $stock;
+
+    public function __construct(StockService $stockService, Stock $stock) {
+      $this->stockService = $stockService;
+      $this->stock = $stock;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -23,7 +28,7 @@ class StocksController extends Controller
     public function index()
     {
 
-        $stocks = Stock::with('sector','industry')->where('industry_id','!=','0')->get();
+        $stocks = $this->stock->getStockWithoutDerivative();
      
         return new StockCollection($stocks);
     }
@@ -49,9 +54,10 @@ class StocksController extends Controller
         if($request->process == "upload_bursa_stock_list") {
           if($request->hasFile('file') ){
 
-            Stock::updateStockList($request,['stocks']);
+            $uploaded = $this->stockService->updateStockList($request,['stocks']);
 
-            $response = "Update Stock List Successfully";
+            if($uploaded) $response = "Update Stock List Successfully";
+            elseif(!$uploaded) $response = "Failed Update Stock List";
             
 
           } else {
@@ -61,9 +67,10 @@ class StocksController extends Controller
         } elseif($request->process == "upload_sector_industry_code") {
           if($request->hasFile('file') ){
             
-            Stock::updateSectorIndustry($request,['sectors','industries']);
+            $uploaded = $this->stockService->updateSectorIndustry($request,['sectors','industries']);
 
-            $response = "Update Sector and Industry Successfully";
+            if($uploaded) $response = "Update Sector and Industry Successfully";
+            elseif(!$uploaded) $response = "Failed Update Sector and Industry";
 
           } else {
             $response = "Failed Update Sector and Industry";
@@ -104,7 +111,6 @@ class StocksController extends Controller
      */
     public function update(Request $request, $id)
     {
-          // return response()->json('a');
         return response()->json($request);
 
     }

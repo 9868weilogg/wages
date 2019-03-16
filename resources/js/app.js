@@ -237,13 +237,13 @@ Vue.component('admin-page', require('./components/pages/admins/AdminPage.vue').d
           .catch(error => console.log(error.response));
         }
 
-        const insertGisRankMark = (response) => {
+        const insertGisRankMark = (gisRank) => {
           axios({
-            url: '/api/gis-ranks/' + response.data.id,
+            url: '/api/gis-ranks/' + gisRank.id,
             method: 'get',
           })
           .then(response => {
-            // console.log(response.data);
+            // console.log(response);
             let gisRank = response.data
             store.state.buffettApproach = [
               {
@@ -382,7 +382,8 @@ Vue.component('admin-page', require('./components/pages/admins/AdminPage.vue').d
             createGisRank(watchlistItem)
           } else {
             // console.log(response.data)
-            insertGisRankMark(response) 
+            let gisRank = response.data
+            insertGisRankMark(gisRank) 
           }
         })
         .catch(error => console.log(error.response));

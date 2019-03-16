@@ -62224,12 +62224,12 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
         });
       };
 
-      var insertGisRankMark = function insertGisRankMark(response) {
+      var insertGisRankMark = function insertGisRankMark(gisRank) {
         axios({
-          url: '/api/gis-ranks/' + response.data.id,
+          url: '/api/gis-ranks/' + gisRank.id,
           method: 'get'
         }).then(function (response) {
-          // console.log(response.data);
+          // console.log(response);
           var gisRank = response.data;
           store.state.buffettApproach = [{
             key: 'Business Sexines',
@@ -62346,7 +62346,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
           createGisRank(watchlistItem);
         } else {
           // console.log(response.data)
-          insertGisRankMark(response);
+          var gisRank = response.data;
+          insertGisRankMark(gisRank);
         }
       }).catch(function (error) {
         return console.log(error.response);

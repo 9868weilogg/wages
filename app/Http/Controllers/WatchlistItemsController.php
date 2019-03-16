@@ -10,8 +10,22 @@ use App\Models\WatchlistItem;
 
 use App\Http\Resources\WatchlistItemCollection;
 
+use App\Services\WatchlistItemService;
+
 class WatchlistItemsController extends Controller
 {
+    private $watchlistItemService;
+    private $eod;
+    private $stock;
+    private $watchlistItem;
+
+    public function __construct(watchlistItemService $watchlistItemService, EndOfDayData $eod, Stock $stock, WatchlistItem $watchlistItem) {
+      $this->watchlistItemService = $watchlistItemService;
+      $this->eod = $eod;
+      $this->stock = $stock;
+      $this->watchlistItem = $watchlistItem;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -20,10 +34,10 @@ class WatchlistItemsController extends Controller
     public function index(Request $request)
     {
         if($request->get == "watchlist_item") {
-          $items = WatchlistItem::where('watchlist_id', $request->watchlist_id)->get();
+          $items = $this->watchlistItem->where('watchlist_id', $request->watchlist_id)->get();
           foreach($items as $item){
-            $item->stock = EndOfDayData::where('code',$item->code)->orderBy('created_at','desc')->first();
-            $item->name = Stock::where('code',$item->code)->first()->short_name;
+            $item->stock = $this->eod->where('code',$item->code)->orderBy('created_at','desc')->first();
+            $item->name = $this->stock->where('code',$item->code)->first()->short_name;
           }
           return new WatchlistItemCollection($items);
         } 
@@ -48,12 +62,14 @@ class WatchlistItemsController extends Controller
      */
     public function store(Request $request)
     {
-        $item = WatchlistItem::firstOrCreate([
-          'code' => $request->stockCode,
-          'watchlist_id' => $request->watchlistId,
-        ]);
+        // $item = WatchlistItem::firstOrCreate([
+        //   'code' => $request->stockCode,
+        //   'watchlist_id' => $request->watchlistId,
+        // ]);
 
-        if($item) return response()->json('Success add watchlist item');
+        $created = $this->watchlistItemService->create($request);
+
+        if($created) return response()->json('Success add watchlist item');
     }
 
     /**
@@ -98,8 +114,9 @@ class WatchlistItemsController extends Controller
      */
     public function destroy($id)
     {
-        $item = WatchlistItem::find($id)->delete();
+        // $item = WatchlistItem::find($id)->delete();
+        $deleted = $this->watchlistItemService->delete($id);
 
-        if($item) return response()->json("Success delete watchlist item.");
+        if($deleted) return response()->json("Success delete watchlist item.");
     }
 }

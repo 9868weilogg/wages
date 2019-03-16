@@ -8,8 +8,18 @@ use App\Models\Watchlist;
 
 use App\Http\Resources\WatchlistCollection;
 
+use App\Services\WatchlistService;
+
 class WatchlistsController extends Controller
 {
+    private $watchlistService;
+    private $watchlist;
+
+    public function __construct(WatchlistService $watchlistService, Watchlist $watchlist) {
+      $this->watchlistService = $watchlistService;
+      $this->watchlist = $watchlist;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -17,7 +27,7 @@ class WatchlistsController extends Controller
      */
     public function index()
     {
-        $watchlists = Watchlist::get();
+        $watchlists = $this->watchlist->get();
 
         return new WatchlistCollection($watchlists);
     }
@@ -40,11 +50,13 @@ class WatchlistsController extends Controller
      */
     public function store(Request $request)
     {
-        $watchlist = Watchlist::create([
-          'name' => $request->watchlist,
-          'user_id' => 1,
-        ]);
-        if($watchlist) return response()->json('Success add watchlist');
+        // $watchlist = Watchlist::create([
+        //   'name' => $request->watchlist,
+        //   'user_id' => 1,
+        // ]);
+        $created = $this->watchlistService->create($request);
+
+        if($created) return response()->json('Success add watchlist');
     }
 
     /**

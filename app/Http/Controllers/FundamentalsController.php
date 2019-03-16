@@ -9,10 +9,20 @@ use App\Models\Stock;
 
 use App\Http\Resources\FundamentalCollection;
 
-use Storage;
+use App\Services\FundamentalService;
 
 class FundamentalsController extends Controller
 {
+    public function __construct(
+      FundamentalService $fundamentalService, 
+      Fundamental $fundamental, 
+      Stock $stock) {
+
+      $this->fundamentalService = $fundamentalService;
+      $this->fundamental = $fundamental;
+      $this->stock = $stock;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -20,9 +30,9 @@ class FundamentalsController extends Controller
      */
     public function index()
     {
-        $fundamentals = Fundamental::get();
+        $fundamentals = $this->fundamental->get();
         foreach($fundamentals as $fundamental){
-          $stockName = Stock::where('code',$fundamental->code)->first()->short_name;
+          $stockName = $this->stock->where('code',$fundamental->code)->first()->short_name;
           $fundamental->name = $stockName;
         }
      
@@ -50,9 +60,10 @@ class FundamentalsController extends Controller
         if($request->process == "upload_fundamental_data") {
           if($request->hasFile('file') ){
 
-            Fundamental::updateFundamentalData($request);
+            $uploaded = $this->fundamentalService->updateFundamentalData($request);
 
-            $response = "Update Fundamental Data Successfully";
+            if($uploaded) $response = "Update Fundamental Data Successfully";
+            elseif(!$uploaded) $response = "Failed Update Fundamental Data";
             
 
           } else {
