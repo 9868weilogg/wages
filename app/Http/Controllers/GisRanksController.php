@@ -6,8 +6,19 @@ use Illuminate\Http\Request;
 
 use App\Models\GisRank;
 
+use App\Services\GisRankService;
+
+use App\Http\Resources\GisRankCollection;
+
 class GisRanksController extends Controller
 {
+    private $gisRankService;
+
+    public function __construct(GisRankService $gisRankService, GisRank $gisRank) {
+      $this->gisRankService = $gisRankService;
+      $this->gisRank = $gisRank;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,11 +26,9 @@ class GisRanksController extends Controller
      */
     public function index(Request $request)
     {
-        if($request->get == "checkIfExist") {
-          $watchlistItemRank = GisRank::where('watchlist_item_id', $request->watchlist_item_id)->first();
-          if($watchlistItemRank) return response()->json($watchlistItemRank);
-          else return response()->json(false);
-        }
+      $response = $this->gisRankService->checkIfExist($request);
+
+      return response()->json($response);
     }
 
     /**
@@ -40,12 +49,9 @@ class GisRanksController extends Controller
      */
     public function store(Request $request)
     {
-        $watchlistItem = GisRank::create([
-          'code' => $request->code,
-          'watchlist_item_id' => $request->watchlist_item_id,
-        ]);
+        $created = $this->gisRankService->create($request);
 
-        if($watchlistItem) return response()->json("success");
+        if($created) return response()->json("success");
     }
 
     /**
@@ -56,7 +62,8 @@ class GisRanksController extends Controller
      */
     public function show($id)
     {
-      $watchlistItemRank = GisRank::find($id);
+      $watchlistItemRank = $this->gisRank->find($id);
+
       return response()->json($watchlistItemRank);
     }
 
@@ -80,12 +87,9 @@ class GisRanksController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $watchlistItem = GisRank::where('watchlist_item_id',$id)->first();
-        $watchlistItem->update([
-          $request->key => $request->value,
-        ]);
+        $updated = $this->gisRankService->update($request, $id);
 
-        if($watchlistItem) return response()->json("success");
+        if($updated) return response()->json("success");
     }
 
     /**

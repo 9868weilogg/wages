@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 
 use App\Models\EndOfDayData;
 use App\Models\Fundamental;
-use App\Models\Watchlist;
 
 use App\Http\Resources\StockPriceCollection;
 use App\Http\Resources\watchlistCollection;
@@ -15,6 +14,11 @@ use Carbon\Carbon;
 
 class StockPricesController extends Controller
 {
+    public function __construct(Fundamental $fundamental, EndOfDayData $eod) {
+      $this->fundamental = $fundamental;
+      $this->eod = $eod;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -25,8 +29,8 @@ class StockPricesController extends Controller
         ini_set('memory_limit', '-1');
         
         $lastYear = Carbon::now()->subYear(1);
-        $watchlistItems = Fundamental::groupBy('code')->get();
-        $eods = EndOfDayData::whereIn('code',$watchlistItems->pluck('code'))->whereDate('created_at','>',$lastYear)->orderBy('created_at','desc')->get();
+        $watchlistItems = $this->fundamental->groupBy('code')->get();
+        $eods = $this->eod->whereIn('code',$watchlistItems->pluck('code'))->whereDate('created_at','>',$lastYear)->orderBy('created_at','desc')->get();
 
         return new StockPriceCollection($eods);
     }
