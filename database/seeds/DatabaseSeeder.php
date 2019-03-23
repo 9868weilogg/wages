@@ -7,8 +7,9 @@ class DatabaseSeeder extends Seeder
     protected $toTruncate = [
 
       'watchlists',
-      'watchlist_items'
-
+      'watchlist_items',
+      'users',
+      'plans',
 
     ];
     /**
@@ -25,6 +26,8 @@ class DatabaseSeeder extends Seeder
       $this->call([
         WatchlistsTableSeeder::class,
         WatchlistItemsTableSeeder::class,
+        UsersTableSeeder::class,
+        PlansTableSeeder::class,
       ]);
     }
 }

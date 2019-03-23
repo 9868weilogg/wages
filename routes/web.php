@@ -19,3 +19,12 @@ Route::resource('home','HomeController');
 Route::resource('valuations','ValuationsController');
 Route::resource('admins','AdminsController');
 Route::resource('eods','EndOfDayDatasController');
+// Route::get('/plans','PlansController@index')->name('plans.index');
+// Route::get('/plans/{plan}','PlansController@show')->name('plans.show');
+Route::resource('plans','PlansController');
+Route::resource('subscriptions','SubscriptionsController');
+Route::get('/braintree/token', 'BraintreeTokenController@index')->name('token');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
